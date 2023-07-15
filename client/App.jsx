@@ -6,7 +6,8 @@ import helperFunctions from './helper-functions.js';
 
 const App = () => {
   const mdTestString =
-    'Inside the **App** with *markdown*!\n' + '\n``` const test = [1,2,3];```';
+    'Inside the **App** with *markdown*!\n' +
+    '\n``` const test = [1,2,3];```\n[reddit](www.reddit.com)';
 
   return <div>{helperFunctions.md(mdTestString)}</div>;
 };
