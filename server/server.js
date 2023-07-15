@@ -5,7 +5,9 @@ const app = express();
 const PORT = 3000;
 
 // Routers
-const apiRouter = require(path.join(__dirname, '/routes/api.js'));
+const techRouter = require(path.join(__dirname, '/routes/techRouter.js'));
+const postRouter = require(path.join(__dirname, '/routes/postRouter.js'));
+const userRouter = require(path.join(__dirname, '/routes/userRouter.js'));
 
 // Parse incoming JSON, static reqeusts, forms, and cookies
 app.use(express.json());
@@ -14,7 +16,10 @@ app.use(express.static('./dist'));
 
 
 // API router for server handling of db info
-app.use('/api', apiRouter);
+app.use('/api/tech', techRouter);
+app.use('/api/post', postRouter);
+app.use('/api/user', userRouter);
+
 
 // Default unknown page handler
 app.use('*', (req,res)=>{
