@@ -41,9 +41,16 @@ module.exports = {
         },
       },
       {
-        test: /.(css|scss)$/,
+        test: /.(css|scss |sass)$/,
         exclude: /node_modules/,
-        use: ['style-loader', 'css-loader', 'sass-loader'],
+        use: ['style-loader', 'css-loader',
+          {
+            loader: 'sass-loader',
+            options: {
+              implementation: require('dart-sass')
+            }
+          }
+        ]
       },
       {
         test: /\.(png|jpg|gif|woff|woff2|eot|ttf|svg|ico)$/,

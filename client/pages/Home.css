@@ -1,0 +1,29 @@
+.pageMaterial {
+        display:flex;
+        justify-content:center;
+}
+
+.homeHead {
+        display: inline-flex;
+        background-color:purple;
+        justify-content: space-between;
+        width: 75%;
+}
+
+.createApi {
+        background-color: black;
+        justify-content: flex-end;
+}
+
+.cohortId {
+        background-color:blue;
+        justify-content: flex-start;
+}
+
+.searchbarHome {
+        background-color:yellow;
+        justify-content: flex-start;
+}
+
+
+
