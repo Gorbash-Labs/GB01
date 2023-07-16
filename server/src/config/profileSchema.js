@@ -1,6 +1,6 @@
 // for server.js
 
-/*
+
 const { Pool } = require('pg');
 
 const PG_URI =
@@ -19,4 +19,3 @@ module.exports = {
   },
 };
 
-*/
