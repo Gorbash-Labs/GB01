@@ -8,7 +8,7 @@ const router = express.Router();
 
 
 
-// POSTS 
+// POSTS
 // Find all posts by a user /api/post/posts-by-user/USER_ID
 router.get('/posts-by-user/:id', postController.findPostsByUser, (req,res)=>{
 
@@ -47,7 +47,7 @@ router.post('/', userController.authenticate, postController.makePost, (req,res)
   res.sendStatus(200);
 });
 
-// // Fetch all posts for an 'all posts' display that likely won't be used 
+// // Fetch all posts for an 'all posts' display that likely won't be used
 // router.get('/', (req,res)=>{
 
 //   res.status(200).json(res.locals.postList);

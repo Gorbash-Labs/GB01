@@ -9,6 +9,7 @@ import Comments from './pages/Comments.jsx';
 import Login from './pages/Login.jsx';
 import Profile from './pages/Profile.jsx';
 import styles from './_appStyles.css';
+import './App.css'
 
 
 

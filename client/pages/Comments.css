@@ -1,0 +1,39 @@
+.accordion {
+    width: 100%;
+    max-width: 1000px;
+    margin: 0 auto;
+    background-color: #4b4b4b;
+  }
+
+  .accordion-item {
+    margin-bottom: 1px;
+  }
+
+  .accordion-item.active {
+
+    background-color: #4b4b4b;
+  }
+
+  .accordion-header {
+    background-color: #4b4b4b;
+  }
+
+  .accordion-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
+    cursor: pointer;
+  }
+
+  .accordion-content {
+    padding: 10px;
+    background-color: #6c0606;
+  }
+
+
+  .accordion-content > div {
+    padding: 10px;
+    background-color: #982929;
+    width: 800
+  }

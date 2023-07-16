@@ -5,13 +5,54 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Navbar from '../components/Navbar.jsx'
 import './Home.css'
 const Home = () => {
+  const [showOverlay, setShowOverlay] = useState(false);
+
+  const openOverlay = () => {
+    setShowOverlay(true);
+  };
+
   return (
     <div className='wrapper'>
       <Navbar />
       <div className='pageMaterial'>
         <div className='homeHead'>
           <div className="cohortId">potato</div>
-          <button className="createApi">brocoli</button>
+          <div className="content">
+            <button className="button" onClick={openOverlay}>ADD API</button>
+          </div>
+          {showOverlay && (
+            <div className="overlay">
+              <div className="overlay-content">
+                <div>
+                  <form>
+                    <div className="formGroup">
+                      <h3>API</h3>
+                      <input
+                        type="text"
+                        className="input-one"
+                      // value={}
+                      // onChange={(event) => {
+                      //
+                      // }}
+                      />
+                      <h3>Link:</h3>
+                      <input
+                        type="text"
+                        className="input-one"
+                      // value={}
+                      // onChange={(event) => {
+
+                      // }}
+                      />
+                    </div>
+                    <button type="submit" className="login-button">
+                      Submit
+                    </button>
+                  </form>
+                </div>
+              </div>
+            </div>
+          )}
         </div>
       </div>
       <div className='pageMaterial'>
@@ -22,3 +63,4 @@ const Home = () => {
 };
 
 export default Home;
+

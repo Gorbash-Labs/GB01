@@ -1,4 +1,6 @@
+
 const db = require('../config/profileSchema.js');
+
 
 const userController = {};
 

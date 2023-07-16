@@ -37,6 +37,7 @@ router.get('/', techController.getAllTech, (req, res) => {
   console.log('Ready to send all tech');
   res.status(200).send();
   // res.status(200).json(res.locals.techList);
+
 });
 
 module.exports = router;
