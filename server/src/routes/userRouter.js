@@ -13,6 +13,11 @@ router.post(
   userController.makeUser,
   userController.newSession,
   (req, res) => {
+    // if the user already exists send a bool back to frontend
+    if (res.locals.existingUser) {
+      console.log('user already exists pick a different username');
+      res.status(200).send();
+    }
     console.log('adding new user');
     res.status(200).send();
   }
@@ -28,11 +33,16 @@ router.post(
   }
 );
 
+//Sign-Out
+router.get('/signout', userController.endSession, (req, res) => {
+  res.status(200).redirect('/');
+});
 
 // Look up a single user
 router.get(
   '/:id',
-  userController.findUser, postController.findPostsByUser, 
+  userController.findUser,
+  postController.findPostsByUser,
   (req, res) => {
     // res.locals.userRequest && res.locals.postList
     res.status(200).json();
