@@ -1,8 +1,8 @@
-const express = requires('express');
+const express = require('express');
 
-const postController = require('../postController');
-const techController = require('../techController');
-const userController = require('../userController');
+const postController = require('../controllers/postController');
+const techController = require('../controllers/techController');
+const userController = require('../controllers/userController');
 
 const router = express.Router();
 
@@ -33,7 +33,7 @@ router.post('/', userController.authenticate, techController.makeTech, (req,res)
 });
 
 
-// Fetch all tech for home page display 
+// Fetch all tech for home page display
 router.get('/', techController.getAllTech, (req,res)=>{
 
   res.status(200).json(res.locals.techList);

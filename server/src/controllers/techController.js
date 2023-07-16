@@ -1,4 +1,4 @@
-const db = require('../models/dbModel');
+//const db = require('../models/dbModel');
 
 const techController = {};
 

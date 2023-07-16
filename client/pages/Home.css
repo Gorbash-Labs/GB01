@@ -1,11 +1,11 @@
 .pageMaterial {
-        display:flex;
-        justify-content:center;
+        display: flex;
+        justify-content: center;
 }
 
 .homeHead {
         display: inline-flex;
-        background-color:purple;
+        background-color: purple;
         justify-content: space-between;
         width: 75%;
 }
@@ -16,14 +16,92 @@
 }
 
 .cohortId {
-        background-color:blue;
+        background-color: blue;
         justify-content: flex-start;
 }
 
 .searchbarHome {
-        background-color:yellow;
+        background-color: yellow;
         justify-content: flex-start;
 }
 
 
 
+
+
+.home {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-end;
+        background-color: white;
+        color: white;
+        padding-top: 80px;
+}
+
+.content {
+        margin-top: 20px;
+}
+
+.overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+}
+
+.overlay-content {
+        padding: 40px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+        color: white;
+        background-color: rgb(33, 33, 33);
+}
+
+form {
+        width: 500px;
+        height: 500px;
+        margin-top: 20px;
+        display: flex;
+        flex-direction: column;
+
+}
+
+.formGroup {
+        margin-bottom: 20px;
+}
+
+.formGroup-2 {
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 20px;
+}
+
+.input-one {
+        height: 40px;
+        border: none;
+        font-size: 16px;
+        font-weight: 400;
+        padding-left: 10px;
+}
+
+.login-button {
+        height: 30px;
+        color: white;
+        border: none;
+        border-radius: 20px;
+        cursor: pointer;
+        margin-top: 10px;
+}
+
+.login-button:hover {
+        background-color: #909090;
+}
+
+.input-one:focus {
+        outline-width: 0;
+}
