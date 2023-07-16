@@ -1,0 +1,119 @@
+*** READ ME ***
+
+This is the list of Schemas for the project
+
+Primary database uses postsql, currently hooked up to Tony's acc using link:
+
+"postgres://mqyenfhu:Q-XccTOehb_iYM3Qq4Xh3vXhYNPRF2Mm@mahmud.db.elephantsql.com/mqyenfhu"
+
+***USER***
+
+userId: auto generated* (required)
+username: string   (required)
+password: string // hashed + salt     (required)
+Contact: string   
+permissions: smallInt // 0 = default user permission  (required)
+organizationID: COMMUNITY_communityId = 1
+
+    CREATE TABLE users (
+        user_id SERIAL PRIMARY KEY,
+        name TEXT NOT NULL,
+        password TEXT NOT NULL,
+        contact TEXT NOT NULL,
+        permissions INTEGER DEFAULT 0
+    )
+
+
+***COMMUNITY***
+
+communityId: number auto-generated (required)
+name: string (e.g CTRI17)
+
+    CREATE TABLE communities (
+        community_id SERIAL PRIMARY KEY,
+        name TEXT NOT NULL
+    )
+
+    ALTER TABLE users 
+    ADD COLUMN community INTEGER NOT NULL,
+    ADD CONSTRAINT fk_community FOREIGN KEY (community) REFERENCES communities (community_id);
+
+
+***TECHS***
+
+    CREATE TABLE techs (
+        tech_id SERIAL PRIMARY KEY,
+        name TEXT NOT NULL,
+        type_api BOOLEAN,
+        type_framework BOOLEAN,
+        type_fibrary BOOLEAN,
+        link TEXT,
+        description VARCHAR(300),
+        image_url TEXT
+    )
+
+
+***TECH-KEYWORDS***
+
+    CREATE TABLE tech_keywords(
+        tech_keyword_id SERIAL PRIMARY KEY,
+        keyword TEXT NOT NULL
+    )
+
+
+***JUNCTION TABLE techs_v_tech_keyword ***
+
+    CREATE TABLE tech_keywords_v_techs(
+        tech INTEGER NOT NULL,
+        tech_keyword INTEGER NOT NULL,
+        PRIMARY KEY (tech, tech_keyword),
+        FOREIGN KEY (tech) REFERENCES techs (tech_id),
+        FOREIGN KEY (tech_keyword) REFERENCES tech_keywords (tech_keyword_id)
+    )
+
+
+***LANGUAGES***
+
+language_id: number  (required)
+name:  string
+
+    CREATE TABLE languages(
+        language_id SERIAL PRIMARY KEY,
+        name TEXT NOT NULL
+    )
+
+
+***POSTS***
+
+postId: number  (required)
+technologyId: number (required)
+userId: USER_userId number (required)
+type-review: false
+type-advice: false
+type-codeSnippet: false
+type-helpOffer: false 
+language: LANGUAGE_langId (required)
+title: string
+comment: string (5,000 chars) (required)
+image: aws bucket (stretch goal)
+
+    CREATE TABLE posts(
+        post_id SERIAL PRIMARY KEY,
+        title TEXT NOT NULL,
+        tech INTEGER NOT NULL,
+        FOREIGN KEY(tech) REFERENCES techs(tech_id),
+        uploader INTEGER NOT NULL,
+        FOREIGN KEY(uploader) REFERENCES users(user_id),
+        type_review BOOLEAN,
+        type_advice BOOLEAN,
+        type_code_snippet BOOLEAN,
+        type_help_offer BOOLEAN,
+        language INTEGER NOT NULL,
+        FOREIGN KEY(language) REFERENCES languages (language_id),
+        comment VARCHAR(5000) NOT NULL
+    )
+
+
+***SESSIONS***
+
+OAuth: 
