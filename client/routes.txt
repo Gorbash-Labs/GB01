@@ -1,0 +1,70 @@
+Front-End Routes 
+(vars in all caps)
+
+
+GET
+/api/tech -- return list of all techs
+/api/tech/TECH_ID -- return a particular tech
+/api/tech/search?keywords=SEARCH_TERMS -- return all matching techList
+/api/tech/posts/TECH_ID -- return all posts matching tech
+
+/api/post/POST_ID -- return a particular post
+/api/post/posts-by-user/USER_ID -- return all posts by 1 user
+
+/api/user/login -- try to log user in (sends cookies)
+/api/user/USER_ID -- get all info on a user
+
+
+POST/PUT/DELETE (requests)
+POST /api/tech -- add a new tech with attached info
+POST /api/post -- add new post with attached info
+PUT /api/post/POST_ID -- update 1 post with attached info
+DELETE /api/post/POST_ID -- delete 1 post
+POST /api/user/newuser -- create a new user with attached info
+
+user-class-example
+{
+  userId: number,
+  username: string,
+  password: string, //hashed+salted
+  contact: string,
+  permissions: number, //0 for everyone
+  organizationId: number, //1 for everyone while all on ctri17
+}
+
+tech-class-example
+{
+  techId: number
+  name: string,
+  type-api: bool,
+  type-framework: bool,
+  type-library: bool,
+  link: string,
+  description: string
+  image: string, //link to image
+  keywords: [string], // array of strings parsed through a separate lookup table
+}
+
+post-class-example
+{
+  postId: number,
+  techId: number,
+  userId: number,
+  type-review: bool,
+  type-advice: false,
+  type-codeSnippet: false,
+  type-helpOffer: false,
+  language: number,
+  title: string,
+  comment: string,
+  image: string,
+}
+
+Cookies & Authentication:
+- Create Username + Password (stored as plaintext strings in DB)
+- UserID stored as cookie: "SSID": UserId (number from db)
+  - res.cookie("SSID", DB_USERS_USERID, {maxAge: 90000, httpOnly: true})
+- Authentication: Require user+password to get updated cookie
+- Authorization to Edit/Delete: Require matching SSID
+- Logout: cookies.set('SSID',{expires: new Date(0)});
+
