@@ -1,0 +1,24 @@
+Front-End Routes 
+(vars in all caps)
+
+
+GET
+/api/tech -- return list of all techs
+/api/tech/TECH_ID -- return a particular tech
+/api/tech/search?keywords=SEARCH_TERMS -- return all matching techList
+/api/tech/posts/TECH_ID -- return all posts matching tech
+
+/api/post/POST_ID -- return a particular post
+/api/post/posts-by-user/USER_ID -- return all posts by 1 user
+
+/api/user/login -- try to log user in (sends cookies)
+/api/user/USER_ID -- get all info on a user
+
+
+POST/PUT/DELETE (requests)
+POST /api/tech -- add a new tech with attached info
+POST /api/post -- add new post with attached info
+PUT /api/post/POST_ID -- update 1 post with attached info
+DELETE /api/post/POST_ID -- delete 1 post
+POST /api/user/newuser -- create a new user with attached info
+

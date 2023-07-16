@@ -1,40 +1,49 @@
-const { post } = require('../../server');
-//const db = require('../models/dbModel');
+
+const db = require('../config/profileSchema.js');
 
 const postController = {};
 
 
 
 postController.findPost = (req,res,next) => {
+  // Get a post with req.params.id == postId
+  // Attach to res.locals.postRequest;
 
-  //req.params.id == postId
-  //res.locals.postRequest;
+  next();
 }
 
 postController.makePost = (req,res,next) => {
+// An authorized user is posting
+// Get username from cookies/session
+// Get post from body
+// Add the post to the DB
 
-  //body
+  next();
 }
 
 postController.editPost = (req,res,next) => {
+  // An authorized/authenticated user wants to edit the post saved to res.locals.postRequest.
+  // Edit the post by database ID
 
-  //req.params.id postId + body
+  next();
+
 }
 
 postController.deletePost = (req,res,next) => {
-
-  //req.params.id postId
+  // An authorized/authenticated user wants to delete their post (res.locals.postRequest)
+  // Delete the post from the database by databaseId.
+  next();
 }
 
 postController.findPostsByUser = (req,res,next) => {
+  // Using req.params.userId, generate res.locals.postlist
 
-  //req.params.id = userId
-  //res.locals.postList
+  next();
 }
 
 postController.findPostsByTech = (req,res,next) => {
-
-  //req.params.id
+  next();
+  //req.params.id 
   // res.locals.postList
 }
 

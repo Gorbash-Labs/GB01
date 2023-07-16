@@ -43,7 +43,7 @@ router.put('/:id', postController.findPost, userController.authenticate, userCon
 
 // Add new Post to the database
 router.post('/', userController.authenticate, postController.makePost, (req,res)=>{
-
+  console.log('ready to send all posts')
   res.sendStatus(200);
 });
 
