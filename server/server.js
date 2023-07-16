@@ -5,9 +5,9 @@ const app = express();
 const PORT = 3000;
 
 // Routers
-const techRouter = require(path.join(__dirname, '/routes/techRouter.js'));
-const postRouter = require(path.join(__dirname, '/routes/postRouter.js'));
-const userRouter = require(path.join(__dirname, '/routes/userRouter.js'));
+const techRouter = require(path.join(__dirname, '/src/routes/techRouter.js'));
+const postRouter = require(path.join(__dirname, '/src/routes/postRouter.js'));
+const userRouter = require(path.join(__dirname, '/src/routes/userRouter.js'));
 
 // Parse incoming JSON, static reqeusts, forms, and cookies
 app.use(express.json());

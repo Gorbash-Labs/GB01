@@ -1,5 +1,5 @@
 const { post } = require('../../server');
-const db = require('../models/dbModel');
+//const db = require('../models/dbModel');
 
 const postController = {};
 
@@ -34,7 +34,7 @@ postController.findPostsByUser = (req,res,next) => {
 
 postController.findPostsByTech = (req,res,next) => {
 
-  //req.params.id 
+  //req.params.id
   // res.locals.postList
 }
 
