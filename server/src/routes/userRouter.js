@@ -31,10 +31,10 @@ router.post(
 // Look up a single user
 router.get(
   '/:id',
-  userController.authenticate,
-  userController.findUser,
+  userController.findUser, postController.findPostsByUser, 
   (req, res) => {
-    res.status(200).json(res.locals.userRequest);
+    // res.locals.userRequest && res.locals.postList
+    res.status(200).json();
   }
 );
 
