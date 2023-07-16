@@ -1,0 +1,26 @@
+/*
+add a universal "background color" to a "variables" pallete scss file AND import that to _appStyles.css}
+*/
+/*
+add a universal "Text color" to a "variables" pallete scss file AND import that to _appStyles.css}
+*/
+.Navbar {
+    padding: 8px;
+    display: flex;
+    list-style-type: none;
+    justify-content: flex-end;
+    background-color: $third;
+    color: black;
+}
+
+/*
+add a universal "on hover color" to a "variables" pallete scss file AND import that to _appStyles.css}
+*/
+.Navbar li:hover {
+    background-color: $fifth;
+    color: $fourth;
+}
+
+.Navbar li {
+    margin-left: 20px;
+}

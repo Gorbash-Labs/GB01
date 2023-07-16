@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import ReactDOM from 'react';
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Navbar from '../components/Navbar.jsx'
-import './Comments.css'
+
 
 const Comments = () => {
   const [activeIndex, setActiveIndex] = useState(null);

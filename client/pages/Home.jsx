@@ -2,8 +2,9 @@ import React, { useEffect, useState } from 'react';
 import ReactDOM from 'react';
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 //add containers and requirements for JS
-import Navbar from '../components/Navbar.jsx'
-import './Home.css'
+import Navbar from '../components/Navbar.jsx';
+
+
 const Home = () => {
   const [showOverlay, setShowOverlay] = useState(false);
 
@@ -20,6 +21,7 @@ const Home = () => {
           <div className="content">
             <button className="button" onClick={openOverlay}>ADD API</button>
           </div>
+        <div>h</div>
           {showOverlay && (
             <div className="overlay">
               <div className="overlay-content">
