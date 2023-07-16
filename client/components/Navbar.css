@@ -1,0 +1,12 @@
+.Navbar {
+    background-color: pink;
+    color: red;
+    list-style-type: none;
+    display: flex;
+    justify-content: space-between;
+    height: 50px;
+}
+
+.Navbar li:hover {
+    background-color: darken(white, 15);
+}
