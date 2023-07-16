@@ -1,5 +1,6 @@
 const path = require('path');
 const express = require('express');
+const cookieParser = require('cookie-parser');
 
 const app = express();
 const PORT = 3000;
@@ -9,12 +10,11 @@ const techRouter = require(path.join(__dirname, '/src/routes/techRouter'));
 const postRouter = require(path.join(__dirname, '/src/routes/postRouter'));
 const userRouter = require(path.join(__dirname, '/src/routes/userRouter'));
 
-
 // Parse incoming JSON, static reqeusts, forms, and cookies
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(cookieParser());
 app.use(express.static('./dist'));
-
 
 // API router for server handling of db info
 app.use('/api/tech', techRouter);
