@@ -1,27 +1,26 @@
-const db = require('../models/dbModel');
+const db = require('../config/profileSchema.js');
 
 const userController = {};
 
+userController.makeUser = (req, res, next) => {
+  next();
+};
 
-userController.makeUser = (req,res,next) => {
+userController.newSession = (req, res, next) => {
+  next();
+};
 
-}
+userController.authenticate = (req, res, next) => {
+  next();
+};
 
-userController.newSession = (req,res,next) => {
+userController.authorizeEdit = (req, res, next) => {
+  next();
+};
 
-}
-
-userController.authenticate = (req,res,next) => {
-
-}
-
-userController.authorizeEdit = (req,res,next) => {
-
-}
-
-userController.findUser = (req,res,next) => {
-
+userController.findUser = (req, res, next) => {
+  next();
   //res.locals.userRequest
-}
+};
 
 module.exports = userController;

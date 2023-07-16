@@ -1,8 +1,8 @@
-const express = requires('express');
+const express = require('express');
 
-const postController = require('../postController');
-const techController = require('../techController');
-const userController = require('../userController');
+const postController = require('../controllers/postController');
+const techController = require('../controllers/techController');
+const userController = require('../controllers/userController');
 
 const router = express.Router();
 
@@ -43,7 +43,7 @@ router.put('/:id', postController.findPost, userController.authenticate, userCon
 
 // Add new Post to the database
 router.post('/', userController.authenticate, postController.makePost, (req,res)=>{
-
+  console.log('ready to send all posts')
   res.sendStatus(200);
 });
 
