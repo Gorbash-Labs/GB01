@@ -6,7 +6,6 @@ const userController = require('../controllers/userController');
 
 const router = express.Router();
 
-
 // Search for tech with at '/tech/search?keywords=XXXX' on 'req.query.keywords'
 router.get(
   '/search',
@@ -22,7 +21,8 @@ router.get('/posts/:id', postController.findPostsByTech, (req, res) => {
 });
 
 // Add new Tech to the database
-router.post('/',
+router.post(
+  '/',
   // userController.authenticate, // ignored to test makeTech
   techController.makeTech, // DONE
   (req, res) => {
@@ -33,19 +33,23 @@ router.post('/',
 // Look up a single tech
 router.get(
   '/:id',
-  techController.findTech, // DONE
+  techController.findTech,
+  postController.findPostsByTech,
   (req, res) => {
-    res.status(200).json(res.locals.techRequest);
+    const responseObj = {
+      tech: res.locals.techRequest,
+      posts: res.locals.postList,
+    };
+    res.status(200).json(responseObj);
   }
 );
-
 
 // Fetch all tech for home page display
 router.get(
   '/',
   techController.getAllTech, // DONE
   (req, res) => {
-    console.log('Ready to send all tech');
+    //console.log('Ready to send all tech:', res.locals.techList);
     res.status(200).json(res.locals.techList);
   }
 );
