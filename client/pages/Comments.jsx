@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Editor } from '@tinymce/tinymce-react';
-import './Comments.css';
+import './Comments.scss';
 
 const Comments = () => {
   const [activeIndex, setActiveIndex] = useState(null);
@@ -22,9 +22,7 @@ const Comments = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Perform form submission and access the editor content
     console.log(editorContent);
-    // Reset form fields or perform further actions as needed
   };
 
   const data = [
