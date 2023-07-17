@@ -36,14 +36,14 @@ userController.makeUser = async (req, res, next) => {
     console.log('user added successfully');
 
     // Add USER_ID on res.locals.userId
-    const userId = await db.query(`SELECT user_id FROM users WHERE name = $1`, [
-      username,
-    ]);
+    const { rows } = await db.query(
+      `SELECT user_id FROM users WHERE name = $1`,
+      [username]
+    );
+    const { user_id } = rows[0];
 
-    // @TONY -- I think this query returns an array, we need [0] for the first element.
-    res.locals.userId = userId;
-    console.log('userId saved');
-
+    res.locals.userId = user_id;
+    console.log(res.locals.userId);
     return next();
   } catch (err) {
     return next('Express error handler caught at userController.makeUser');
@@ -52,7 +52,7 @@ userController.makeUser = async (req, res, next) => {
 
 userController.newSession = (req, res, next) => {
   // Here after creating or authenticating. Make a new 1.5 minute session and send them cookies.
-  res.cookie('SSID', res.locals.userId { maxAge: 90000, httpOnly: true });
+  res.cookie('SSID', res.locals.userId({ maxAge: 90000, httpOnly: true }));
   next();
 };
 
@@ -61,22 +61,23 @@ userController.endSession = (req, res, next) => {
   next();
 };
 
-userController.authenticate = (req, res, next) => {
+userController.authenticate = async (req, res, next) => {
   // Here for verifying authentication of new users
   // If they have a valid session already, next()
   if (req.cookies('SSID')) next;
 
   // If they don't have a valid session, check req.body for username + password
-  const {username, passowrd} = req.body;
+  const { username, passowrd } = req.body;
   // Hash salt + Pwd and check database. If valid, next.
   try {
     // Add USER_ID on res.locals.userId
-    const userIdResult = await db.query(`SELECT user_id FROM users WHERE name = $1, password = $2`, [
-      username, password
-    ]);
+    const userIdResult = await db.query(
+      `SELECT user_id FROM users WHERE name = $1, password = $2`,
+      [username, password]
+    );
 
-    if (userIdResult.length == 0){
-      return next ({
+    if (userIdResult.length == 0) {
+      return next({
         log: 'usercontroller.authenticate: Invalid username or password',
         status: 401,
         message: 'Invalid username or password',
@@ -84,7 +85,8 @@ userController.authenticate = (req, res, next) => {
     }
 
     res.locals.userId = userId[0];
-    console.log('userId saved');
+
+    console.log('UserId saved');
 
     return next();
   } catch (err) {
@@ -97,12 +99,12 @@ userController.authenticate = (req, res, next) => {
 userController.authorizeEdit = (req, res, next) => {
   // Here to edit or delete. Verify that they have a valid session and that User_ID is the author of req/params/id. If not, error.
   const postAuthorId = req.locals.postRequest.userId;
-  if (req.cookies('SSID') === postAuthorId){
+  if (req.cookies('SSID') === postAuthorId) {
     // User is authorized to edit or delete their own post
     next();
   } else {
     // User not authorized to edit/delete another's post
-    return next ({
+    return next({
       log: 'usercontroller.authorizeEdit: User not authorized to modify another users post.',
       status: 401,
       message: 'Unauthorized action.',
