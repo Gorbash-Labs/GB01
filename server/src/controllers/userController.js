@@ -67,7 +67,7 @@ userController.authenticate = async (req, res, next) => {
   if (req.cookies('SSID')) next;
 
   // If they don't have a valid session, check req.body for username + password
-  const { username, passowrd } = req.body;
+  const { username, password } = req.body;
   // Hash salt + Pwd and check database. If valid, next.
   try {
     // Add USER_ID on res.locals.userId
@@ -112,9 +112,27 @@ userController.authorizeEdit = (req, res, next) => {
   }
 };
 
-userController.findUser = (req, res, next) => {
-  next();
-  //get user onto res.locals.userRequest
+userController.findUser = async (req, res, next) => {
+  const userName = req.params.id;
+  const lookupText = 'SELECT * FROM users WHERE name = $1';
+  const lookupVals = [userName];
+  try {
+    const { rows } = await db.query(lookupText, lookupVals);
+    console.log('Retrieved user lookup: ', rows);
+    if (rows.length === 0) {
+      return next({
+        log: 'Failed to find matching user in userController.findUser',
+        message: { err: 'Lookup error.' },
+      });
+    }
+    res.locals.userRequest = rows[0];
+    next();
+  } catch (err) {
+    return next({
+      log: 'Encountered lookup error in postController.findPostsByUser',
+      message: { err: 'Lookup error.' },
+    });
+  }
 };
 
 module.exports = userController;

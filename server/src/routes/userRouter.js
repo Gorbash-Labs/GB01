@@ -18,7 +18,6 @@ router.post(
       console.log('user already exists pick a different username');
       res.status(200).send();
     }
-    console.log('adding new user');
     res.status(200).send();
   }
 );
@@ -45,7 +44,7 @@ router.get(
   postController.findPostsByUser,
   (req, res) => {
     // res.locals.userRequest && res.locals.postList
-    res.status(200).json();
+    res.status(200).json({user: res.locals.userRequest, posts: res.locals.postList});
   }
 );
 

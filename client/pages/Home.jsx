@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Navbar from '../components/Navbar.jsx';
 import './Home.scss';
 import { useNavigate } from "react-router-dom";
+
 const Home = () => {
   const [showOverlay, setShowOverlay] = useState(false);
   const navigate = useNavigate();
@@ -16,60 +17,67 @@ const Home = () => {
     setShowOverlay(true);
   };
 
-
-
   function comments(){
     navigate("/Comments")
+
   }
 
   const mockData = [
     {
-      header: "Google Maps API",
-      link: "https://developers.google.com/maps/documentation/javascript/overview",
-      paragraph: "Google Maps API allows you to embed maps into your website or application and customize them to fit your needs.",
-      image: "https://i.ibb.co/jzvCsB1/Screenshot-2023-07-16-at-3-17-57-PM.png",
+      header: 'Google Maps API',
+      link: 'https://developers.google.com/maps/documentation/javascript/overview',
+      paragraph:
+        'Google Maps API allows you to embed maps into your website or application and customize them to fit your needs.',
+      image: 'https://i.ibb.co/jzvCsB1/Screenshot-2023-07-16-at-3-17-57-PM.png',
     },
     {
-      header: "Google Maps API",
-      link: "https://developers.google.com/maps/documentation/javascript/overview",
-      paragraph: "Google Maps API allows you to embed maps into your website or application and customize them to fit your needs.",
-      image: "https://i.ibb.co/jzvCsB1/Screenshot-2023-07-16-at-3-17-57-PM.png",
+      header: 'Google Maps API',
+      link: 'https://developers.google.com/maps/documentation/javascript/overview',
+      paragraph:
+        'Google Maps API allows you to embed maps into your website or application and customize them to fit your needs.',
+      image: 'https://i.ibb.co/jzvCsB1/Screenshot-2023-07-16-at-3-17-57-PM.png',
     },
     {
-      header: "Google Maps API",
-      link: "https://developers.google.com/maps/documentation/javascript/overview",
-      paragraph: "Google Maps API allows you to embed maps into your website or application and customize them to fit your needs.",
-      image: "https://i.ibb.co/jzvCsB1/Screenshot-2023-07-16-at-3-17-57-PM.png",
+      header: 'Google Maps API',
+      link: 'https://developers.google.com/maps/documentation/javascript/overview',
+      paragraph:
+        'Google Maps API allows you to embed maps into your website or application and customize them to fit your needs.',
+      image: 'https://i.ibb.co/jzvCsB1/Screenshot-2023-07-16-at-3-17-57-PM.png',
     },
     {
-      header: "Google Maps API",
-      link: "https://developers.google.com/maps/documentation/javascript/overview",
-      paragraph: "Google Maps API allows you to embed maps into your website or application and customize them to fit your needs.",
-      image: "https://i.ibb.co/jzvCsB1/Screenshot-2023-07-16-at-3-17-57-PM.png",
+      header: 'Google Maps API',
+      link: 'https://developers.google.com/maps/documentation/javascript/overview',
+      paragraph:
+        'Google Maps API allows you to embed maps into your website or application and customize them to fit your needs.',
+      image: 'https://i.ibb.co/jzvCsB1/Screenshot-2023-07-16-at-3-17-57-PM.png',
     },
     {
-      header: "Google Maps API",
-      link: "https://developers.google.com/maps/documentation/javascript/overview",
-      paragraph: "Google Maps API allows you to embed maps into your website or application and customize them to fit your needs.",
-      image: "https://i.ibb.co/jzvCsB1/Screenshot-2023-07-16-at-3-17-57-PM.png",
+      header: 'Google Maps API',
+      link: 'https://developers.google.com/maps/documentation/javascript/overview',
+      paragraph:
+        'Google Maps API allows you to embed maps into your website or application and customize them to fit your needs.',
+      image: 'https://i.ibb.co/jzvCsB1/Screenshot-2023-07-16-at-3-17-57-PM.png',
     },
     {
-      header: "Google Maps API",
-      link: "https://developers.google.com/maps/documentation/javascript/overview",
-      paragraph: "Google Maps API allows you to embed maps into your website or application and customize them to fit your needs.",
-      image: "https://i.ibb.co/jzvCsB1/Screenshot-2023-07-16-at-3-17-57-PM.png",
+      header: 'Google Maps API',
+      link: 'https://developers.google.com/maps/documentation/javascript/overview',
+      paragraph:
+        'Google Maps API allows you to embed maps into your website or application and customize them to fit your needs.',
+      image: 'https://i.ibb.co/jzvCsB1/Screenshot-2023-07-16-at-3-17-57-PM.png',
     },
     {
-      header: "Google Maps API",
-      link: "https://developers.google.com/maps/documentation/javascript/overview",
-      paragraph: "Google Maps API allows you to embed maps into your website or application and customize them to fit your needs.",
-      image: "https://i.ibb.co/jzvCsB1/Screenshot-2023-07-16-at-3-17-57-PM.png",
+      header: 'Google Maps API',
+      link: 'https://developers.google.com/maps/documentation/javascript/overview',
+      paragraph:
+        'Google Maps API allows you to embed maps into your website or application and customize them to fit your needs.',
+      image: 'https://i.ibb.co/jzvCsB1/Screenshot-2023-07-16-at-3-17-57-PM.png',
     },
     {
-      header: "Google Maps API",
-      link: "https://developers.google.com/maps/documentation/javascript/overview",
-      paragraph: "Google Maps API allows you to embed maps into your website or application and customize them to fit your needs.",
-      image: "https://i.ibb.co/jzvCsB1/Screenshot-2023-07-16-at-3-17-57-PM.png",
+      header: 'Google Maps API',
+      link: 'https://developers.google.com/maps/documentation/javascript/overview',
+      paragraph:
+        'Google Maps API allows you to embed maps into your website or application and customize them to fit your needs.',
+      image: 'https://i.ibb.co/jzvCsB1/Screenshot-2023-07-16-at-3-17-57-PM.png',
     },
   ];
 
@@ -148,9 +156,6 @@ const Home = () => {
     ));
   }
 
-
-
-
   return (
     <div>
       <Navbar />
@@ -159,7 +164,9 @@ const Home = () => {
         <div>
           <div className="content">
             <h2>Cohort: CTRI 17</h2>
-            <button className="button" onClick={openOverlay}>+ ADD API</button>
+            <button className="button" onClick={openOverlay}>
+              + ADD API
+            </button>
             {showOverlay && (
               <div className="overlay">
                 <div className="overlay-content">
@@ -224,7 +231,11 @@ const Home = () => {
             )}
           </div>
           <div className="input-container">
-            <input type="text" className="input-bar" placeholder="Search APIs..." />
+            <input
+              type="text"
+              className="input-bar"
+              placeholder="Search APIs..."
+            />
           </div>
         </div>
       </div>
@@ -233,6 +244,7 @@ const Home = () => {
           <div className="grid-container">
             {renderBox()}    
           </div>
+
         </div>
       </div>
     </div>
