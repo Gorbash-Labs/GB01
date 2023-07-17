@@ -4,7 +4,18 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 //add containers and requirements for JS
 import Navbar from '../components/Navbar.jsx'
 
-const Profile = () => {
+const Profile = async (props) => {
+/*
+  if (props.loggedInStatus) { //-->we have a logged in user
+    //get request to DB to fetch the userID's profile info (stretch goal)
+    await fetch('dummy', { //--> go to Profile end point
+      method: "POST",
+      body: JSON.stringify({
+        userId: props.loggedInStatus,
+      }),
+    })
+  }
+*/
   return (
     <div className="wrapper">
       <Navbar />

@@ -10,17 +10,17 @@ const Home = () => {
   const [apiURL, setApiURL] = useState('');
   const [apiDescription, setApiDescription] = useState('');
   const [apiImageURL, setApiImageURL] = useState('');
-  
   const [apiData, setApiData] = useState([])
   
   const openOverlay = () => {
     setShowOverlay(true);
   };
 
+
+
   function comments(){
     navigate("/Comments")
   }
-
 
   const mockData = [
     {
@@ -71,14 +71,15 @@ const Home = () => {
       paragraph: "Google Maps API allows you to embed maps into your website or application and customize them to fit your needs.",
       image: "https://i.ibb.co/jzvCsB1/Screenshot-2023-07-16-at-3-17-57-PM.png",
     },
-
-
   ];
 
   const addAPI = async () => {
+    console.log('addAPI inside')
+    event.preventDefault();
+   
     try {
-      console.log('hello')
-      console.log(apiName, apiURL, apiDescription)
+      setShowOverlay(false);
+
       const response = await fetch('/api/tech', {
         method: 'POST',
         headers: {
@@ -87,44 +88,23 @@ const Home = () => {
         body: JSON.stringify({
           name: apiName,
           link: apiURL,
-          img: apiImageURL,
+          image: apiImageURL,
+          typeApi: false,
+          typeFramework: false,
+          typeLibrary: false,
           description: apiDescription,
+          keywords: ['maps'],
         }),
       });
 
       const data = await response.json();
-      
+      console.log('success')
       console.log('data returned', data);
-
-      // body: JSON.stringify({
-      //   name: apiName,
-      //   api: true,
-      //   framework: false,
-      //   library: false,
-      //   link: apiURL,
-      //   description: apiDescription,
-      //   image: apiImageURL,
-      //   keyword: [],
-      // }),
-  
-      // {
-      //   techId: number
-      //   name: string,
-      //   type: {
-      //     api: bool,
-      //     framework: bool,
-      //     library: bool,
-      //   },
-      //   link: string,
-      //   description: string,
-      //   image: string, // link to image
-      //   keywords: [string], // array of strings parsed through a separate lookup table
-      // }
-  
     
     } catch (err) {
       console.log(err);
     }
+  
   };
   
 
@@ -168,52 +148,7 @@ const Home = () => {
     ));
   }
 
-  // const renderBox = [];
-  // for(let i = 0; i < apiData.length; i++){
-  //   apiData[i]
-  //   pushing 
-  // }
 
-  // const renderBox = (data) => {
-  //   console.log('hi', data);
-    // for(let i = 0; i < data.length; i++){
-    //   data[i]
-    // }
-    // return data.map((item, index) => (
-    //   <div className="box" key={index}>
-    //     <div className="image-container">
-    //       <img src={item.image} alt="API" className="api-image" />
-    //     </div>
-    //     <div className="api-content">
-    //       <h3>{item.header}</h3>
-    //       <a href={item.link}>{item.link}</a>
-    //       <p>{item.paragraph}</p>
-    //       <div className="button-comment">
-    //         <button onClick={comments}>API Posts</button>
-    //       </div>
-    //     </div>
-    //   </div>
-    // ));
-
-
-  // const renderBox = (data) => {
-  //   console.log(1, data)
-  //   console.log('hi from inside ')
-  //   // return data.map((item, index) => (
-  //   //   <div className="box" key={index}>
-  //   //     <div className="image-container">
-  //   //       <img src={item.image} alt="API" className="api-image" />
-  //   //     </div>
-  //   //     <div className="api-content">
-  //   //       <h3>{item.header}</h3>
-  //   //       <a href={item.link}>{item.link}</a>
-  //   //       <p>{item.paragraph}</p>
-  //   //       <div className="button-comment">
-  //   //         <button onClick={comments}>API Posts</button>
-  //   //       </div>
-  //   //     </div>
-  //   //   </div>
-  //   // ));
 
 
   return (
@@ -275,11 +210,13 @@ const Home = () => {
                           accept="image/*"
                         />
                       </div>
+
                       <div className="btn">
-                        <button type="submit" className="login-button" onSubmit={addAPI}>
-                          Submit
+                        <button className="login-button" onClick={addAPI}>
+                          Submit!
                         </button>
                       </div>
+                      
                     </form>
                   </div>
                 </div>
@@ -294,8 +231,7 @@ const Home = () => {
       <div className="one">
         <div className="scroll-container">
           <div className="grid-container">
-            {renderBox()}
-                  
+            {renderBox()}    
           </div>
         </div>
       </div>
