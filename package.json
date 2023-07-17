@@ -1,7 +1,7 @@
 {
-  "name": "scratch-proj",
+  "name": "Goru",
   "version": "1.0.0",
-  "description": "asdf",
+  "description": "A mentorship community for APIs and other developer technologies.",
   "main": "index.js",
   "scripts": {
     "start": "concurrently \"webpack-dev-server --mode development --open --hot\" \"nodemon ./server/server.js\"",

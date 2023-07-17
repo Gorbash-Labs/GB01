@@ -1,12 +1,13 @@
 .body2 {
   display: grid;
-  grid-template-rows: 2;
+  grid-template-rows: 1;
   justify-content: center;
   margin: 15px;
 }
 
 .form_contents {
-  display: flex;
+  display: grid;
+  grid-template-rows: 3;
   justify-content: center;
   align-content: center;
   width: 100%;

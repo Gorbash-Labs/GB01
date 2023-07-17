@@ -14,14 +14,19 @@ import './app.scss'
 
 
 const App = () => {
+
+  //create a High Level state for whether the user is logged in or not
+    //make the loggedInStatus either false OR the User's ID/cookie from database as idenfier
+  const [loggedInStatus, setLoggedInStatus] = useState(false);
+
   return (
     <BrowserRouter>
       <Routes>
-        <Route index element={<Home />}/>
-        <Route path="home" element={<Home />}/>
-        <Route path="comments" element={<Comments />}/>
-        <Route path="login" element={<Login />}/>
-        <Route path="profile" element={<Profile />}/>
+        <Route index element={<Home />} loggedIn={setLoggedInStatus} userId={loggedInStatus}/>
+        <Route path="home" element={<Home />} loggedIn={setLoggedInStatus} userId={loggedInStatus}/>
+        <Route path="comments" element={<Comments />} loggedIn={setLoggedInStatus} userId={loggedInStatus}/>
+        <Route path="login" element={<Login />} loggedIn={setLoggedInStatus} userId={loggedInStatus}/>
+        <Route path="profile" element={<Profile />} loggedIn={setLoggedInStatus} userId={loggedInStatus}/>
       </Routes>
     </BrowserRouter>
   )
