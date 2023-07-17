@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Editor } from '@tinymce/tinymce-react';
-import './Comments.css';
+import './Comments.scss';
 
 const Comments = () => {
   const [activeIndex, setActiveIndex] = useState(null);
