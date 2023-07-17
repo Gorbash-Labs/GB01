@@ -8,8 +8,8 @@ import Home from './pages/Home.jsx';
 import Comments from './pages/Comments.jsx';
 import Login from './pages/Login.jsx';
 import Profile from './pages/Profile.jsx';
-import styles from './_appStyles.css';
-import './App.css'
+import styles from './_appStyles.scss';
+import './app.scss'
 
 
 
@@ -21,6 +21,7 @@ const App = () => {
         <Route path="home" element={<Home />}/>
         <Route path="comments" element={<Comments />}/>
         <Route path="login" element={<Login />}/>
+        <Route path="profile" element={<Profile />}/>
       </Routes>
     </BrowserRouter>
   )

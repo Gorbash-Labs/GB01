@@ -67,13 +67,13 @@ const Comments = () => {
       </div>
       {index === activeIndex && (
         <div className="accordion-content">
-          
+
           <div>
             <p className="experience">{item.experience}</p>
-            
+
             <img src={item.image} alt="Image" className="accordion-image" />
           </div>
-          
+
         </div>
       )}
     </div>
