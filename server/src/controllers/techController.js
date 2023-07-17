@@ -19,23 +19,26 @@ techController.getAllTech = async (req, res, next) => {
 };
 
 techController.findTech = async (req, res, next) => {
-  // Look up postId on db and place on res.locals.techRequest
+  // Look up id on db and place on res.locals.techRequest
   try {
     const { id } = req.params;
-    console.log(id);
+    console.log('Looking up tech with id ', id);
     const { rows } = await db.query(`SELECT * FROM techs WHERE tech_id = $1`, [
       id,
     ]);
 
     if (rows.length === 0) {
-      // have an eror for Unable to find this techid
+      return next({
+        log: 'Express error handler caught at techController.findTech',
+        message: { err: 'Error: bad request.' },
+      });
     }
     res.locals.techRequest = rows[0];
     return next();
   } catch (err) {
     return next({
       log: 'Express error handler caught at techController.findTech',
-      message: { err: 'Find one tech error' },
+      message: { err: 'Error: bad request.' },
     });
   }
 };
@@ -81,25 +84,28 @@ techController.makeTech = async (req, res, next) => {
 
     const tech_id = rows[0].tech_id;
 
-    console.log(tech_id);
+    console.log('New card id: ', tech_id);
 
-    for (let i = 0; i < keywords.length; i++) {
-      //find tech_keyword_id
-      const { rows } = await db.query(
-        `SELECT tech_keyword_id FROM tech_keywords WHERE keyword = $1`,
-        [keywords[i]]
-      );
-      const tech_keyword_id = rows[0].tech_keyword_id;
+    if (keywords.length) {
+      for (let i = 0; i < keywords.length; i++) {
+        //find tech_keyword_id
+        const { rows } = await db.query(
+          `SELECT tech_keyword_id FROM tech_keywords WHERE keyword = $1`,
+          [keywords[i]]
+        );
+        const tech_keyword_id = rows[0].tech_keyword_id;
 
-      console.log(tech_keyword_id);
+        console.log(tech_keyword_id);
 
-      //insert to tech_v_tech_keyword
-      await db.query(
-        `INSERT INTO tech_keywords_v_techs (tech, tech_keyword) VALUES ($1, $2)`,
-        [tech_id, tech_keyword_id]
-      );
+        //insert to tech_v_tech_keyword
+        await db.query(
+          `INSERT INTO tech_keywords_v_techs (tech, tech_keyword) VALUES ($1, $2)`,
+          [tech_id, tech_keyword_id]
+        );
+        console.log('added keywords');
+      }
     }
-    console.log('added keywords');
+
     return next();
   } catch (err) {
     return next({

@@ -9,9 +9,10 @@ const router = express.Router();
 // POSTS
 // Find all posts by a user /api/post/posts-by-user/USER_ID
 // @STEVER how will you know the user id here from front end? i assume you would only know their username. when that user name is passed down we can convert it to Id
-router.get('/posts-by-user/:id', postController.findPostsByUser, (req, res) => {
-  res.status(200).json(res.locals.postList);
-});
+// @Tony - It's stored as req.cookies('SSID')
+// router.get('/posts-by-user/:id', postController.findPostsByUser, (req, res) => {
+//   res.status(200).json(res.locals.postList);
+// });
 
 // Search for posts with at '/api/post/search?keywords=KEYWORDS' using 'req.query.keywords' - STRETCH GOAL
 // router.get('/search', (req,res)=>{
