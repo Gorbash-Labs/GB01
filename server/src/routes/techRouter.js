@@ -16,9 +16,13 @@ router.get(
 );
 
 // Search for tech with at '/tech/search?keywords=XXXX' on 'req.query.keywords'
-router.get('/search', techController.searchTech, (req, res) => {
-  res.status(200).json(res.locals.techList);
-});
+router.get(
+  '/search',
+  techController.searchTech, //
+  (req, res) => {
+    res.status(200).json(res.locals.techList);
+  }
+);
 
 // Look up all posts for a single tech
 router.get('/posts/:id', postController.findPostsByTech, (req, res) => {

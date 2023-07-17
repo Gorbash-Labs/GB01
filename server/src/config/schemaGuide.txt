@@ -46,7 +46,7 @@ name: string (e.g CTRI17)
         name TEXT NOT NULL,
         type_api BOOLEAN,
         type_framework BOOLEAN,
-        type_fibrary BOOLEAN,
+        type_library BOOLEAN,
         link TEXT,
         description VARCHAR(300),
         image_url TEXT
@@ -85,7 +85,7 @@ name:  string
 
 ***POSTS***
 
-postId: number  (required)
+post_id: number  (required)
 technologyId: number (required)
 userId: USER_userId number (required)
 type-review: false
@@ -110,7 +110,8 @@ image: aws bucket (stretch goal)
         type_help_offer BOOLEAN,
         language INTEGER NOT NULL,
         FOREIGN KEY(language) REFERENCES languages (language_id),
-        comment VARCHAR(5000) NOT NULL
+        comment VARCHAR(5000) NOT NULL,
+        image TEXT
     )
 
 

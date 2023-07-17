@@ -36,9 +36,9 @@ tech-class-example
 {
   techId: number
   name: string,
-  type-api: bool,
-  type-framework: bool,
-  type-library: bool,
+  typeApi: bool,
+  typeFramework: bool,
+  typeLibrary: bool,
   link: string,
   description: string
   image: string, //link to image
@@ -48,14 +48,14 @@ tech-class-example
 post-class-example
 {
   postId: number,
-  techId: number,
+  techId: number, <- are we hard coding this id in the frontend? i feel not
   userId: number,
-  type-review: bool,
-  type-advice: false,
-  type-codeSnippet: false,
-  type-helpOffer: false,
-  language: number,
-  title: string,
+  typeReview: bool,
+  typeAdvice: false,
+  typeCodeSnippet: false,
+  typeHelpOffer: false,
+  language: string,
+  title: string,  <- frontend sends string back to backend for id conversion
   comment: string,
   image: string,
 }
