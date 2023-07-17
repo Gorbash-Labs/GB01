@@ -1,0 +1,38 @@
+.body {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 15% auto;
+  gap: 10px;
+  margin: 10px;
+  padding: 10px;
+  border: 2px black solid;
+  width: 90%;
+  height:90%;
+  min-height: 500px;
+  min-width: 90%;
+}
+
+.profile_image {
+  border: 2px navy solid;
+  width: 80px;
+}
+
+.profile_text {
+  border: 2px navy solid;
+}
+
+.profile_pass {
+  border: 2px navy solid;
+}
+
+.profile_friends_list {
+  border: 2px olive solid;
+}
+
+.profile_comments_list {
+  border: 2px olive solid;
+}
+
+.profile_APIs_list {
+  border: 2px olive solid;
+}

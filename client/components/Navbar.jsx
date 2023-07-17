@@ -1,6 +1,6 @@
 import React from 'react';
 import { useNavigate } from "react-router-dom";
-import './Navbar.css'
+
 
 
 export default function Navbar(){
@@ -14,12 +14,16 @@ export default function Navbar(){
     function Login(){
       navigate("/Login")
     }
+    function Profile(){
+      navigate("/Profile")
+    }
 
     return (
         <ul className="Navbar">
             <li onClick={home}>Home</li>
             <li onClick={comments}>Comments</li>
             <li onClick={Login}>Login</li>
+            <li onClick={Profile}>Profile</li>
         </ul>
     )
 }
