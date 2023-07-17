@@ -52,7 +52,7 @@ userController.makeUser = async (req, res, next) => {
 
 userController.newSession = (req, res, next) => {
   // Here after creating or authenticating. Make a new 1.5 minute session and send them cookies.
-  res.cookie('SSID', res.locals.userId { maxAge: 90000, httpOnly: true });
+  res.cookie('SSID', res.locals.userId, { maxAge: 90000, httpOnly: true });
   next();
 };
 

@@ -16,7 +16,7 @@ export default function Navbar(){
     }
 
     return (
-        <ul class="Navbar">
+        <ul className="Navbar">
             <li onClick={home}>Home</li>
             <li onClick={comments}>Comments</li>
             <li onClick={Login}>Login</li>

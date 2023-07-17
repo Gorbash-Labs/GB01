@@ -1,14 +1,19 @@
 import React, { useState } from 'react';
 import Navbar from '../components/Navbar.jsx';
 import './Home.css';
-
+import { useNavigate } from "react-router-dom";
 const Home = () => {
   const [showOverlay, setShowOverlay] = useState(false);
+  const navigate = useNavigate();
 
   const openOverlay = () => {
     setShowOverlay(true);
   };
 
+
+  function comments(){
+    navigate("/Comments")
+  }
   const renderBox = (data) => {
     return data.map((item, index) => (
       <div className="box" key={index}>
@@ -19,6 +24,9 @@ const Home = () => {
           <h3>{item.header}</h3>
           <a href={item.link}>{item.link}</a>
           <p>{item.paragraph}</p>
+          <div className="button-comment">
+            <button onClick={comments}>API Posts</button>
+          </div>
         </div>
       </div>
     ));
@@ -76,6 +84,9 @@ const Home = () => {
     
 
   ];
+
+
+
 
   return (
     <div>
