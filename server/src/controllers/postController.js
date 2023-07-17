@@ -44,9 +44,8 @@ postController.makePost = async (req, res, next) => {
     languageid,
     title,
     comment,
-    image,
   } = req.body;
-
+  const image = '';
   // retreive tech id, uploader id, and language id
   // code
 

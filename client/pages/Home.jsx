@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Navbar from '../components/Navbar.jsx';
 import './Home.scss';
 import { useNavigate, useParams } from 'react-router-dom';
-import Comments from './Comments.jsx';
+
 
 const Home = () => {
   const [showOverlay, setShowOverlay] = useState(false);
@@ -87,8 +87,9 @@ const Home = () => {
             <img src={item.image_url} alt="Tech" className="api-image" />
           </div>
           <div className="api-content">
-            <h3>{item.header}</h3>
-            <a href={item.link}>(Resource Link)</a>
+            <a href={item.link} className="tech-item-name">
+              {item.name}
+            </a>
             <p>{item.description}</p>
             <div className="button-comment">
               <button onClick={comments} id={item.tech_id}>
@@ -108,10 +109,26 @@ const Home = () => {
       <div className="main-header">
         <div>
           <div className="content">
-            <h2>Cohort: CTRI 17</h2>
-            <button className="button" onClick={openOverlay}>
-              + ADD TECH
-            </button>
+            <div className="home-top-all-content">
+              <div className="home-top-title-button">
+                <h2>Cohort: CTRI 17</h2>
+                <div>
+                  <img src="./logo.png"></img>
+                </div>
+                <div>
+                  <button className="button" onClick={openOverlay}>
+                    + ADD TECH
+                  </button>
+                </div>
+              </div>
+              <div className="input-container">
+                <input
+                  type="text"
+                  className="input-bar-home"
+                  placeholder="Search APIs..."
+                />
+              </div>
+            </div>
             {showOverlay && (
               <div className="overlay">
                 <div className="overlay-content">
@@ -174,13 +191,6 @@ const Home = () => {
                 </div>
               </div>
             )}
-          </div>
-          <div className="input-container">
-            <input
-              type="text"
-              className="input-bar"
-              placeholder="Search APIs..."
-            />
           </div>
         </div>
       </div>

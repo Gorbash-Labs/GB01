@@ -64,6 +64,7 @@ const Comments = () => {
 
   const addComment = async () => {
     event.preventDefault();
+    console.log(id, titleEntry, entry, image);
     try {
       setShowOverlay(false);
 
@@ -83,7 +84,7 @@ const Comments = () => {
           typeHelpOffer: false,
           languageid: 1,
           title: titleEntry,
-          comment: commentEntries,
+          comment: entry,
           image: image,
         }),
       });
@@ -152,7 +153,7 @@ const Comments = () => {
             <div>{item.title}</div>
             <div className="details">
               <p className="username">{item.username}</p>
-              <p className="tags">tags</p>
+              <p className="tags">Posted by: Steve</p>
               {/* <p className="date">
               Date Posted: {new Date(item.datePosted).toLocaleString()}
             </p> */}
@@ -236,6 +237,7 @@ const Comments = () => {
                             onEditorChange={handleEditorChange}
                             value={entry}
                             onChange={(event) => {
+                              console.log(event.target.value);
                               setEntry(event.target.value);
                             }}
                             init={{

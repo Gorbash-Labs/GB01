@@ -54,6 +54,9 @@
   background-color: rgb(175, 175, 175);
   width: 480px;
   height: 420px;
+  &:hover {
+    box-shadow: 0 0 10px rgb(218, 218, 218);
+  }
 }
 
 .form {
@@ -127,16 +130,17 @@
 .content {
   margin-top: 10px;
   display: flex;
-  margin-bottom: 40px;
+  margin-bottom: 20px;
 }
 
 .input-container {
   display: flex;
   justify-content: center;
-  margin-bottom: 50px;
+  margin-bottom: 40px;
+  margin-top: 0px;
 }
 
-.input-bar {
+.input-bar-home {
   width: 800px;
   height: 30px;
   border: 1px solid #ccc;
@@ -197,7 +201,7 @@
   word-wrap: break-word;
 
   &:hover {
-    box-shadow: 0 0 10px rgb(241, 241, 241);
+    box-shadow: 0 0 10px rgb(190, 105, 105);
   }
 }
 
@@ -239,4 +243,28 @@
 
 .api-content p {
   margin-top: 10px;
+}
+
+.tech-item-name {
+  font-size: 22px;
+  color: blue;
+  text-decoration: none;
+}
+.home-top-all-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  margin-bottom: 120px;
+}
+.home-top-title-button {
+  display: flex;
+  direction: row;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+
+  margin-top: 40px;
+  margin-bottom: 0px;
 }
