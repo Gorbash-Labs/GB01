@@ -2,25 +2,46 @@ const db = require('../config/profileSchema.js');
 
 const postController = {};
 
-postController.findPost = (req, res, next) => {
+postController.findPost = async (req, res, next) => {
   // Get a post with req.params.id == postId
   // Attach to res.locals.postRequest;
-
-  next();
+  const postId = req.params.id;
+  const lookupText = 'SELECT * FROM posts WHERE post_id = $1';
+  const lookupVals = [postId];
+  try {
+    const { rows } = await db.query(lookupText, lookupVals);
+    if (rows.length === 0) {
+      // no results
+      return next({
+        log: 'Failed to find any matching posts.',
+        message: { err: 'Lookup error.' },
+      });
+    }
+    console.log('Retrieved post lookup: ', rows[0]);
+    res.locals.postRequest = rows[0];
+    next();
+  } catch (err) {
+    return next({
+      log: 'Encountered lookup error in postController.findPost',
+      message: { err: 'Lookup error.' },
+    });
+  }
 };
 
 postController.makePost = async (req, res, next) => {
   // An authorized user is posting
   // Get username from cookies/session
-  const { username } = req.cookies;
+  //const { username } = req.cookies;
+  const uploader_id = req.cookies('SSID');
+  // const uploader_id = 8;
   // Get post from body
   const {
-    tech,
+    tech_id,
     typeReview,
     typeAdvice,
     typeCodeSnippet,
     typeHelpOffer,
-    language,
+    languageid,
     title,
     comment,
     image,
@@ -47,7 +68,7 @@ postController.makePost = async (req, res, next) => {
         image,
       ]
     );
-
+    // This could get PostId for confirmation and potentially better communication w/ front end
     return next();
   } catch (err) {
     return next('error');
@@ -68,26 +89,42 @@ postController.deletePost = (req, res, next) => {
 };
 
 postController.findPostsByUser = async (req, res, next) => {
-  // Using req.params.userId, generate res.locals.postlist
-  // const { username } = req.params;
-  // const text = ``;
-  // try {
-  //   const { rows } = await db.query(text, [username]);
-  //   // if rows length is zero then it does not exist
-  //   res.locals.postList = rows;
-  //   return next();
-  // } catch (err) {
-  //   return next({
-  //     log: 'Express error handler caught at postController.findPostsByUser',
-  //     message: { err: 'Unable to find posts by this user' },
-  //   });
-  // }
+  // Get all post with req.params.id == techId
+  // Attach to res.locals.postList;
+  console.log(res.locals.userRequest);
+  const userId = res.locals.userRequest.user_id;
+  const lookupText = 'SELECT * FROM posts WHERE uploader = $1';
+  const lookupVals = [userId];
+  try {
+    const { rows } = await db.query(lookupText, lookupVals);
+    console.log('Retrieved post lookup: ', rows);
+    res.locals.postList = rows;
+    next();
+  } catch (err) {
+    return next({
+      log: 'Encountered lookup error in postController.findPostsByUser',
+      message: { err: 'Lookup error.' },
+    });
+  }
 };
 
-postController.findPostsByTech = (req, res, next) => {
-  next();
-  //req.params.id
-  // res.locals.postList
+postController.findPostsByTech = async (req, res, next) => {
+  // Get all post with req.params.id == techId
+  // Attach to res.locals.postList;
+  const techId = req.params.id;
+  const lookupText = 'SELECT * FROM posts WHERE tech = $1';
+  const lookupVals = [techId];
+  try {
+    const { rows } = await db.query(lookupText, lookupVals);
+    console.log('Retrieved post lookup: ', rows);
+    res.locals.postList = rows;
+    next();
+  } catch (err) {
+    return next({
+      log: 'Encountered lookup error in postController.findPostsByTech',
+      message: { err: 'Lookup error.' },
+    });
+  }
 };
 
 module.exports = postController;
