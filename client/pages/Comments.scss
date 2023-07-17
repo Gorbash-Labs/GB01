@@ -1,39 +1,240 @@
 .accordion {
     width: 100%;
-    max-width: 1000px;
+    max-width: 1200px;
     margin: 0 auto;
-    background-color: #4b4b4b;
   }
 
   .accordion-item {
     margin-bottom: 1px;
   }
-
-  .accordion-item.active {
-
-    background-color: #4b4b4b;
+  .accordion-header-outer {
+    /* background-color: aqua; */
+    display: flex;
+    
+  }
+  .details {
+    display: flex;
   }
 
+  .acc-footer{
+    display: flex;
+    margin-left: 0px;
+    background-color: #45a049;
+    width: 1200px;
+  }
+  .username {
+    margin-right: 10px;
+    margin-left: 0px;
+    font-size: 16px;
+  }
+
+  .accordion-header-outer-p {
+    margin-top: 18px;
+    margin-left: 5px;
+  }
+  .accordion-header-outer div {
+    margin-top: 18px;
+    margin-left: 5px;
+  }
   .accordion-header {
-    background-color: #4b4b4b;
+    display: flex;
+    justify-content: flex-end;
+    background-color: rgb(147, 147, 147);
+    margin-left: auto;
+    width: 90%;
+    height: 85px;
+    margin-bottom: 10px;
+    margin-top: 10px;
+    font-size: 25px;
   }
+
+  .acc-footer p {
+    font-size: 18px;
+  }
+
+  
 
   .accordion-header {
     display: flex;
-    align-items: center;
     justify-content: space-between;
     padding: 10px;
     cursor: pointer;
-  }
-
-  .accordion-content {
-    padding: 10px;
-    background-color: #6c0606;
+    flex-direction: column;
   }
 
 
-  .accordion-content > div {
-    padding: 10px;
-    background-color: #982929;
-    width: 800
+  .date {
+    margin-left: auto;
+    margin-right: 70px;
+    font-size: 16px;
   }
+  .tags {
+    font-size: 16px;
+  }
+ 
+
+  .accordion-content div {
+    padding-left: 25px;
+    padding-right: 25px;
+    padding-top: 0px;
+    margin-left: 28px;
+    width: 1000px;
+    /* height: 500px; */
+    display: flex;
+    justify-content: center;
+    background-color: rgb(147, 147, 147);
+    position: relative;
+    flex-direction: column;
+  }
+  
+  .accordion-image {
+    margin-top: 10px;
+    width: 500px;
+  }
+
+  .experience {
+    padding-top: 0px !important;
+    margin-top: 0px !important;
+  }
+
+
+
+  .overlay-comments {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.overlay-content-comments {
+    padding: 40px;
+    box-shadow: 0 2px 5px rgba(179, 179, 179, 0.3);
+    color: white;
+    background-color: rgb(175, 175, 175);
+    width: 900px;
+    height: 700px;
+
+}
+
+.form {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    background-color: #45a049;
+  }
+  
+  .formGroup-two {
+    margin-bottom: 20px;
+    width: 832px;
+  }
+
+  .formGroup-two > div {
+    margin-left: 20px;
+    margin-top: 20px;
+  }
+  
+  .formGroup-2 {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+
+  }
+  .formGroup > h2 {
+    margin-bottom: 50px;
+  }
+  .line {
+    margin-top: 20px;
+    background-color: #45a049;
+    width: 90%;
+  }
+  .input-one-c {
+    height: 55px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+    font-weight: 400;
+    padding-left: 10px;
+    width: 800px;
+    margin-bottom: 35px;
+    border-radius: 15px;
+    border: none;
+    outline: none;
+  }
+  .input-one-c:hover {
+    border: none;
+    outline: none;
+  }
+
+  .input-one-first {
+    height: 55px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+    font-weight: 400;
+    padding-left: 10px;
+    width: 800px;
+    margin-bottom: 35px;
+    margin-top: 20px;
+    border-radius: 15px;
+    border: none;
+    outline: none;
+
+  }
+  .input-one-first:hover {
+    border: none;
+    outline: none;
+  }
+  
+  
+  .input-description {
+    min-height: 200px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+    font-weight: 400;
+    padding-left: 10px;
+    width: 800px;
+    margin-bottom: 35px;
+    border-radius: 15px;
+    margin-top: 0;
+    padding-top: 0;
+    vertical-align: top;
+    display: inline-block;
+    outline: none;
+  }
+
+  .input-description:hover {
+    border: none;
+    outline: none;
+  }
+  
+  
+  .login-button {
+    padding-top: 15px;
+    padding-bottom: 15px;
+    color: white;
+    width: 150px;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    margin-top: 10px;
+    background-color: green;
+    border-radius: 20px;
+    font-size: 18px;
+  }
+  
+  .login-button:hover {
+    background-color: #45a049;
+  }
+  
+  .input-one:focus {
+    outline: none;
+  }
+
+  h5 {
+    margin-bottom: 0px;
+  }
+
+  
