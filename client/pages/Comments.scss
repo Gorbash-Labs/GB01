@@ -90,11 +90,13 @@
   .accordion-image {
     margin-top: 10px;
     width: 500px;
+    margin-bottom: 15px;
   }
 
   .experience {
-    padding-top: 0px !important;
+    padding-top: 20px !important;
     margin-top: 0px !important;
+    padding-bottom: 10px;
   }
 
 
@@ -109,6 +111,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    z-index: 10000;
 }
 
 .overlay-content-comments {
@@ -118,8 +121,9 @@
     background-color: rgb(175, 175, 175);
     width: 900px;
     height: 700px;
-
+    z-index: 10000;
 }
+
 
 .form {
     margin-top: 20px;
@@ -135,7 +139,6 @@
 
   .formGroup-two > div {
     margin-left: 20px;
-    margin-top: 20px;
   }
   
   .formGroup-2 {
@@ -163,6 +166,18 @@
     border-radius: 15px;
     border: none;
     outline: none;
+  }
+  .input-one-image {
+    height: 55px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+    font-weight: 400;
+    padding-left: 10px;
+    width: 800px;
+    border-radius: 15px;
+    border: none;
+    outline: none;
+    margin-top: 20px;
   }
   .input-one-c:hover {
     border: none;
@@ -212,14 +227,14 @@
   
   
   .login-button {
-    padding-top: 15px;
+    /* padding-top: 15px; */
     padding-bottom: 15px;
     color: white;
     width: 150px;
     border: none;
     border-radius: 20px;
     cursor: pointer;
-    margin-top: 10px;
+    /* margin-top: 10px; */
     background-color: green;
     border-radius: 20px;
     font-size: 18px;
@@ -237,4 +252,13 @@
     margin-bottom: 0px;
   }
 
+  
+  .custom-editor > .tox-pop {
+    z-index: 10001 !important;
+  }
+
+
+  .tox-tinymce-aux {
+    z-index: 10002 !important;
+  }
   
