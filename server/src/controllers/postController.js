@@ -32,8 +32,8 @@ postController.makePost = async (req, res, next) => {
   // An authorized user is posting
   // Get username from cookies/session
   //const { username } = req.cookies;
-  const uploader_id = req.cookies('SSID');
-  // const uploader_id = 8;
+  // const uploader_id = req.cookies('SSID');
+  const uploader_id = 8;
   // Get post from body
   const {
     tech_id,
@@ -44,9 +44,8 @@ postController.makePost = async (req, res, next) => {
     languageid,
     title,
     comment,
-    image,
   } = req.body;
-
+  const image = '';
   // retreive tech id, uploader id, and language id
   // code
 
@@ -116,7 +115,7 @@ postController.findPostsByTech = async (req, res, next) => {
   const lookupVals = [techId];
   try {
     const { rows } = await db.query(lookupText, lookupVals);
-    console.log('Retrieved post lookup: ', rows);
+    // console.log('Retrieved post lookup: ', rows);
     res.locals.postList = rows;
     next();
   } catch (err) {

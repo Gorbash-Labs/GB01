@@ -24,7 +24,7 @@ const App = () => {
       <Routes>
         <Route index element={<Home />} loggedIn={setLoggedInStatus} userId={loggedInStatus}/>
         <Route path="home" element={<Home />} loggedIn={setLoggedInStatus} userId={loggedInStatus}/>
-        <Route path="comments" element={<Comments />} loggedIn={setLoggedInStatus} userId={loggedInStatus}/>
+        <Route path="comments/:id" element={<Comments />} loggedIn={setLoggedInStatus} userId={loggedInStatus}/>
         <Route path="login" element={<Login />} loggedIn={setLoggedInStatus} userId={loggedInStatus}/>
         <Route path="profile" element={<Profile />} loggedIn={setLoggedInStatus} userId={loggedInStatus}/>
       </Routes>

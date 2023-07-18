@@ -55,7 +55,6 @@ router.post(
   // userController.authenticate, // skipped for testing
   postController.makePost,
   (req, res) => {
-    console.log('ready to send all posts');
     res.sendStatus(200);
   }
 );
