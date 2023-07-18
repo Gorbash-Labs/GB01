@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Editor } from '@tinymce/tinymce-react';
 import { useParams } from 'react-router-dom';
-import './Comments.scss';
+import '../styles/Comments.scss';
 import Navbar from '../components/Navbar.jsx';
 import HelperFunctions from '../helper-functions';
 
@@ -9,7 +9,7 @@ const Comments = () => {
   //this is the state for the accordian, when the accordian is clicked it invokes an active index
   const [activeIndex, setActiveIndex] = useState(null);
 
-  //state overlay that is changed to true when the button is clicked in order to appear 
+  //state overlay that is changed to true when the button is clicked in order to appear
   const [showOverlay, setShowOverlay] = useState(false);
 
   //here are the states for the form to keep track of each input
@@ -21,8 +21,6 @@ const Comments = () => {
   const [techImage, setTechImage] = useState('');
   const [entry, setEntry] = useState();
   const [image, setImage] = useState();
-
-
 
   //from here we had starting typing out the states to handle the backend format but realized we did not have enough time so it is not connected/finished
   /*
@@ -61,11 +59,9 @@ const Comments = () => {
 
   // comment VARCHAR(5000) NOT NULL,
 
-
   // language INTEGER NOT NULL,
   const [languageEntry, setLanguageEntry] = useState();
   const [commentEntries, setCommentEntries] = useState([]);
-
 
   //to find id of our url
   const { id } = useParams();
@@ -294,11 +290,7 @@ const Comments = () => {
 
 export default Comments;
 
-
-
-
 //this was our mock data before working with the database
-
 
 // const data = [
 //   {
