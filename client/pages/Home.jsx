@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import Navbar from '../components/Navbar.jsx';
-import './Home.scss';
+import '../styles/Home.scss';
 import { useNavigate, useParams } from 'react-router-dom';
-
 
 const Home = () => {
   //overlay state for showing the form, set true to appear
   const [showOverlay, setShowOverlay] = useState(false);
- 
+
   //state for the form inputs
   const [apiName, setApiName] = useState('');
   const [apiURL, setApiURL] = useState('');
@@ -16,7 +15,7 @@ const Home = () => {
   const [apiData, setApiData] = useState([]);
 
   const navigate = useNavigate();
-  
+
   const openOverlay = () => {
     setShowOverlay(true);
   };
