@@ -6,7 +6,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Navbar from './components/Navbar.jsx';
 import Home from './pages/Home.jsx';
 import Comments from './pages/Comments.jsx';
-import Login from './pages/Login.jsx';
+import Login from './pages/Oauth.jsx';
 import Profile from './pages/Profile.jsx';
 import styles from './_appStyles.scss';
 import './app.scss'
