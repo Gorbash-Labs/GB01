@@ -3,6 +3,7 @@ import ReactDOM from 'react';
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 //add containers and requirements for JS
 import Navbar from '../components/Navbar.jsx'
+import '../styles/Login.scss'
 
 const Login = (props) => {
   //create a state of invalid usernmae/passowrd initialixed to false

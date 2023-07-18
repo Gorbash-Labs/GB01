@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Navbar from '../components/Navbar.jsx';
-import './Home.scss';
+import '../styles/Home.scss';
 import { useNavigate, useParams } from 'react-router-dom';
 
 

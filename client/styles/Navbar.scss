@@ -1,9 +1,11 @@
-/*
+/*c
 add a universal "background color" to a "variables" pallete scss file AND import that to _appStyles.css}
 */
 /*
 add a universal "Text color" to a "variables" pallete scss file AND import that to _appStyles.css}
 */
+@import './client/styles/_variables.scss';
+
 .Navbar {
   padding: 8px;
   display: flex;

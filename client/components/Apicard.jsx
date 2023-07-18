@@ -1,6 +1,6 @@
 import React from 'react';
 import { useNavigate } from "react-router-dom";
-import './Apicard.css'
+import '../styles/Apicard.scss'
 
 
 export default function Apicard(){
