@@ -1,6 +1,6 @@
 import React from 'react';
 //add containers and requirements for JS
-import Navbar from '../components/Navbar.jsx';
+import { Navbar } from '../components/Navbar.jsx';
 
 const Profile = async (props) => {
   if (props.loggedInStatus) {
