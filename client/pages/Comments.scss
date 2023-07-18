@@ -9,7 +9,6 @@
   margin-bottom: 1px;
 }
 .accordion-header-outer {
-  /* background-color: aqua; */
   display: flex;
 }
 .details {
@@ -75,8 +74,6 @@
   padding-top: 0px;
   margin-left: 28px;
   margin-right: 50px;
-  // width: 1000px;
-  /* height: 500px; */
   display: flex;
   justify-content: center;
   background-color: rgba(147, 147, 147, 0.2);
@@ -218,14 +215,12 @@
 }
 
 .login-button {
-  /* padding-top: 15px; */
   padding-bottom: 15px;
   color: white;
   width: 150px;
   border: none;
   border-radius: 20px;
   cursor: pointer;
-  /* margin-top: 10px; */
   background-color: green;
   border-radius: 20px;
   font-size: 18px;
