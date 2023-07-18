@@ -1,66 +1,28 @@
 import React, { useState, useEffect } from 'react';
 import '../stylesheets/Home.scss';
 import { useNavigate, useParams } from 'react-router-dom';
-
+import TechCard from '../components/TechCard.jsx';
+import AddTechPopup from '../components/AddTechPopup.jsx';
 
 const Home = () => {
   //overlay state for showing the form, set true to appear
   const [showOverlay, setShowOverlay] = useState(false);
- 
+
   //state for the form inputs
-  const [apiData, setApiData] = useState([]);
+  // const [apiData, setApiData] = useState([]);
   const [apiName, setApiName] = useState('');
   const [apiURL, setApiURL] = useState('');
   const [apiDescription, setApiDescription] = useState('');
   const [apiImageURL, setApiImageURL] = useState('');
 
-  const [apiState, setapiState] = useState({})
- 
-  const navigate = useNavigate();
-  
+  const [techCardState, settechCardState] = useState([]);
+
   const openOverlay = () => {
     setShowOverlay(true);
   };
 
   const params = useParams();
 
-  function comments(e) {
-    const senderTechId = e.target.id;
-    const senderName = e.target.name;
-    navigate(`/comments/${senderTechId}`); // received as route.params
-  }
-
-  const addAPI = async () => {
-    console.log('addAPI inside');
-    event.preventDefault();
-
-    try {
-      setShowOverlay(false);
-
-      const response = await fetch('/api/tech', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          name: apiName,
-          link: apiURL,
-          image: apiImageURL,
-          typeApi: false,
-          typeFramework: false,
-          typeLibrary: false,
-          description: apiDescription,
-          keywords: ['maps'],
-        }),
-      });
-
-      const data = await response.json();
-      console.log('success');
-      console.log('data returned', data);
-    } catch (err) {
-      console.log(err);
-    }
-  };
 
 
   // initializing the page
@@ -77,37 +39,23 @@ const Home = () => {
         },
       });
       const data = await response.json();
-      console.log(data)
-      const newData = JSON.parse(JSON.stringify(data));
-      
-
-      setApiData(newData);
-
-    } catch (err) {}
+      settechCardState(data);
+    } catch (err) {
+      console.log('err', err);
+    }
   };
 
-
   const renderBox = () => {
-    return apiData.map((item, index) => {
-      console.log(item);
-
+    return techCardState.map((item, index) => {
       return (
-        <div className="box" key={index}>
-          <div className="image-container">
-            <img src={item.image_url} alt="Tech" className="api-image" />
-          </div>
-          <div className="api-content">
-            <a href={item.link} className="tech-item-name">
-              {item.name}
-            </a>
-            <p>{item.description}</p>
-            <div className="button-comment">
-              <button onClick={comments} id={item.tech_id}>
-                Comments
-              </button>
-            </div>
-          </div>
-        </div>
+        <TechCard
+          key={index}
+          name={item.name}
+          description={item.description}
+          id={item.tech_id}
+          image_url={item.image_url}
+          link={item.link}
+        />
       );
     });
   };
@@ -137,68 +85,7 @@ const Home = () => {
                 />
               </div>
             </div>
-            {showOverlay && (
-              <div className="overlay">
-                <div className="overlay-content">
-                  <div>
-                    <form>
-                      <div className="formGroup">
-                        <h2>Add Tech</h2>
-                        <input
-                          type="text"
-                          className="input-one"
-                          placeholder="Add API Name"
-                          value={apiName}
-                          onChange={(event) => {
-                            setApiName(event.target.value);
-                          }}
-                        />
-
-                        <input
-                          type="text"
-                          className="input-one"
-                          placeholder="Add API URL"
-                          value={apiURL}
-                          onChange={(event) => {
-                            setApiURL(event.target.value);
-                          }}
-                        />
-                        <textarea
-                          className="input-one"
-                          rows="3"
-                          maxLength="150"
-                          placeholder="Add Brief Description"
-                          value={apiDescription}
-                          onChange={(event) => {
-                            setApiDescription(event.target.value);
-                          }}
-                        />
-                        <input
-                          type="text"
-                          className="input-one"
-                          placeholder="Add Image URL"
-                          value={apiImageURL}
-                          onChange={(event) => {
-                            setApiImageURL(event.target.value);
-                          }}
-                        />
-                        <input
-                          type="file"
-                          className="input-one"
-                          accept="image/*"
-                        />
-                      </div>
-
-                      <div className="btn">
-                        <button className="login-button" onClick={addAPI}>
-                          Submit!
-                        </button>
-                      </div>
-                    </form>
-                  </div>
-                </div>
-              </div>
-            )}
+            {showOverlay && <AddTechPopup />}
           </div>
         </div>
       </div>
