@@ -1,3 +1,12 @@
+$blue4: #112d4e;
+$blue3: #3f72af;
+$blue2: #dbe2ef;
+$blue1: #f9f7f7;
+
+#root {
+  background-color: $blue2;
+}
+
 .pageMaterial {
   display: flex;
   justify-content: center;
@@ -30,7 +39,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: flex-end;
-  background-color: white;
+  background-color: brown;
   color: white;
   padding-top: 80px;
 }
@@ -51,7 +60,7 @@
   padding: 40px;
   box-shadow: 0 2px 5px rgba(179, 179, 179, 0.3);
   color: white;
-  background-color: rgb(175, 175, 175);
+  background-color: blueviolet;
   width: 480px;
   height: 420px;
   &:hover {
