@@ -12,7 +12,7 @@ module.exports = {
   //   devtool: 'eval-source-map',
   mode: 'development',
   devServer: {
-    host: 'localhost',
+    host: '127.0.0.1',
     port: 8080,
     static: {
       directory: path.resolve(__dirname, 'dist'),
@@ -23,7 +23,7 @@ module.exports = {
     headers: { 'Access-Control-Allow-Origin': '*' },
     proxy: {
       '/api/**': {
-        target: 'http://localhost:3000/',
+        target: 'http://127.0.0.1:3000/',
         secure: false,
       },
     },
@@ -43,14 +43,16 @@ module.exports = {
       {
         test: /.(css|scss |sass)$/,
         exclude: /node_modules/,
-        use: ['style-loader', 'css-loader',
+        use: [
+          'style-loader',
+          'css-loader',
           {
             loader: 'sass-loader',
             options: {
-              implementation: require('dart-sass')
-            }
-          }
-        ]
+              implementation: require('dart-sass'),
+            },
+          },
+        ],
       },
       {
         test: /\.(png|jpg|gif|woff|woff2|eot|ttf|svg|ico)$/,
