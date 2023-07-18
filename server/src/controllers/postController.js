@@ -28,6 +28,23 @@ postController.findPost = async (req, res, next) => {
   }
 };
 
+postController.retrievePosts = async (req, res, next) => {
+  // Get a post with req.params.id == postId
+  // Attach to res.locals.postRequest;
+  const lookupText = 'SELECT * FROM posts';
+  try {
+    const { arrOfComments } = await db.query(lookupText);
+    console.log('Retrieved general comments: ', arrOfComments);
+    res.locals.comments = arrOfComments;
+    next();
+  } catch (err) {
+    return next({
+      log: 'Encountered lookup error in postController.retrievePosts',
+      message: { err: 'Lookup error' },
+    });
+  }
+};
+
 postController.makePost = async (req, res, next) => {
   // An authorized user is posting
   // Get username from cookies/session
@@ -48,6 +65,26 @@ postController.makePost = async (req, res, next) => {
   const image = '';
   // retreive tech id, uploader id, and language id
   // code
+
+/*
+    CREATE TABLE posts(
+        post_id SERIAL PRIMARY KEY,
+        title TEXT NOT NULL,
+        tech INTEGER NOT NULL,
+        FOREIGN KEY(tech) REFERENCES techs(tech_id),
+        uploader INTEGER NOT NULL,
+        FOREIGN KEY(uploader) REFERENCES users(user_id),
+        type_review BOOLEAN,
+        type_advice BOOLEAN,
+        type_code_snippet BOOLEAN,
+        type_help_offer BOOLEAN,
+        language INTEGER NOT NULL,
+        FOREIGN KEY(language) REFERENCES languages (language_id),
+        comment VARCHAR(5000) NOT NULL,
+        image TEXT
+    )
+
+*/
 
   try {
     // Add the post to the DB

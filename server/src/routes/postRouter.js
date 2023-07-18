@@ -59,10 +59,9 @@ router.post(
   }
 );
 
-// // Fetch all posts for an 'all posts' display that likely won't be used
-// router.get('/', (req,res)=>{
-
-//   res.status(200).json(res.locals.postList);
-// });
+// // Fetch all posts for an 'all posts' display Goes to GENERAL COMMETNS Page
+router.get('/', postController.retrievePosts, (req,res)=>{
+  res.status(200).json(res.locals.comments);
+});
 
 module.exports = router;

@@ -45,7 +45,6 @@ const Profile = async (props) => {
   } else { //--> User is not signed in, give generic Profile display
     return (
       <div className="wrapper">
-        <Navbar />
         <div className="body">
             <div className="profile_picture">Picture
               <div className="profile_image">Uploads image here</div>
