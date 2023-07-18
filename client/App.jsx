@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 // import helperFunctions from './helper-functions.js';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 //add containers and requirements for JS
-import Home from './pages/Home.jsx';
+import { Home } from './pages/Home.jsx';
 import Comments from './pages/Comments.jsx';
 import Login from './pages/Login.jsx';
 import Profile from './pages/Profile.jsx';

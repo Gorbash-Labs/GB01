@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 //add containers and requirements for JS
-import Navbar from '../components/Navbar.jsx';
+import { Navbar } from '../components/Navbar.jsx';
 
 const Login = (props) => {
   //create a state of invalid usernmae/passowrd initialixed to false
