@@ -1,14 +1,19 @@
 const db = require('../config/profileSchema.js');
+const bcrypt = require('bcrypt');
+
+const saltRounds = 10;
 
 const userController = {};
 
 userController.makeUser = async (req, res, next) => {
+  
   const { username, password, contact } = req.body;
+  
   //Check and see if username is taken
   const result = await db.query('SELECT name FROM users WHERE name = $1', [
     username,
   ]);
-
+  
   if (result.rows.length > 0) {
     res.locals.existingUser = true;
     return next({
@@ -19,36 +24,44 @@ userController.makeUser = async (req, res, next) => {
   }
 
   // Expect req.body has username and password
-  if (username === undefined || password === undefined)
+  if (!username || !password)
     return next({
       log: 'Express error handler caught at userController.makeUser',
-      message: { err: 'Name or pw does not exist' },
+      message: { err: 'Must input both a username and password' },
     });
 
   // Create new user in DB with hashed Pwd
+  
+  
+  const hash = await bcrypt.hash(password, saltRounds)
+  
+  console.log(hash)
+  
   const text = `INSERT INTO users (name, password, contact, community)
-                VALUES ($1, $2, $3, $4)`;
-  const values = [username, password, contact, 1]; // 1 for CTRI17
-
-  // DATABASE CODE FOR CREATING USER GOES HERE
+  VALUES ($1, $2, $3, $4)`;
+  const values = [username, hash, contact, 1]; // 1 for CTRI17
+  
   try {
-    await db.query(text, values);
-    console.log('user added successfully');
+  // DATABASE CODE FOR CREATING USER GOES HERe
+       await db.query(text, values);
+         console.log('user added successfully');
 
     // Add USER_ID on res.locals.userId
-    const { rows } = await db.query(
+    const { rows } = db.query(
       `SELECT user_id FROM users WHERE name = $1`,
       [username]
     );
-    const { user_id } = rows[0];
+    const { user_id, password } = rows[0];
 
     res.locals.userId = user_id;
     console.log(res.locals.userId);
     return next();
   } catch (err) {
+    
     return next('Express error handler caught at userController.makeUser');
-  }
 };
+
+}
 
 userController.newSession = (req, res, next) => {
   // Here after creating or authenticating. Make a new 1.5 minute session and send them cookies.
