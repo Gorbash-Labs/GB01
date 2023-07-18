@@ -27,7 +27,7 @@ postController.findPost = async (req, res, next) => {
     });
   }
 };
-
+//kenny was here
 postController.makePost = async (req, res, next) => {
   // An authorized user is posting
   // Get username from cookies/session
