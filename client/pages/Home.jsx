@@ -8,22 +8,11 @@ const Home = () => {
   //overlay state for showing the form, set true to appear
   const [showOverlay, setShowOverlay] = useState(false);
 
-  //state for the form inputs
-  // const [apiData, setApiData] = useState([]);
-  const [apiName, setApiName] = useState('');
-  const [apiURL, setApiURL] = useState('');
-  const [apiDescription, setApiDescription] = useState('');
-  const [apiImageURL, setApiImageURL] = useState('');
-
   const [techCardState, settechCardState] = useState([]);
 
   const openOverlay = () => {
     setShowOverlay(true);
   };
-
-  const params = useParams();
-
-
 
   // initializing the page
   useEffect(() => {

@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 
 import { useNavigate } from 'react-router-dom';
 
@@ -10,23 +10,19 @@ function techCard(props) {
   }
 
   return (
-    <div className="box">
-    <div className="image-container">
-      <img src={props.image_url} alt="Tech" className="api-image" />
-    </div>
-    <div className="api-content">
-      <a href={props.link} className="tech-item-name">
-        {props.name}
-      </a>
-      <p>{props.description}</p>
-      <div className="button-comment">
-        <button onClick={handleCommentClick} id={props.tech_id}>
-          Comments
-        </button>
+    <div className="box" onClick={handleCommentClick}>
+      <div className="image-container">
+        <img src={props.image_url} alt="Tech" className="api-image" />
+      </div>
+      <div className="api-content">
+        <a href={props.link} className="tech-item-name">
+          {props.name}
+        </a>
+        <p>{props.description}</p>
+        <div className="button-comment"></div>
       </div>
     </div>
-  </div>
-  )
+  );
 }
 
-export default techCard
+export default techCard;
