@@ -1,10 +1,11 @@
-// for server.js
 
 
 const { Pool } = require('pg');
+//  'postgres://mqyenfhu:Q-XccTOehb_iYM3Qq4Xh3vXhYNPRF2Mm@mahmud.db.elephantsql.com/mqyenfhu'  // tonys
 
-const PG_URI =
-  'postgres://mqyenfhu:Q-XccTOehb_iYM3Qq4Xh3vXhYNPRF2Mm@mahmud.db.elephantsql.com/mqyenfhu';
+// 'postgres://xawxqres:uzaHNe86NQawj7bbw0qFPlyjmiLGvt_c@stampy.db.elephantsql.com/xawxqres' // kevins
+
+const PG_URI = 'postgres://xawxqres:uzaHNe86NQawj7bbw0qFPlyjmiLGvt_c@stampy.db.elephantsql.com/xawxqres';
 const pool = new Pool({
   connectionString: PG_URI,
 });

@@ -1,10 +1,9 @@
-import React from 'react';
-import { useNavigate } from "react-router-dom";
-import './Apicard.css'
+import React from 'react'
 
-
-export default function Apicard(){
-    return (
-        <h1>hello</h1>
-    )
+function APIcard(props) {
+  return (
+    <div>APIcard rendered</div>
+  )
 }
+
+export default APIcard

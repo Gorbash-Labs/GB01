@@ -78,7 +78,6 @@ const Login = (props) => {
   
   return (
     <div className='wrapper'>
-      <Navbar />
       <div className="body2">
         <div className="form_contents">
           <div className="login_form_container">

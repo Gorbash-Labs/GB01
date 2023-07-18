@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import Navbar from '../components/Navbar.jsx';
-import './Home.scss';
+import '../stylesheets/Home.scss';
 import { useNavigate, useParams } from 'react-router-dom';
 
 
@@ -9,12 +8,14 @@ const Home = () => {
   const [showOverlay, setShowOverlay] = useState(false);
  
   //state for the form inputs
+  const [apiData, setApiData] = useState([]);
   const [apiName, setApiName] = useState('');
   const [apiURL, setApiURL] = useState('');
   const [apiDescription, setApiDescription] = useState('');
   const [apiImageURL, setApiImageURL] = useState('');
-  const [apiData, setApiData] = useState([]);
 
+  const [apiState, setapiState] = useState({})
+ 
   const navigate = useNavigate();
   
   const openOverlay = () => {
@@ -27,7 +28,6 @@ const Home = () => {
     const senderTechId = e.target.id;
     const senderName = e.target.name;
     navigate(`/comments/${senderTechId}`); // received as route.params
-    //
   }
 
   const addAPI = async () => {
@@ -62,23 +62,30 @@ const Home = () => {
     }
   };
 
+
   // initializing the page
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch('/api/tech', {
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        });
-        const data = await response.json();
-        const newData = JSON.parse(JSON.stringify(data));
-        setApiData(newData);
-      } catch (err) {}
-    };
     fetchData();
   }, []);
+
+  const fetchData = async () => {
+    try {
+      const response = await fetch('/api/tech', {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+      const data = await response.json();
+      console.log(data)
+      const newData = JSON.parse(JSON.stringify(data));
+      
+
+      setApiData(newData);
+
+    } catch (err) {}
+  };
+
 
   const renderBox = () => {
     return apiData.map((item, index) => {
@@ -96,7 +103,7 @@ const Home = () => {
             <p>{item.description}</p>
             <div className="button-comment">
               <button onClick={comments} id={item.tech_id}>
-                Posts
+                Comments
               </button>
             </div>
           </div>
@@ -107,8 +114,6 @@ const Home = () => {
 
   return (
     <div>
-      <Navbar />
-
       <div className="main-header">
         <div>
           <div className="content">

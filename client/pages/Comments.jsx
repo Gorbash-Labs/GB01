@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Editor } from '@tinymce/tinymce-react';
 import { useParams } from 'react-router-dom';
-import './Comments.scss';
+import '../stylesheets/Comments.scss';
 import Navbar from '../components/Navbar.jsx';
 import HelperFunctions from '../helper-functions';
 
@@ -21,8 +21,6 @@ const Comments = () => {
   const [techImage, setTechImage] = useState('');
   const [entry, setEntry] = useState();
   const [image, setImage] = useState();
-
-
 
   //from here we had starting typing out the states to handle the backend format but realized we did not have enough time so it is not connected/finished
   /*
@@ -70,8 +68,8 @@ const Comments = () => {
   //to find id of our url
   const { id } = useParams();
 
-  const addComment = async () => {
-    event.preventDefault();
+  const addComment = async (e) => {
+    e.preventDefault();
     console.log(id, titleEntry, entry, image);
     try {
       setShowOverlay(false);
@@ -84,7 +82,6 @@ const Comments = () => {
 
         body: JSON.stringify({
           // userId: number, found via backend
-
           tech_id: id,
           typeReview: false,
           typeAdvice: false,
@@ -108,30 +105,31 @@ const Comments = () => {
   // initializing the page
   useEffect(() => {
     //the tech id is linked to the home page box technology clicked
-    const techId = id;
-
-    const fetchData = async () => {
-      try {
-        const response = await fetch('/api/tech/' + techId, {
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        });
-        const data = await response.json();
-        const newData = JSON.parse(JSON.stringify(data));
-        // newData =  {tech: tech-obj, posts: [post-obj, post-obj, ..]}
-        setCommentEntries(newData.posts);
-        setCurrentTech(newData.tech);
-        setTechName(newData.tech.name);
-        setTechDescription(newData.tech.description);
-        setTechLink(newData.tech.link);
-        setTechImage(newData.tech.image_url);
-        console.log(newData);
-      } catch (err) {}
-    };
     fetchData();
   }, []);
+
+  const fetchData = async () => {
+    const techId = id;
+
+    try {
+      const response = await fetch('/api/tech/' + techId, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+      const data = await response.json();
+      const newData = JSON.parse(JSON.stringify(data));
+      // newData =  {tech: tech-obj, posts: [post-obj, post-obj, ..]}
+      setCommentEntries(newData.posts);
+      setCurrentTech(newData.tech);
+      setTechName(newData.tech.name);
+      setTechDescription(newData.tech.description);
+      setTechLink(newData.tech.link);
+      setTechImage(newData.tech.image_url);
+      console.log(newData);
+    } catch (err) {}
+  };
 
   const openOverlay = (e) => {
     // e.preventDefault();
@@ -181,7 +179,6 @@ const Comments = () => {
 
   return (
     <div>
-      <Navbar />
       <div className="main-header">
         <div>
           <div className="content">
