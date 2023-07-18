@@ -1,28 +1,24 @@
-import React, {
-  useState,
-  useReducer,
-  useEffect,
-  useContext,
-  createContext,
-} from 'react';
+import React, { useReducer, useEffect, useContext, createContext } from 'react';
 import Navbar from '../components/Navbar.jsx';
 import Apicard from '../components/Apicard.jsx';
 import './Home.scss';
 import { useNavigate, useParams } from 'react-router-dom';
 
 const actions = {
+  SHOW_OVERLAY: 'SHOW_OVERLAY',
   NAME_INPUT: 'NAME_INPUT',
   URL_INPUT: 'URL_INPUT',
   IMAGE_URL_INPUT: 'IMAGE_URL_INPUT',
   DESCRIPTION_INPUT: 'DESCRIPTION_INPUT',
   SUBMIT: 'SUBMIT',
   LOAD: 'LOAD',
+  NEW_DATA: 'NEW_DATA',
   EXIT: 'EXIT',
 };
 
 const overlayStateInit = {
   visible: false,
-  loading: 'init',
+  loading: 'idle',
   apiName: '',
   apiUrl: '',
   apiDescription: '',
@@ -32,6 +28,9 @@ const overlayStateInit = {
 
 const overlayStateReducer = (state, action) => {
   switch (action.type) {
+    case actions.SHOW_OVERLAY: {
+      return { ...state, visible: true };
+    }
     case actions.NAME_INPUT: {
       return { ...state, apiName: action.payload };
     }
@@ -45,51 +44,38 @@ const overlayStateReducer = (state, action) => {
       return { ...state, apiDescription: action.payload };
     }
     case actions.LOAD: {
-      return { ...state, apiData: action.payload };
+      return { ...state, loading: 'load' };
     }
     case actions.SUBMIT: {
       return { ...state, loading: 'submit' };
     }
+    case actions.NEW_DATA: {
+      return { ...state, loading: 'idle', apiData: action.payload };
+    }
     case actions.EXIT: {
       return {
+        ...state,
         visible: false,
         apiName: '',
         apiUrl: '',
         apiDescription: '',
         apiImageUrl: '',
-        apiData: [],
-        loading: 'idle',
       };
     }
     default:
       return state;
   }
 };
+const OverlayDispatchContext = createContext();
+const OverlayFormContext = createContext();
 
 const Home = () => {
-  //overlay state for showing the form, set true to appear
-  const [showOverlay, setShowOverlay] = useState(false);
-
-  //state for the form inputs
-  const [apiName, setApiName] = useState('');
-  const [apiURL, setApiURL] = useState('');
-  const [apiDescription, setApiDescription] = useState('');
-  const [apiImageURL, setApiImageURL] = useState('');
-  const [apiData, setApiData] = useState([]);
-
   const [overlayState, overlayDispatch] = useReducer(
     overlayStateReducer,
     overlayStateInit,
   );
-  const OverlayDispatchContext = createContext();
-  const OverlayFormContext = createContext();
 
   const navigate = useNavigate();
-
-  const openOverlay = () => {
-    setShowOverlay(true);
-  };
-
   const params = useParams();
 
   function comments(e) {
@@ -98,107 +84,68 @@ const Home = () => {
     navigate(`/comments/${senderTechId}`); // received as route.params
   }
 
-  const addAPI = async () => {
-    console.log('addAPI inside');
-    event.preventDefault();
-
-    try {
-      setShowOverlay(false);
-
-      const response = await fetch('/api/tech', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          name: apiName,
-          link: apiURL,
-
-          image: apiImageURL,
-          typeApi: false,
-          typeFramework: false,
-          typeLibrary: false,
-          description: apiDescription,
-          keywords: ['maps'],
-        }),
-      });
-
-      const data = await response.json();
-      console.log('success');
-      console.log('data returned', data);
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
   // initializing the page
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch('/api/tech', {
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        });
-        const data = await response.json();
-        const newData = JSON.parse(JSON.stringify(data));
-        setApiData(newData);
-      } catch (err) {}
-    };
-    fetchData();
+    overlayDispatch({ type: actions.LOAD });
   }, []);
 
-  // loading state changed: making a fetch
-  useEffect(async () => {
+  // loading state changed: making a fetch IF NOT IDLE
+  useEffect(() => {
     const { loading, apiImageURL, apiDescription, apiName, apiUrl } =
       overlayState;
     switch (loading) {
-      case 'init':
+      case 'load':
         {
-          try {
-            const response = await fetch('/api/tech', {
-              method: 'GET',
-              headers: {
-                'Content-Type': 'application/json',
-              },
-            });
-            const data = await response.json();
-            const newData = JSON.parse(JSON.stringify(data));
-            overlayDispatch({ type: actions.LOAD, payload: newData });
-          } catch (err) {}
+          const fetchData = async () => {
+            try {
+              const response = await fetch('/api/tech', {
+                method: 'GET',
+                headers: {
+                  'Content-Type': 'application/json',
+                },
+              });
+              const data = await response.json();
+              const newData = JSON.parse(JSON.stringify(data));
+              overlayDispatch({ type: actions.NEW_DATA, payload: newData });
+            } catch (err) {
+              console.log('Error occurred loading data from backend');
+            }
+          };
+          fetchData();
         }
         break;
 
       case 'submit':
         {
-          try {
-            const response = await fetch('/api/tech', {
-              method: 'POST',
-              headers: {
-                'Content-Type': 'application/json',
-              },
-              body: JSON.stringify({
-                name: apiName,
-                link: apiURL,
+          const fetchData = async () => {
+            try {
+              const response = await fetch('/api/tech', {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                  name: apiName,
+                  link: apiURL,
 
-                image: apiImageURL,
-                typeApi: false,
-                typeFramework: false,
-                typeLibrary: false,
-                description: apiDescription,
-                keywords: ['maps'],
-              }),
-            });
+                  image: apiImageURL,
+                  typeApi: false,
+                  typeFramework: false,
+                  typeLibrary: false,
+                  description: apiDescription,
+                  keywords: ['maps'],
+                }),
+              });
 
-            const data = await response.json();
-            console.log('success');
-            console.log('data returned', data);
-            overlayDispatch({ type: actions.LOAD, payload: data });
-            overlayDispatch({ type: actions.EXIT });
-          } catch (err) {
-            console.log(err);
-          }
+              const data = await response.json();
+              console.log('success');
+              console.log('data returned', data);
+              overlayDispatch({ type: actions.NEW_DATA, payload: data });
+              overlayDispatch({ type: actions.EXIT });
+            } catch (err) {
+              console.log('Error occurred submitting data to backend');
+            }
+          };
         }
         break;
 
@@ -211,27 +158,15 @@ const Home = () => {
     <OverlayDispatchContext.Provider value={overlayDispatch}>
       <OverlayFormContext.Provider value={overlayState}>
         <Navbar />
-        <MainHeader
-          openOverlay={openOverlay}
-          addAPI={addAPI}
-          apiData={apiData}
-          showOverlay={showOverlay}
-          apiName={apiName}
-          setApiName={setApiName}
-          apiURL={apiURL}
-          setApiURL={setApiURL}
-          apiDescription={apiDescription}
-          setApiDescription={setApiDescription}
-          apiImageURL={apiImageURL}
-          setApiImageURL={setApiImageURL}
-        />
-        <ApisContainer apiData={apiData} comments={comments} />
+        <MainHeader />
+        <ApisContainer comments={comments} />
       </OverlayFormContext.Provider>
     </OverlayDispatchContext.Provider>
   );
 };
 
-const ApisContainer = ({ apiData, comments }) => {
+const ApisContainer = ({ comments }) => {
+  const { apiData } = useContext(OverlayFormContext);
   const renderBox = () => {
     return apiData.map((item, index) => {
       console.log(item);
@@ -264,19 +199,10 @@ const ApisContainer = ({ apiData, comments }) => {
   );
 };
 
-const MainHeader = ({
-  openOverlay,
-  showOverlay,
-  addAPI,
-  apiName,
-  setApiName,
-  apiURL,
-  setApiURL,
-  apiDescription,
-  setApiDescription,
-  apiImageURL,
-  setApiImageURL,
-}) => {
+const MainHeader = () => {
+  const { visible, apiName, apiURL, apiDescription, apiImageURL } =
+    useContext(OverlayFormContext);
+  const dispatch = useContext(OverlayDispatchContext);
   return (
     <div className='main-header'>
       <div>
@@ -288,7 +214,12 @@ const MainHeader = ({
                 <img src='./logo.png'></img>
               </div>
               <div>
-                <button className='button' onClick={openOverlay}>
+                <button
+                  className='button'
+                  onClick={() => {
+                    dispatch({ type: actions.SHOW_OVERLAY });
+                  }}
+                >
                   + ADD TECH
                 </button>
               </div>
@@ -301,7 +232,7 @@ const MainHeader = ({
               />
             </div>
           </div>
-          {showOverlay && (
+          {visible && (
             <div className='overlay'>
               <div className='overlay-content'>
                 <div>
@@ -314,7 +245,10 @@ const MainHeader = ({
                         placeholder='Add API Name'
                         value={apiName}
                         onChange={event => {
-                          setApiName(event.target.value);
+                          dispatch({
+                            type: actions.NAME_INPUT,
+                            payload: event.target.value,
+                          });
                         }}
                       />
 
@@ -324,7 +258,10 @@ const MainHeader = ({
                         placeholder='Add API URL'
                         value={apiURL}
                         onChange={event => {
-                          setApiURL(event.target.value);
+                          dispatch({
+                            type: actions.URL_INPUT,
+                            payload: event.target.value,
+                          });
                         }}
                       />
                       <textarea
@@ -334,7 +271,10 @@ const MainHeader = ({
                         placeholder='Add Brief Description'
                         value={apiDescription}
                         onChange={event => {
-                          setApiDescription(event.target.value);
+                          dispatch({
+                            type: actions.DESCRIPTION_INPUT,
+                            payload: event.target.value,
+                          });
                         }}
                       />
                       <input
@@ -343,7 +283,10 @@ const MainHeader = ({
                         placeholder='Add Image URL'
                         value={apiImageURL}
                         onChange={event => {
-                          setApiImageURL(event.target.value);
+                          dispatch({
+                            type: actions.IMAGE_URL_INPUT,
+                            payload: event.target.value,
+                          });
                         }}
                       />
                       <input
@@ -354,7 +297,12 @@ const MainHeader = ({
                     </div>
 
                     <div className='btn'>
-                      <button className='login-button' onClick={addAPI}>
+                      <button
+                        className='login-button'
+                        onClick={() => {
+                          dispatch('SUBMIT');
+                        }}
+                      >
                         Submit!
                       </button>
                     </div>
