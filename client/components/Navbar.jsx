@@ -6,16 +6,16 @@ import { useNavigate } from "react-router-dom";
 export default function Navbar(){
     const navigate = useNavigate();
     function home(){
-        navigate("/Home")
+        navigate("/home")
     }
     function comments(){
         navigate("/feed")
     }
     function Login(){
-      navigate("/Login")
+      navigate("/login")
     }
     function Profile(){
-      navigate("/Profile")
+      navigate("/profile")
     }
 
     return (
