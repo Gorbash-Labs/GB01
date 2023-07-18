@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Editor } from '@tinymce/tinymce-react';
 import { useParams } from 'react-router-dom';
-import './Comments.scss';
+import '../styles/Comments.scss';
 import Navbar from '../components/Navbar.jsx';
 import HelperFunctions from '../helper-functions';
 
