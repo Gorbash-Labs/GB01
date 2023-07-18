@@ -23,7 +23,6 @@ organizationID: COMMUNITY_communityId = 1
         permissions INTEGER DEFAULT 0
     )
 
-
 ***COMMUNITY***
 
 communityId: number auto-generated (required)
@@ -113,7 +112,6 @@ image: aws bucket (stretch goal)
         comment VARCHAR(5000) NOT NULL,
         image TEXT
     )
-
 
 ***SESSIONS***
 
