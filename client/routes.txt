@@ -1,24 +1,90 @@
 Front-End Routes 
-(vars in all caps)
+(vars in all caps, tabbed items unsure)
 
+GET /api/tech -- return list of all techs
+GET /api/tech/TECH_ID -- return a particular tech
+  GET /api/tech/search?keywords=SEARCH_TERMS -- return all matching techList
+GET /api/tech/posts/TECH_ID -- return all posts matching tech
 
-GET
-/api/tech -- return list of all techs
-/api/tech/TECH_ID -- return a particular tech
-/api/tech/search?keywords=SEARCH_TERMS -- return all matching techList
-/api/tech/posts/TECH_ID -- return all posts matching tech
+GET /api/post/POST_ID -- return a particular post
+  GET /api/post/posts-by-user/USER_ID -- return all posts by 1 user
 
-/api/post/POST_ID -- return a particular post
-/api/post/posts-by-user/USER_ID -- return all posts by 1 user
+  GET /api/user/USER_ID -- get all info on a user as {user, posts}
 
-/api/user/login -- try to log user in (sends cookies)
-/api/user/USER_ID -- get all info on a user
-
-
-POST/PUT/DELETE (requests)
+POST /api/user/login -- try to log user in (sends cookies)
 POST /api/tech -- add a new tech with attached info
 POST /api/post -- add new post with attached info
-PUT /api/post/POST_ID -- update 1 post with attached info
-DELETE /api/post/POST_ID -- delete 1 post
+  PUT /api/post/POST_ID -- update 1 post with attached info
+  DELETE /api/post/POST_ID -- delete 1 post
 POST /api/user/newuser -- create a new user with attached info
+
+
+Priority Lists and Statuses
+
+MVP / Written
+- Get all tech
+- Get particular tech
+- Login
+- Makes new tech
+- Make new post (unverified)
+- Create new user
+- Get particular post (postController.findPost)
+- Get posts matching a particular tech (postController.findPostsByTech)
+- Get all info on a user
+- Get posts by user 
+
+Hopeful
+- Search for techs
+
+
+Stretch 
+- 
+
+
+
+user-class-example
+{
+  userId: number,
+  username: string,
+  password: string, //hashed+salted
+  contact: string,
+  permissions: number, //0 for everyone
+  organizationId: number, //1 for everyone while all on ctri17
+}
+
+tech-class-example
+{
+  techId: number
+  name: string,
+  typeApi: bool,
+  typeFramework: bool,
+  typeLibrary: bool,
+  link: string,
+  description: string
+  image: string, //link to image
+  keywords: [string], // array of strings parsed through a separate lookup table
+}
+
+post-class-example
+{
+  postId: number,
+  techId: number, <- are we hard coding this id in the frontend? i feel not
+  userId: number,
+  typeReview: bool,
+  typeAdvice: false,
+  typeCodeSnippet: false,
+  typeHelpOffer: false,
+  language: string,
+  title: string,  <- frontend sends string back to backend for id conversion
+  comment: string,
+  image: string,
+}
+
+Cookies & Authentication:
+- Create Username + Password (stored as plaintext strings in DB)
+- UserID stored as cookie: "SSID": UserId (number from db)
+  - res.cookie("SSID", DB_USERS_USERID, {maxAge: 90000, httpOnly: true})
+- Authentication: Require user+password to get updated cookie
+- Authorization to Edit/Delete: Require matching SSID
+- Logout: cookies.set('SSID',{expires: new Date(0)});
 
