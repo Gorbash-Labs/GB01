@@ -3,23 +3,28 @@ import React, { useEffect, useState } from 'react';
 import { Navbar } from '../components/Navbar.jsx';
 
 const Login = (props) => {
-  //create a state of invalid usernmae/passowrd initialixed to false
+  //create a state of invalid username/passowrd initialized to false
   const [invalidLogin, setShowInvalidLogin] = useState(false);
 
   //when someone puts in their form info, handle a login request
   const handleLogin = async (e) => {
-    console.log('Event Data: ', e);
+    e.preventDefault();
     //make a fetch request to the server to post a username and password login
     const un = e.target.username;
     const pw = e.target.password;
+
+    console.log('username: ', un, 'password: ', pw)
+
     //check if new user is toggled
     const newUser = e.target.new_user;
+
     if (!newUser) {
+      console.log(newUser)
       //-->login request (NOT a new user)
-      const url = path.resolve(__dirName, '/api/user/login');
+      const url = path.resolve('/api/user/login');
       //if good match, post back the home page with access to create an api
       //else bad match, post back a toggle which shows div "username or password invalid"
-      await fetch('dummy', {
+      await fetch(url, {
         method: 'POST',
         body: JSON.stringify({
           username: un,
