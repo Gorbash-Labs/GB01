@@ -5,7 +5,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 //add containers and requirements for JS
 import Navbar from './components/Navbar.jsx';
 import Home from './pages/Home.jsx';
-import Comments from './pages/Comments.jsx';
+import Posts from './pages/Posts.jsx';
 import Login from './pages/Login.jsx';
 import Profile from './pages/Profile.jsx';
 import './styles/app.scss'
@@ -23,7 +23,7 @@ const App = () => {
       <Routes>
         <Route index element={<Home />} loggedIn={setLoggedInStatus} userId={loggedInStatus}/>
         <Route path="home" element={<Home />} loggedIn={setLoggedInStatus} userId={loggedInStatus}/>
-        <Route path="comments/:id" element={<Comments />} loggedIn={setLoggedInStatus} userId={loggedInStatus}/>
+        <Route path="comments/:id" element={<Posts />} loggedIn={setLoggedInStatus} userId={loggedInStatus}/>
         <Route path="login" element={<Login />} loggedIn={setLoggedInStatus} userId={loggedInStatus}/>
         <Route path="profile" element={<Profile />} loggedIn={setLoggedInStatus} userId={loggedInStatus}/>
       </Routes>
