@@ -1,9 +1,15 @@
+/**
+ * @jest-environment jsdom
+ */
+
 import React from 'react';
 import { render, screen } from '@testing-library/react';
+import renderer from 'react-test-renderer';
 import '@testing-library/jest-dom'
-import HHC from '/home/ronagen/projects/GB02/client/containers/HomeHeaderContainer.jsx';
+import { HomeHeaderContainer } from '../client/containers/HomeHeaderContainer.jsx';
 
 test('renders the landing page', () => {
-  render(<HHC />);
+  const test = render(<HomeHeaderContainer />);
+  expect(test.getByText("Cohort: CTRI 17")).toBeTruthy();
   console.log('yes');
 });
