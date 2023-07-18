@@ -6,16 +6,25 @@ import Navbar from '../components/Navbar.jsx';
 import HelperFunctions from '../helper-functions';
 
 const Comments = () => {
+  //this is the state for the accordian, when the accordian is clicked it invokes an active index
   const [activeIndex, setActiveIndex] = useState(null);
+
+  //state overlay that is changed to true when the button is clicked in order to appear 
   const [showOverlay, setShowOverlay] = useState(false);
+
+  //here are the states for the form to keep track of each input
   const [editorContent, setEditorContent] = useState('');
   const initialVal = ` - Technical notes / Key insights`;
-
   const [techName, setTechName] = useState('');
   const [techLink, setTechLink] = useState('');
   const [techDescription, setTechDescription] = useState('');
   const [techImage, setTechImage] = useState('');
+  const [entry, setEntry] = useState();
+  const [image, setImage] = useState();
 
+
+
+  //from here we had starting typing out the states to handle the backend format but realized we did not have enough time so it is not connected/finished
   /*
       CREATE TABLE posts(
         post_id SERIAL PRIMARY KEY,
@@ -51,13 +60,12 @@ const Comments = () => {
   // type_help_offer BOOLEAN,
 
   // comment VARCHAR(5000) NOT NULL,
-  const [entry, setEntry] = useState();
-  // image TEXT
-  const [image, setImage] = useState();
+
 
   // language INTEGER NOT NULL,
   const [languageEntry, setLanguageEntry] = useState();
   const [commentEntries, setCommentEntries] = useState([]);
+
 
   //to find id of our url
   const { id } = useParams();
@@ -67,7 +75,7 @@ const Comments = () => {
     console.log(id, titleEntry, entry, image);
     try {
       setShowOverlay(false);
-
+      //on the button click the overlay is set back to false
       const response = await fetch('/api/post', {
         method: 'POST',
         headers: {
@@ -99,7 +107,7 @@ const Comments = () => {
 
   // initializing the page
   useEffect(() => {
-    // What tech_id is this?
+    //the tech id is linked to the home page box technology clicked
     const techId = id;
 
     const fetchData = async () => {
@@ -126,7 +134,7 @@ const Comments = () => {
   }, []);
 
   const openOverlay = (e) => {
-    e.preventDefault();
+    // e.preventDefault();
     setShowOverlay(true);
   };
 
@@ -154,9 +162,6 @@ const Comments = () => {
             <div className="details">
               <p className="username">{item.username}</p>
               <p className="tags">Posted by: Steve</p>
-              {/* <p className="date">
-              Date Posted: {new Date(item.datePosted).toLocaleString()}
-            </p> */}
             </div>
           </div>
         </div>
@@ -174,14 +179,6 @@ const Comments = () => {
     );
   });
 
-  // name: apiName,
-  // link: apiURL,
-  // image: apiImageURL,
-  // typeApi: false,
-  // typeFramework: false,
-  // typeLibrary: false,
-  // description: apiDescription,
-  // keywords: ['maps'],
   return (
     <div>
       <Navbar />
@@ -229,7 +226,6 @@ const Comments = () => {
                               setLanguageEntry(event.target.value);
                             }}
                           />
-                          {/* <textarea className="input-description" rows="3" maxLength="5000" placeholder="Comment (max 5000 characters)" required></textarea> */}
                           <Editor
                             apiKey="ba2mzqsjqzq6lv0fu4numgypg3j9125otxy4rpzttx7vji3q"
                             initialValue={initialVal}
@@ -297,6 +293,12 @@ const Comments = () => {
 };
 
 export default Comments;
+
+
+
+
+//this was our mock data before working with the database
+
 
 // const data = [
 //   {

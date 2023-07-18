@@ -5,15 +5,18 @@ import { useNavigate, useParams } from 'react-router-dom';
 
 
 const Home = () => {
+  //overlay state for showing the form, set true to appear
   const [showOverlay, setShowOverlay] = useState(false);
-  const navigate = useNavigate();
-
+ 
+  //state for the form inputs
   const [apiName, setApiName] = useState('');
   const [apiURL, setApiURL] = useState('');
   const [apiDescription, setApiDescription] = useState('');
   const [apiImageURL, setApiImageURL] = useState('');
   const [apiData, setApiData] = useState([]);
 
+  const navigate = useNavigate();
+  
   const openOverlay = () => {
     setShowOverlay(true);
   };
