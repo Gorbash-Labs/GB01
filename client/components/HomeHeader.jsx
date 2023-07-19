@@ -56,22 +56,6 @@ const addAPI = async () => {
     console.log(err);
   }
 };
- //Change Option to pick type of document
- const handleSelectChange = (selectedOption) => {
-
-  setTypeApi(false);
-  setTypeFramework(false);
-  setTypeLibrary(false);
-
-  if (selectedOption === 'Api') {
-    setTypeApi(true);
-  } else if (selectedOption === 'Framework') {
-    setTypeFramework(true);
-  } else if (selectedOption === 'Library') {
-    setTypeLibrary(true);
-  }
-};
-
 
   return (
     <div className="main-header">
@@ -89,12 +73,11 @@ const addAPI = async () => {
                 <input type="text" className="input-one" placeholder="Add API URL" value={apiURL} onChange={(event) => { setApiURL(event.target.value); }} />
                 <textarea className="input-one" rows="3" maxLength="150" placeholder="Add Brief Description" value={apiDescription} onChange={(event) => { setApiDescription(event.target.value); }} />
                 <input type="text" className="input-one" placeholder="Add Image URL" value={apiImageURL} onChange={(event) => { setApiImageURL(event.target.value); }} />
-                <select className="input-one" placeholder='Select your type' onChange={(e) => handleSelectChange(e.target.value)}>
-                  <option value='' disabled selected>Select Type of Tech</option>
-                  <option> Framework </option>
-                  <option> Api </option>
-                  <option> Library </option>
-                </select>
+                <div className = 'checkList'>
+                <label><input type = "checkbox" onChange ={ () =>{ setTypeApi(true); }}/>Api</label>
+                <label><input type = "checkbox" onChange ={ () =>{ setTypeFramework(true); }} />Framework</label>
+                <label><input type = "checkbox" onChange ={ () =>{ setTypeLibrary(true); }}/>Library</label>
+                </div>
                 <input type="file" className="input-one" accept="image/*" />
                 <button className="login-button" onClick={addAPI}>Submit!</button>
               </div>
