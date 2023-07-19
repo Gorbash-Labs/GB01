@@ -131,6 +131,7 @@ techController.makeTech = async (req, res, next) => {
 
 // works with one word searches
 techController.searchTech = async (req, res, next) => {
+  console.log('received req body', req)
   const { searchString } = req.body;
   const query = `SELECT * FROM techs WHERE LOWER(keywords) LIKE $1`;
   const searchWords = searchString.toLowerCase().split(' ');

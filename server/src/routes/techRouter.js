@@ -8,9 +8,9 @@ const router = express.Router();
 
 // Search for tech with at '/tech/search?keywords=XXXX' on 'req.query.keywords'
 // works with single search word
-router.post(
+router.get(
   '/search',
-  techController.searchTech, //
+  techController.searchTech,
   (req, res) => {
     res.status(200).json(res.locals.techList);
   }

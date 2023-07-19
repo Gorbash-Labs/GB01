@@ -67,8 +67,8 @@ const overlayStateReducer = (state, action) => {
       return state;
   }
 };
-const OverlayDispatchContext = createContext();
-const OverlayFormContext = createContext();
+export const OverlayDispatchContext = createContext();
+export const OverlayFormContext = createContext();
 
 const Home = () => {
   const [overlayState, overlayDispatch] = useReducer(
