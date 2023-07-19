@@ -177,14 +177,14 @@ userController.updateUser = async (req, res, next) => {
   const lookupVals = [userId, name, password, contact];
   try {
     const response = await db.query(lookupText, lookupVals);
-    console.log('Retrieved updated user: ', response);
+    console.log('Retrieved updated user: ', response.rows[0]);
     if (!response) {
       return next({
         log: 'Failed to update user in userController.updateUser',
         message: { err: 'Lookup error.' },
       });
     }
-    res.locals.newUserInfo = rows[0];
+    res.locals.newUserInfo = response.rows[0];
     next();
   } catch (err) {
     return next({
