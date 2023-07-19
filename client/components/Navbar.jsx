@@ -1,11 +1,12 @@
-import React,{useState} from 'react';
+import React,{useState,useContext} from 'react';
 import { useNavigate } from "react-router-dom";
 import '../styles/Navbar.scss'
-
+import { UserIdContext } from '../contexts/Contexts';
 
 export default function Navbar(){
     const navigate = useNavigate();
  const [isUserLoggedIn,setIsUserLoggedIn] = useState(false)
+ const {globalId,setGlobalId} = useContext(UserIdContext)
 
     function home(){
         navigate("/Home")
@@ -17,12 +18,12 @@ export default function Navbar(){
       navigate("/Profile")
     }
     function LogOut(){
-      setIsUserLoggedIn(false)
+      setGlobalId('')
     }
 
     return (
       <div>
-      {isUserLoggedIn ? (
+      { typeof globalId === 'number' ? (
         <ul className="Navbar">
           <li id='allbuttons' onClick={home}>Home</li>
           <li id='allbuttons' onClick={Profile}>Profile</li>
