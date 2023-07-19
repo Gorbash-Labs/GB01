@@ -124,6 +124,8 @@ const Comments = () => {
     fetchData();
   }, []);
 
+  //update pages
+
   const openOverlay = (e) => {
     // e.preventDefault();
     setShowOverlay(true);
@@ -172,7 +174,7 @@ const Comments = () => {
         <div className="tech-box">
           <div className="comment-data-box">
             <img className="comment-data-image" src={techImage}></img>
-            <div>
+            <div style={{ flexGrow: 1 }}>
               <a href={techLink} className="comment-tech-link">
                 <h2>{techName}</h2>
               </a>

@@ -20,6 +20,7 @@ $width: 1000px;
 .button {
   height: 45px;
   color: white;
+  flex-shrink: 0;
   width: 130px;
   border: none;
   border-radius: 20px;

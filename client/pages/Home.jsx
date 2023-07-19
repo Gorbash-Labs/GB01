@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import Navbar from '../components/Navbar.jsx';
 import '../styles/Homes.scss';
-import { HomeHeader } from '../components/HomeHeader.jsx'
-import { HomeBody } from '../components/HomeBody.jsx'
+import { HomeHeader } from '../components/HomeHeader.jsx';
+import { HomeBody } from '../components/HomeBody.jsx';
 
 const Home = () => {
-
   return (
-    <div className = 'homepage'>
+    <div className="homepage">
       <Navbar />
       <HomeHeader />
       <div className="input-container">
@@ -15,6 +14,7 @@ const Home = () => {
           type="text"
           className="input-bar-home"
           placeholder="Search APIs..."
+          e
         />
       </div>
       <HomeBody />
