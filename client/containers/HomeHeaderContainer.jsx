@@ -13,6 +13,11 @@ export function HomeHeaderContainer() {
   const openOverlay = () => {
     setShowOverlay(true);
   };
+
+  const handleCloseOverlay = () => {
+    setShowOverlay(false);
+  };
+
   // REVIEW: data looks unaffected, but not sure if we'll have to prop drill elsewhere now that data is localized into another file.
   const addAPI = async (event) => {
     console.log('addAPI inside');
@@ -73,6 +78,9 @@ export function HomeHeaderContainer() {
           </div>
           {showOverlay && (
             <div className="overlay">
+              <button id="overlay-close-button" onClick={handleCloseOverlay}>
+                x
+              </button>
               <div className="overlay-content">
                 <div>
                   <form>

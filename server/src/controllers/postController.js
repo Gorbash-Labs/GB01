@@ -13,8 +13,7 @@ postController.findPost = async (req, res, next) => {
     if (rows.length === 0) {
       // no results
       return next({
-        log: 'Failed to find any matching posts.',
-        message: { err: 'Lookup error.' },
+        log: err,
       });
     }
     console.log('Retrieved post lookup: ', rows[0]);
@@ -22,8 +21,7 @@ postController.findPost = async (req, res, next) => {
     next();
   } catch (err) {
     return next({
-      log: 'Encountered lookup error in postController.findPost',
-      message: { err: 'Lookup error.' },
+      log: err,
     });
   }
 };
@@ -70,7 +68,7 @@ postController.makePost = async (req, res, next) => {
     // This could get PostId for confirmation and potentially better communication w/ front end
     return next();
   } catch (err) {
-    return next('error');
+    return next({ log: err });
   }
 };
 
@@ -101,8 +99,7 @@ postController.findPostsByUser = async (req, res, next) => {
     next();
   } catch (err) {
     return next({
-      log: 'Encountered lookup error in postController.findPostsByUser',
-      message: { err: 'Lookup error.' },
+      log: err,
     });
   }
 };
@@ -120,8 +117,7 @@ postController.findPostsByTech = async (req, res, next) => {
     next();
   } catch (err) {
     return next({
-      log: 'Encountered lookup error in postController.findPostsByTech',
-      message: { err: 'Lookup error.' },
+      log: err,
     });
   }
 };

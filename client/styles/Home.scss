@@ -59,6 +59,15 @@
   }
 }
 
+#overlay-close-button {
+  position: relative;
+  left: 10px;
+  top: -250px;
+  width: 30px;
+  height: 30px;
+  border-radius: 30px;
+}
+
 .form {
   margin-top: 20px;
   display: flex;
