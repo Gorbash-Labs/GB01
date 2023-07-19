@@ -1,38 +1,63 @@
-.body {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  grid-template-rows: 15% auto;
-  gap: 10px;
-  margin: 10px;
-  padding: 10px;
-  border: 2px black solid;
-  width: 90%;
-  height:90%;
-  min-height: 500px;
-  min-width: 90%;
+div {
+  display: flex;
+  justify-content: space-between;
+  box-sizing: border-box;
 }
 
-.profile_image {
-  border: 2px navy solid;
-  width: 80px;
+ul {
+  list-style: none;
 }
 
-.profile_text {
-  border: 2px navy solid;
+button {
+  height: 25px;
+  width: 75px;
+  margin: 5px;
 }
 
-.profile_pass {
-  border: 2px navy solid;
+.profilePage {
+  width: 100vw;
+  flex-direction: column;
+  margin: 15px;
 }
 
-.profile_friends_list {
-  border: 2px olive solid;
+.header {
+  width: 95%;
+  margin: 15px;
 }
 
-.profile_comments_list {
-  border: 2px olive solid;
+.headerLeft,
+.headerRight {
+  flex-direction: column;
 }
 
-.profile_APIs_list {
-  border: 2px olive solid;
+.basicInfoContents {
+  flex-direction: column;
+}
+
+.editButton {
+  align-self: flex-end;
+}
+
+.headerRight {
+  align-items: center;
+}
+
+.editImg {
+  height: 20px;
+  width: 20px;
+}
+
+.imgContainer {
+  height: 200px;
+  width: 200px;
+  justify-content: flex-end;
+}
+
+.headerLeft {
+  justify-content: flex-start;
+}
+
+.postContainer {
+  width: 80%;
+  align-self: center;
 }

@@ -1,75 +1,48 @@
 import React, { useEffect, useState } from 'react';
-import ReactDOM from 'react';
-import { BrowserRouter, Route, Routes } from "react-router-dom";
-//add containers and requirements for JS
-import Navbar from '../components/Navbar.jsx'
-import '../styles/Profile.scss'
+import '../styles/Profile.scss';
+import { UserContext } from '../contexts/Contexts.jsx'; //userContext = username
+import ProfileHeader from '../components/ProfileHeader.jsx';
+import ProfileBody from '../components/ProfileBody.jsx';
 
-const Profile = async (props) => {
+const Profile = () => {
+  const [user, setUser] = useState({});
+  const [posts, setPosts] = useState({});
 
-  if (props.loggedInStatus) { //-->we have a logged in user
-    //get request to DB to fetch the userID's profile info (stretch goal)
-    await fetch('dummy', { //--> go to Profile end point
-      method: "POST",
-      body: JSON.stringify({
-        userId: props.loggedInStatus,
-      }),
-    }).then (res => {
-      res.json();
-    }).then (resObj => { //--> eveutally update with the profile's saved data
-      return (
-        <div className="wrapper">
-          <Navbar />
-          <div className="body">
-              <div className="profile_picture">Picture
-                <div className="profile_image">FETCHED image here</div>
-              </div>
-              <div className="profile_name">Name
-                <div className="profile_text">FETCHED name here</div>
-              </div>
-              <div className="profile_password">Password
-                <div className="profile_pass">FETCHED pasword here</div>
-              </div>
-              <div className="profile_friends">Friends List
-                <div className="profile_friends_list">FETCHED Your Friends</div>
-              </div>
-              <div className="profile_comments">Recent Comments
-                <div className="profile_comments_list">FETCHED Your recent comments on other APIs</div>
-              </div>
-              <div className="profile_apis">Recent API's Added
-                <div className="profile_APIs_list">FETCHED Your recent api's</div>
-              </div>
-          </div>
-        </div>
-      )
-    })
-  } else { //--> User is not signed in, give generic Profile display
-    return (
-      <div className="wrapper">
-        <Navbar />
-        <div className="body">
-            <div className="profile_picture">Picture
-              <div className="profile_image">Uploads image here</div>
-            </div>
-            <div className="profile_name">Name
-              <div className="profile_text">Edit name form here</div>
-            </div>
-            <div className="profile_password">Password
-              <div className="profile_pass">Edit pasword form here</div>
-            </div>
-            <div className="profile_friends">Friends List
-              <div className="profile_friends_list">Your Friends</div>
-            </div>
-            <div className="profile_comments">Recent Comments
-              <div className="profile_comments_list">Your recent comments on other APIs</div>
-            </div>
-            <div className="profile_apis">Recent API's Added
-              <div className="profile_APIs_list">Your recent api's</div>
-            </div>
-        </div>
-      </div>
-    )
-  };
+  useEffect(() => {
+    const getData = async () => {
+      // const response = await fetch(`/api/user/${UserContext}`);
+      try {
+        const response = await fetch(`/api/user/Steve`);
+        const data = await response.json();
+        console.log('profile user data:', data);
+        setUser(data.user);
+        setPosts(data.posts);
+      } catch (err) {
+        console.log('err');
+      }
+    };
+    getData();
+    console.log('user:', user);
+    console.log('posts:', posts);
+  }, []);
+  /* 
+   "user": {
+        "user_id": 1,
+        "name": "Steve",
+        "password": "1234",
+        "contact": "steve@gmail.com",
+        "permissions": 0,
+        "community": 1
+    },
+  */
+
+  return (
+    <div className="profilePage">
+      {/* TODO: button to navigate back to home page */}
+      <ProfileHeader user={user} />
+      <ProfileBody posts={posts} />
+    </div>
+  );
 };
 
-export default Profile
+export default Profile;
