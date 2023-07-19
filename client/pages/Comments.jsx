@@ -125,7 +125,8 @@ const Comments = () => {
 
       case 'submit_form': {
         const { title, editor, language } = state.form;
-        console.log('submitting post with comment ', editor);
+        console.log('submitting post with comment, id ', editor, title);
+        console.log(typeof editor);
         const request = {
           method: 'POST',
           headers: {
@@ -136,21 +137,25 @@ const Comments = () => {
             languageid: 1, // hard-coded : need parsing for language here
             comment: editor, // hard code this if not working
             tech_id: id,
+            uploader_id: 0,
             typeReview: false,
             typeAdvice: false,
             typeCodeSnippet: false,
             typeHelpOffer: false,
           }),
         };
-        fetch('/api/post', request)
-          .then(res => res.json())
+        fetch(`/api/post/${id}`, request)
+          .then(res => {
+            console.log(res);
+            return res.json();
+          })
           .then(data => {
             console.log('Success! Data: ', data);
             if (data.length > state.comments.length)
               dispatch({ type: actions.NEW_POSTS_DATA, payload: data });
           })
           .catch(err => {
-            console.log('Error: ', err);
+            console.log('Error in post submission: ', err);
           });
         break;
       }
@@ -215,38 +220,6 @@ const Comments = () => {
       </div>,
     );
   }
-
-  // const comments = state.comments.map((item, index) => {
-  //   return (
-  //     <div
-  //       key={index}
-  //       className={`accordion-item ${index === activeIndex ? 'active' : ''}`}>
-  //       <div className='accordion-header-outer'>
-  //         <div
-  //           className='accordion-header'
-  //           onClick={() =>
-  //             dispatch({ type: actions.EXPAND_ACCORDION, payload: index })
-  //           }>
-  //           <div>{item.title}</div>
-  //           <div className='details'>
-  //             <p className='username'>{item.username}</p>
-  //             <p className='tags'>Posted by: Steve</p>
-  //           </div>
-  //         </div>
-  //       </div>
-  //       {index === activeIndex && (
-  //         <div className='accordion-content'>
-  //           <div>
-  //             <div className='experience'>
-  //               {HelperFunctions.md(item.comment)}
-  //             </div>
-  //             <img src={item.image} alt='Image' className='accordion-image' />
-  //           </div>
-  //         </div>
-  //       )}
-  //     </div>
-  //   );
-  // });
 
   return (
     <>
