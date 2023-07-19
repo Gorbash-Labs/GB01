@@ -67,7 +67,9 @@ postController.makePost = async (req, res, next) => {
         image,
       ]
     );
+    res.local.techId = tech_id;
     // This could get PostId for confirmation and potentially better communication w/ front end
+
     return next();
   } catch (err) {
     return next('error');

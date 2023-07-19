@@ -43,6 +43,10 @@ techController.findTech = async (req, res, next) => {
   }
 };
 
+techController.findTechAfterUpdate = async (req, res, next) => {
+  // res.local.techId is id
+};
+
 techController.makeTech = async (req, res, next) => {
   // Grab req.body and users cookies make a new db entry
   console.log(req.body);
