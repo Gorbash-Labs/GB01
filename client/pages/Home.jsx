@@ -184,7 +184,7 @@ const ApisContainer = ({ comments }) => {
             </a>
             <p>{item.description}</p>
             <div className='button-comment'>
-              <button onClick={(e) => comments(e)} id={item.tech_id}>
+              <button onClick={comments} id={item.tech_id}>
                 Posts
               </button>
             </div>
