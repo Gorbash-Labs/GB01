@@ -3,6 +3,7 @@ import Navbar from '../components/Navbar.jsx';
 import Apicard from '../components/Apicard.jsx';
 import './Home.scss';
 import { useNavigate, useParams } from 'react-router-dom';
+import SearchBar from '../components/SearchBar.jsx'
 
 const actions = {
   SHOW_OVERLAY: 'SHOW_OVERLAY',
@@ -228,10 +229,8 @@ const MainHeader = () => {
               </div>
             </div>
             <div className='input-container'>
-              <input
-                type='text'
-                className='input-bar-home'
-                placeholder='Search APIs...'
+              <SearchBar
+                
               />
             </div>
           </div>
