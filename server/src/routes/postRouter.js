@@ -61,7 +61,7 @@ router.post(
 
 // // Fetch all posts for an 'all posts' display Goes to GENERAL COMMETNS Page
 router.get('/', postController.retrievePosts, (req,res)=>{
-  res.status(200).json(res.locals.comments);
+  return res.status(200).json(res.locals.comments);
 });
 
 module.exports = router;

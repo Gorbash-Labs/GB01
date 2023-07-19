@@ -23,7 +23,7 @@ postController.findPost = async (req, res, next) => {
   } catch (err) {
     return next({
       log: 'Encountered lookup error in postController.findPost',
-      message: { err: 'Lookup error.' },
+      message: { err: 'Lookup error findPost' },
     });
   }
 };
@@ -40,7 +40,7 @@ postController.retrievePosts = async (req, res, next) => {
   } catch (err) {
     return next({
       log: 'Encountered lookup error in postController.retrievePosts',
-      message: { err: 'Lookup error' },
+      message: { err: 'Lookup error retrievePosts' },
     });
   }
 };
@@ -50,7 +50,7 @@ postController.makePost = async (req, res, next) => {
   // Get username from cookies/session
   //const { username } = req.cookies;
   // const uploader_id = req.cookies('SSID');
-  const uploader_id = 8;
+  const uploader_id = 2;
   // Get post from body
   const {
     tech_id,
@@ -139,7 +139,7 @@ postController.findPostsByUser = async (req, res, next) => {
   } catch (err) {
     return next({
       log: 'Encountered lookup error in postController.findPostsByUser',
-      message: { err: 'Lookup error.' },
+      message: { err: 'Lookup error findPostsByUser' },
     });
   }
 };
@@ -158,7 +158,7 @@ postController.findPostsByTech = async (req, res, next) => {
   } catch (err) {
     return next({
       log: 'Encountered lookup error in postController.findPostsByTech',
-      message: { err: 'Lookup error.' },
+      message: { err: 'Lookup error findPostsByTech' },
     });
   }
 };
