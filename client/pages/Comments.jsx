@@ -68,13 +68,23 @@ const commentsPageReducer = (state, action) => {
     case actions.NEW_TECH_DATA: {
       // happens on initial page load
       const tech = action.payload || state.tech;
-      return { ...state, loading: 'idle', tech };
+      return {
+        ...state,
+        loading: 'idle',
+        tech,
+        form: { ...commentsPageStateInit.form },
+      };
     }
     case actions.NEW_POSTS_DATA: {
       // happens on initial page load AND successful post submission
       const comments = action.payload || state.comments.slice();
 
-      return { ...state, loading: 'idle', comments };
+      return {
+        ...state,
+        loading: 'idle',
+        comments,
+        form: { ...commentsPageStateInit.form },
+      };
     }
     default:
       return state;
@@ -103,7 +113,7 @@ const Comments = () => {
   useEffect(() => {
     switch (state.loading) {
       case 'load_page': {
-        console.log('loading comments page');
+        console.log('loading comments page...');
         const request = {
           method: 'GET',
           headers: {
@@ -113,20 +123,25 @@ const Comments = () => {
         fetch(`/api/tech/${id}`, request)
           .then(res => res.json())
           .then(data => {
+            console.log('data received...');
             const { name, link, description, image_url } = data.tech;
             dispatch({
               type: actions.NEW_TECH_DATA,
               payload: { name, link, description, image_url },
             });
+            console.log('Updating posts: ', data.posts);
             dispatch({ type: actions.NEW_POSTS_DATA, payload: data.posts });
+          })
+          .catch(err => {
+            console.log('Error when loading page: ', err);
           });
         break;
       }
 
       case 'submit_form': {
+        console.log('Submitting form...');
         const { title, editor, language } = state.form;
-        console.log('submitting post with comment, id ', editor, title);
-        console.log(typeof editor);
+        let test;
         const request = {
           method: 'POST',
           headers: {
@@ -146,16 +161,20 @@ const Comments = () => {
         };
         fetch(`/api/post/${id}`, request)
           .then(res => {
-            console.log(res);
+            console.log('Initial response received');
+            test = res;
             return res.json();
           })
           .then(data => {
             console.log('Success! Data: ', data);
+            test = data;
             if (data.length > state.comments.length)
               dispatch({ type: actions.NEW_POSTS_DATA, payload: data });
           })
           .catch(err => {
             console.log('Error in post submission: ', err);
+            console.log('Last response: ', test);
+            dispatch({ type: actions.LOAD_PAGE });
           });
         break;
       }
@@ -197,9 +216,10 @@ const Comments = () => {
         <div className='accordion-header-outer'>
           <div
             className='accordion-header'
-            onClick={() =>
-              dispatch({ type: actions.EXPAND_ACCORDION, payload: index })
-            }>
+            onClick={e => {
+              e.preventDefault();
+              dispatch({ type: actions.EXPAND_ACCORDION, payload: index });
+            }}>
             <div>{item.title}</div>
             <div className='details'>
               <p className='username'>{item.username}</p>
@@ -223,7 +243,6 @@ const Comments = () => {
 
   return (
     <>
-      <Navbar />
       <DispatchContext.Provider value={dispatch}>
         <StateContext.Provider value={state}>
           <FormContext.Provider value={state.form}>
@@ -263,7 +282,8 @@ const MainHeader = () => {
           </div>
           <button
             className='button'
-            onClick={() => {
+            onClick={e => {
+              e.preventDefault();
               dispatch({ type: actions.OPEN_OVERLAY });
             }}>
             + ADD POST
@@ -321,7 +341,6 @@ const Form = () => {
             apiKey='ba2mzqsjqzq6lv0fu4numgypg3j9125otxy4rpzttx7vji3q'
             className='custom-editor'
             onEditorChange={(value, editor) => {
-              console.log('editor change', value);
               dispatch({
                 type: actions.FORM_INPUT,
                 payload: { formVar: 'editor', input: value },
@@ -332,12 +351,6 @@ const Form = () => {
               height: 300,
               max_height: 340,
               menubar: true,
-              plugins: [
-                'advlist autolink lists link image',
-                'charmap print preview anchor help',
-                'searchreplace visualblocks code',
-                'insertdatetime media table paste wordcount',
-              ],
               toolbar:
                 'undo redo | formatselect | bold italic | \
               alignleft aligncenter alignright alignjustify | \
@@ -363,8 +376,8 @@ const Form = () => {
           <button
             type='submit'
             className='login-button'
-            onClick={() => {
-              console.log('submitting form...');
+            onClick={e => {
+              e.preventDefault();
               dispatch({ type: actions.SUBMIT_FORM });
             }}>
             Submit
