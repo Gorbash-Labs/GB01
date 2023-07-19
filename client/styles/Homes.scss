@@ -18,9 +18,12 @@ body {
     background-position: 0% 50%;
   }
 }
+hr{
+  width:100%;
+}
 
 .homepage {
-  animation: loadin 1.5s ease-in;
+  animation: loadin 1s ease-in ;
   background: linear-gradient(86.3deg, #97b7e1 3.6%, #79acef 87.6%);
 }
 
@@ -117,7 +120,7 @@ body {
   align-items: center;
   text-align: center;
   box-shadow: 10px 10px 5px rgba(0, 0, 0, 0.3);
-  animation: loadin 1s ease-in;
+  animation: loadin 2s ease-in;
   .input-one {
     border-radius: 6px;
     border: none;

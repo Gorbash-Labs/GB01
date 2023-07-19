@@ -1,9 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import ReactDOM from 'react';
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 //add containers and requirements for JS
+import { useNavigate } from 'react-router-dom';
 import Navbar from '../components/Navbar.jsx'
 import '../styles/Login.scss'
+import { UserIdContext } from '../contexts/Contexts.jsx';
 
 
 
@@ -14,6 +16,8 @@ const Login = (props) => {
   const CLIENT_SECRETS = "a0c26008058e961a4ceea77439f79c8ec02f916c";
   //create a state of invalid usernmae/passowrd initialixed to false
   const [validLogin, setvalidLogin] = useState(false);
+  const navigate = useNavigate()
+  const {setGlobalId} = useContext(UserIdContext)
 
   const [info, setInfo] = useState({ username: '', password: '' })
   const [userData, setUserData] = useState({})
@@ -70,7 +74,7 @@ const Login = (props) => {
     window.location.assign(`https://github.com/login/oauth/authorize?client_id=${CLIENT_ID}`);
   }
 
-  const handleClick = async e => {
+  const handleClick = async (e) => {
     const res = await fetch('http://localhost:3000/api/user/login', {
       method: 'POST',
       body: JSON.stringify({
@@ -81,16 +85,21 @@ const Login = (props) => {
         'Content-Type': 'application/json'
       }
     })
-    console.log("res is", res)
-    if (res) {
+    const id = await res.json()
+    console.log("res is", id)
+    if (typeof id === 'number') {
+      setGlobalId(id)
       setvalidLogin(true);
+      
+    }else{
+      alert("invalid username/password")
     }
   }
 
   return (
     <div>
       <Navbar />
-      <section>
+      <div className = "loginbackground">
         {!localStorage.getItem("accessToken") && !validLogin ?
           <>
             <div className="formHeader">
@@ -104,6 +113,7 @@ const Login = (props) => {
                 <input
                   type="text"
                   id="username"
+                  className ='logininput'
                   name="username"
                   required
                   value={info.username}
@@ -114,13 +124,14 @@ const Login = (props) => {
                 <input
                   type="password"
                   id="password"
+                  className ='logininput'
                   name="password"
                   required
                   value={info.password}
                   onChange={e => {
                     setInfo({ ...info, password: e.target.value })
                   }} />
-                <button type="submit" onClick={handleClick}>Login</button>
+                <button id= 'allbuttons' type="submit" onClick={handleClick}>Login</button>
               </div>
             </div>
             <hr width="70%" />
@@ -151,7 +162,7 @@ const Login = (props) => {
             </footer>
           </>
         }
-      </section >
+      </div >
     </div>
   )
 }
