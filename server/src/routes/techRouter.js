@@ -35,10 +35,12 @@ router.get(
   '/:id',
   techController.findTech,
   postController.findPostsByTech,
+  postController.findLanguagesByTech, // just return everything for now
   (req, res) => {
     const responseObj = {
       tech: res.locals.techRequest,
       posts: res.locals.postList,
+      languages: res.locals.languages,
     };
     res.status(200).json(responseObj);
   }
