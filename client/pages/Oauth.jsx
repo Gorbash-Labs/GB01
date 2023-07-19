@@ -7,15 +7,18 @@ import Navbar from '../components/Navbar.jsx';
 
 const Login = (props) => {
   // const [resData, setResData] = useState();
-  const handleLogin = () => {
-    console.log('invoked handleLogin');
-    fetch('localhost8080/oauth')
-      .then((res) => res.json())
-      .then((data) => {
-        console.log(data);
-      })
-      .catch((err) => console.log('an error occurred'));
-  };
+  // const handleLogin = () => {
+  //   console.log('invoked handleLogin');
+  //   fetch('/api/oauth')
+  //     .then((res) => {
+  //       console.log(res)
+  //     }
+  //     res.json()})
+  //     .then((data) => {
+  //       console.log(data);
+  //     })
+  //     .catch((err) => console.log('an error occurred'));
+  // };
 
   // async function handleLogin() {
   //   const res = await fetch('localhost8080/oauth');
@@ -27,7 +30,7 @@ const Login = (props) => {
   // const CLIENT_ID = process.env.CLIENT_ID;
   // console.log(CLIENT_ID);
   // console.log;
-  const CLIENT_ID = '2887785098e44077bd7b';
+ 
   const hrefString =
     'https://github.com/login/oauth/authorize?scope=user:email&client_id=' +
     CLIENT_ID;

@@ -22,7 +22,7 @@ app.use(cookieParser());
 app.use(express.static('./dist'));
 
 //Catch Oauth button requests
-app.get('/api/oauth', (req, res) => {
+app.use('/api/oauth', (req, res) => {
   console.log('entered oauth on backend');
   const hrefString =
     'https://github.com/login/oauth/authorize?scope=user:email&client_id=' +
