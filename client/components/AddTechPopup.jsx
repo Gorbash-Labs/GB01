@@ -6,11 +6,6 @@ function AddTechPopup(props) {
   const [showOverlay, setShowOverlay] = props.overlayState;
   console.log(showOverlay, setShowOverlay);
 
-  const handleAddTechSubmit = async (e) => {
-
-    e.preventDefault();
-
-
   return (
     <div className="overlay">
       <div className="overlay-content">
