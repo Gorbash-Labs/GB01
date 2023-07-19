@@ -186,22 +186,23 @@
 }
 
 .grid-container {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 35px;
+  display: flex;
+  gap: 40px;
 }
 
 .box {
   display: flex;
-  background-color: #f1f1f1;
+  background-color: #e1e1e1;
   padding: 20px;
   flex-direction: column;
-  width: 315px;
-  height: 290px;
+  width: 200px;
+  height: 200px;
+  border-radius: 5px;
   word-wrap: break-word;
-
+  box-shadow: 2px 2px 5px rgba(65, 65, 65, 0.309);
+  transition: transform 0.5s;
   &:hover {
-    box-shadow: 0 0 10px rgb(190, 105, 105);
+    transform: scale(0.97);
   }
 }
 

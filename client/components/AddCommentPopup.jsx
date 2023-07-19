@@ -1,29 +1,42 @@
 import React from 'react';
+import { useParams } from 'react-router-dom';
+
 import { Editor } from '@tinymce/tinymce-react';
 
-function AddCommentPopup() {
+function AddCommentPopup(props) {
+  const { id } = useParams();
+  
+
+
   return (
     <div className="overlay-comments">
       <div className="overlay-content-comments">
         <div>
-          <form>
-            <div className="formGroup-two">
-              <div>
-                <h2>Add FORM</h2>
-                <hr className="line" />
-                <input
-                  type="text"
-                  className="input-one-first"
-                  placeholder="Title"
-                />
-                <h5></h5>
-                <input
-                  type="text"
-                  className="input-one-c"
-                  placeholder="Language Used"
-                  // required
-                />
-                {/* <Editor
+          <div className="formGroup-two">
+            <div>
+              <h2>Add FORM</h2>
+              <hr className="line" />
+              <input
+                type="text"
+                className="input-one-first"
+                placeholder="Title"
+                id="title"
+              />
+              <h5></h5>
+              <input
+                type="text"
+                className="input-one-c"
+                placeholder="Language Used"
+                // required
+                id="language"
+              />
+              <input
+                type="text"
+                className="input-one-c"
+                placeholder="comment"
+                id="comment"
+              />
+              {/* <Editor
                       apiKey="ba2mzqsjqzq6lv0fu4numgypg3j9125otxy4rpzttx7vji3q"
                       initialValue={initialVal}
                       className="custom-editor"
@@ -51,19 +64,12 @@ function AddCommentPopup() {
                           'body { font-family: Arial, sans-serif; font-size: 14px }',
                       }}
                     /> */}
-                {/* <input
-                  type="file"
-                  className="input-one-image"
-                  accept="image/*"
-                /> */}
-                <input
-                  type="submit"
-                  value='submit'
-
-                />
-              </div>
+              <button type="submit" onClick={props.handleAddCommentClick}>
+                Submit
+              </button>
+              <button onClick={props.handleCancel}>Cancel</button>
             </div>
-          </form>
+          </div>
         </div>
       </div>
     </div>

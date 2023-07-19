@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { Editor } from '@tinymce/tinymce-react';
 import { useParams } from 'react-router-dom';
 import '../stylesheets/Comments.scss';
-import Navbar from '../components/Navbar.jsx';
 import HelperFunctions from '../helper-functions';
 import AddCommentPopup from '../components/AddCommentPopup.jsx';
 
@@ -15,7 +14,6 @@ const Comments = () => {
 
   //here are the states for the form to keep track of each input
   const [editorContent, setEditorContent] = useState('');
-  const initialVal = ` - Technical notes / Key insights`;
   const [techName, setTechName] = useState('');
   const [techLink, setTechLink] = useState('');
   const [techDescription, setTechDescription] = useState('');
@@ -23,25 +21,9 @@ const Comments = () => {
   const [entry, setEntry] = useState();
   const [image, setImage] = useState();
 
+  const [commentsData, setcommentsData] = useState([]);
+
   //from here we had starting typing out the states to handle the backend format but realized we did not have enough time so it is not connected/finished
-  /*
-      CREATE TABLE posts(
-        post_id SERIAL PRIMARY KEY,
-        title TEXT NOT NULL,
-        tech INTEGER NOT NULL,
-        FOREIGN KEY(tech) REFERENCES techs(tech_id),
-        uploader INTEGER NOT NULL,
-        FOREIGN KEY(uploader) REFERENCES users(user_id),
-        type_review BOOLEAN,
-        type_advice BOOLEAN,
-        type_code_snippet BOOLEAN,
-        type_help_offer BOOLEAN,
-        language INTEGER NOT NULL,
-        FOREIGN KEY(language) REFERENCES languages (language_id),
-        comment VARCHAR(5000) NOT NULL,
-        image TEXT
-    )
-  */
 
   // title TEXT NOT NULL,
   const [titleEntry, setTitleEntry] = useState();
@@ -60,48 +42,44 @@ const Comments = () => {
 
   // comment VARCHAR(5000) NOT NULL,
 
-
   // language INTEGER NOT NULL,
-  const [languageEntry, setLanguageEntry] = useState();
   const [commentEntries, setCommentEntries] = useState([]);
+  const [commentData, setcommentData] = useState([]);
 
-
-  //to find id of our url
-  const { id } = useParams();
-
-  const addComment = async (e) => {
+  const handleAddCommentClick = async (e) => {
     e.preventDefault();
-    console.log(id, titleEntry, entry, image);
+
+    const body = {
+      tech_id: id,
+      typeReview: true,
+      typeAdvice: false,
+      typeCodeSnippet: false,
+      typeHelpOffer: false,
+      languageid: 1,
+      title: document.querySelector('#title').value,
+      comment: document.querySelector('#comment').value,
+      image: null,
+    };
+
     try {
-      setShowOverlay(false);
-      //on the button click the overlay is set back to false
-      const response = await fetch('/api/post', {
+      await fetch('/api/post', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-
-        body: JSON.stringify({
-          // userId: number, found via backend
-          tech_id: id,
-          typeReview: false,
-          typeAdvice: false,
-          typeCodeSnippet: false,
-          typeHelpOffer: false,
-          languageid: 1,
-          title: titleEntry,
-          comment: entry,
-          image: image,
-        }),
+        body: JSON.stringify(body),
       });
-
-      const data = await response.json();
-      console.log('success');
-      console.log('data returned', data);
     } catch (err) {
       console.log(err);
     }
+
+    fetchData()
+    setShowOverlay(false)
+
   };
+
+  //to find id of our url
+  const { id } = useParams();
 
   // initializing the page
   useEffect(() => {
@@ -120,9 +98,10 @@ const Comments = () => {
         },
       });
       const data = await response.json();
+
       const newData = JSON.parse(JSON.stringify(data));
       // newData =  {tech: tech-obj, posts: [post-obj, post-obj, ..]}
-      setCommentEntries(newData.posts);
+      setcommentData(data.posts);
       setCurrentTech(newData.tech);
       setTechName(newData.tech.name);
       setTechDescription(newData.tech.description);
@@ -145,38 +124,6 @@ const Comments = () => {
     setEditorContent(content);
   };
 
-  const comments = commentEntries.map((item, index) => {
-    return (
-      <div
-        key={index}
-        className={`accordion-item ${index === activeIndex ? 'active' : ''}`}
-      >
-        <div className="accordion-header-outer">
-          <div
-            className="accordion-header"
-            onClick={() => handleAccordionClick(index)}
-          >
-            <div>{item.title}</div>
-            <div className="details">
-              <p className="username">{item.username}</p>
-              <p className="tags">Posted by: Steve</p>
-            </div>
-          </div>
-        </div>
-        {index === activeIndex && (
-          <div className="accordion-content">
-            <div>
-              <div className="experience">
-                {HelperFunctions.md(item.comment)}
-              </div>
-              <img src={item.image} alt="Image" className="accordion-image" />
-            </div>
-          </div>
-        )}
-      </div>
-    );
-  });
-
   return (
     <div>
       <div className="main-header">
@@ -191,31 +138,69 @@ const Comments = () => {
                 <p className="comment-tech-description">{techDescription}</p>
               </div>
             </div>
-            <button className="button" onClick={openOverlay}>
-              + ADD POST
+            <button className="button" onClick={() => setShowOverlay(true)}>
+              + Add Comment
             </button>
-            {showOverlay && <AddCommentPopup />}
+            {showOverlay && (
+              <AddCommentPopup
+                handleAddCommentClick={handleAddCommentClick}
+                handleCancel={() => setShowOverlay(false)}
+              />
+            )}
           </div>
         </div>
       </div>
 
-      <div className="input-container">
+      {/* <div className="input-container">
         <input type="text" className="input-bar" placeholder="Search APIs..." />
-      </div>
+      </div> */}
 
-      <div className="accordion">{comments}</div>
+      <div className="accordion">
+        {commentData.map((item, index) => {
+          return (
+            <div
+              key={index}
+              className={`accordion-item ${
+                index === activeIndex ? 'active' : ''
+              }`}
+            >
+              <div className="accordion-header-outer">
+                <div
+                  className="accordion-header"
+                  onClick={() => handleAccordionClick(index)}
+                >
+                  <div>{item.title}</div>
+                  <div className="details">
+                    <p className="username">{item.username}</p>
+                    <p className="tags">Posted by: Steve</p>
+                  </div>
+                </div>
+              </div>
+              {index === activeIndex && (
+                <div className="accordion-content">
+                  <div>
+                    <div className="experience">
+                      {HelperFunctions.md(item.comment)}
+                    </div>
+                    <img
+                      src={item.image}
+                      alt="Image"
+                      className="accordion-image"
+                    />
+                  </div>
+                </div>
+              )}
+            </div>
+          );
+        })}
+      </div>
     </div>
   );
 };
 
 export default Comments;
 
-
-
-
-
 //this was our mock data before working with the database
-
 
 // const data = [
 //   {

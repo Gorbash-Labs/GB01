@@ -10,10 +10,6 @@ const Home = () => {
 
   const [techCardState, settechCardState] = useState([]);
 
-  const openOverlay = () => {
-    setShowOverlay(true);
-  };
-
   // initializing the page
   useEffect(() => {
     fetchData();
@@ -49,6 +45,39 @@ const Home = () => {
     });
   };
 
+  const handleAddTechSubmit = async (e) => {
+    e.preventDefault();
+
+    const body = {
+      name: e.target.name.value,
+      link: e.target.link.value,
+      image: e.target.image.value,
+      typeApi: false,
+      typeFramework: false,
+      typeLibrary: false,
+      description: e.target.description.value,
+      keywords: ['maps'],
+    };
+
+    try {
+      setShowOverlay(false)
+
+      const response = await fetch('/api/tech', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(body),
+      });
+
+      const data = await response.json();
+      fetchData();
+  
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   return (
     <div>
       <div className="main-header">
@@ -61,20 +90,23 @@ const Home = () => {
                   <img src="./logo.png"></img>
                 </div>
                 <div>
-                  <button className="button" onClick={openOverlay}>
-                    + ADD TECH
+                  <button className="button" onClick={()=> setShowOverlay(true)}>
+                    + ADD TOPIC
                   </button>
                 </div>
               </div>
-              <div className="input-container">
+              {/* <div className="input-container">
                 <input
                   type="text"
                   className="input-bar-home"
                   placeholder="Search APIs..."
                 />
-              </div>
+              </div> */}
             </div>
-            {showOverlay && <AddTechPopup overlayState={showOverlay, setShowOverlay}/>}
+
+            {showOverlay && <AddTechPopup 
+            overlayOff = {() => setShowOverlay(false)}
+            handleAddTechSubmit={handleAddTechSubmit}/>}
           </div>
         </div>
       </div>
