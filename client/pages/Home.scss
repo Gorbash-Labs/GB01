@@ -60,7 +60,7 @@ $blue1: #f9f7f7;
   padding: 40px;
   box-shadow: 0 2px 5px rgba(179, 179, 179, 0.3);
   color: white;
-  background-color: blueviolet;
+  background-color: $blue4;
   width: 480px;
   height: 420px;
   &:hover {
@@ -77,6 +77,11 @@ $blue1: #f9f7f7;
 
 .formGroup {
   margin-bottom: 20px;
+}
+
+.exitButton {
+  top:0;
+  right:0;
 }
 
 .formGroup-2 {
