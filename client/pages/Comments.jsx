@@ -1,14 +1,16 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect, useContext, createContext } from 'react';
 import { Editor } from '@tinymce/tinymce-react';
 import { useParams } from 'react-router-dom';
 import './Comments.scss';
 import Navbar from '../components/Navbar.jsx';
 import HelperFunctions from '../helper-functions';
 
+const actions = {};
+
 const commentsPageStateInit = {
   accordianIndexExpanded: null,
   formVisible: false,
-  editorContent: '',
+  contentEditor: '',
   contentEntry: null,
   techName: '',
   techLink: '',
@@ -17,7 +19,16 @@ const commentsPageStateInit = {
   imageFile: null,
 };
 
+const commentsPageReducer = (state, action) => {
+  switch (action.type) {
+    case actions.SAMPLE: {
+      return state;
+    }
 
+    default:
+      return state;
+  }
+};
 
 const Comments = () => {
   //this is the state for the accordian, when the accordian is clicked it invokes an active index
