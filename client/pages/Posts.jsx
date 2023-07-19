@@ -30,6 +30,20 @@ const Comments = () => {
   const [lang, setLang] = useState([]);
   const [currentTech, setCurrentTech] = useState();
 
+  //hard code 10 colors for now....
+  const colors = [
+    '#ffffff',
+    '#cccccc',
+    '#4285f4',
+    '#81c784',
+    '#ffff8d',
+    '#ffab40',
+    '#ab47bc',
+    '#f06292',
+    '#00bcd4',
+    '#8d6e63',
+  ];
+
   // ADD POST STATES
   // tech ID
   const { id } = useParams();
@@ -131,6 +145,9 @@ const Comments = () => {
     setShowOverlay(true);
   };
 
+  const handleAccordionHover = (index) => {
+    setActiveIndex(null);
+  };
   const handleAccordionClick = (index) => {
     setActiveIndex(index === activeIndex ? null : index);
   };
@@ -140,13 +157,20 @@ const Comments = () => {
       <div
         key={index}
         className={`accordion-item ${index === activeIndex ? 'active' : ''}`}
+        // onMouseOver={() => handleAccordionClick(index)}
+        // onMouseLeave={() => handleAccordionHover(index)}
         onClick={() => handleAccordionClick(index)}
       >
         <div className="accordion-header">
           <div style={{ display: 'flex', gap: 15, alignItems: 'center' }}>
             <div>{item.title}</div>
 
-            <div className="language">{lang[item.language]}</div>
+            <div
+              className="language"
+              style={{ color: colors[item.language - 1] }}
+            >
+              {lang[item.language - 1]}
+            </div>
           </div>
           <div className="tags">Goru User: Steve {item.uploader}</div>
         </div>
@@ -168,18 +192,26 @@ const Comments = () => {
   return (
     <div className="Post">
       <Navbar />
+
       <div className="content">
         <div className="tech-box">
           <div className="comment-data-box">
-            <img className="comment-data-image" src={techImage}></img>
-            <div style={{ flexGrow: 1 }}>
-              <a href={techLink} className="comment-tech-link">
-                <h2>{techName}</h2>
+            <a href={techLink} target="_blank" rel="noopener noreferrer">
+              <img className="comment-data-image" src={techImage}></img>
+            </a>
+            <div className="comment-techinfo">
+              <a
+                href={techLink}
+                className="comment-tech-link"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                {techName}
               </a>
               <p className="comment-tech-description">{techDescription}</p>
             </div>
           </div>
-          <button className="button" onClick={openOverlay}>
+          <button className="button-addPost" onClick={openOverlay}>
             + ADD POST
           </button>
 
@@ -272,7 +304,7 @@ const Comments = () => {
 
                 <input
                   type="file"
-                  className="input-one-image"
+                  className="input-one-image-post"
                   accept="image/*"
                   value={image}
                   onChange={(event) => {

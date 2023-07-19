@@ -28,7 +28,8 @@ router.post(
   userController.authenticate,
   userController.newSession,
   (req, res) => {
-    res.status(200).send();
+    const id = res.locals.userId;
+    res.status(200).json(id);
   }
 );
 
@@ -36,6 +37,19 @@ router.post(
 router.get('/signout', userController.endSession, (req, res) => {
   res.status(200).redirect('/');
 });
+
+// Look up a single user by name
+router.get(
+  '/id/:id',
+  userController.findUserById,
+  postController.findPostsByUser,
+  (req, res) => {
+    // res.locals.userRequest && res.locals.postList
+    res
+      .status(200)
+      .json({ user: res.locals.userRequest, posts: res.locals.postList });
+  }
+);
 
 // Look up a single user by name
 router.get(
