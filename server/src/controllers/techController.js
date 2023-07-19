@@ -131,12 +131,18 @@ techController.makeTech = async (req, res, next) => {
 
 // works with one word searches
 techController.searchTech = async (req, res, next) => {
-  const { searchString } = req.body;
-  const query = `SELECT * FROM techs WHERE LOWER(keywords) LIKE $1`;
-  const searchWords = searchString.toLowerCase().split(' ');
+  const { keywords } = req.query;
+  
+  const searchWords = keywords.split('+').map(word => word.toLowerCase().trim());
+
+  const conditions = searchWords.map(word => `LOWER(keywords) LIKE '%${word}%'`);
+
+  const conditionQuery = conditions.join(' OR ');
+
+  const query = `SELECT * FROM techs WHERE ${conditionQuery}`;
 
   try {
-    const queryResult = await db.query(query, [`%${searchString.toLowerCase()}%`]);
+    const queryResult = await db.query(query);
 
     // matchingTechs = queryResult.rows;
 
