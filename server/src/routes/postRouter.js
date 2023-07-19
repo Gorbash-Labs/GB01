@@ -22,7 +22,7 @@ const router = express.Router();
 
 // Look up a single post /api/post/POST_ID
 router.get('/:id', postController.findPost, (req, res) => {
-  res.status(200).json(res.locals.postRequest);
+  res.status(200).json();
 });
 
 // Update a single post
@@ -53,9 +53,9 @@ router.put(
 router.post(
   '/',
   // userController.authenticate, // skipped for testing
-  postController.makePost,
+  postController.makePost, 
   (req, res) => {
-    res.sendStatus(200);
+    res.status(200).json(res.locals.foundData);
   }
 );
 
