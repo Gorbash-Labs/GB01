@@ -5,7 +5,13 @@ import './Comments.scss';
 import Navbar from '../components/Navbar.jsx';
 import HelperFunctions from '../helper-functions';
 
-const actions = {};
+const actions = {
+  OPEN_OVERLAY: 'OPEN_OVERLAY',
+  EXIT_OVERLAY: 'EXIT_OVERLAY',
+  EXPAND_ACCORDION: 'EXPAND_ACCORDION',
+  FORM_INPUT: 'FORM_INPUT', // types of form input are title, lang, contentEntry, image file
+  SUBMIT_FORM: 'SUBMIT_FORM',
+};
 
 const commentsPageStateInit = {
   accordianIndexExpanded: null,
@@ -17,6 +23,7 @@ const commentsPageStateInit = {
   techDescription: '',
   techImage: '',
   imageFile: null,
+  loading: 'idle',
 };
 
 const commentsPageReducer = (state, action) => {
@@ -24,7 +31,28 @@ const commentsPageReducer = (state, action) => {
     case actions.SAMPLE: {
       return state;
     }
-
+    case actions.OPEN_OVERLAY: {
+      return {
+        ...state,
+        formVisible: true,
+      };
+    }
+    case actions.EXIT_OVERLAY: {
+      return {
+        ...state,
+        formVisible: false,
+        
+      };
+    }
+    case actions.EXPAND_ACCORDION: {
+      return state;
+    }
+    case actions.FORM_INPUT: {
+      return state;
+    }
+    case actions.SUBMIT_FORM: {
+      return state;
+    }
     default:
       return state;
   }
