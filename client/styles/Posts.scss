@@ -17,7 +17,7 @@ $width: 1000px;
   gap: 30px;
   background-color: white;
 }
-.button {
+.button-addPost {
   height: 45px;
   color: white;
   flex-shrink: 0;
@@ -25,7 +25,6 @@ $width: 1000px;
   border: none;
   border-radius: 20px;
   cursor: pointer;
-  margin-top: 10px;
   background-color: green;
   border-radius: 20px;
   font-size: 16px;
@@ -61,10 +60,12 @@ $width: 1000px;
   align-items: center;
   background-color: #191e3c;
   justify-content: space-between;
+  border: none;
 }
 
 .comment-data-box {
   display: flex;
+  justify-content: flex-start;
   align-items: center;
   gap: 20px;
 }
@@ -74,17 +75,28 @@ $width: 1000px;
   width: auto;
   max-width: 120px;
   border-radius: 10px;
+  &:hover {
+    box-shadow: 0px 0px 10px rgb(141, 141, 141);
+  }
+}
+
+.comment-techinfo {
+  display: flex;
+  flex-direction: column;
 }
 
 .comment-tech-link {
   text-decoration: none;
   color: rgb(255, 255, 255);
+  align-self: flex-start;
+  font-size: 26px;
 }
 
 .comment-tech-description {
   font-size: 15px;
   margin-top: 6px;
   color: rgb(255, 255, 255);
+  font-size: 14px;
 }
 
 .hero-search-box {
@@ -242,7 +254,7 @@ $width: 1000px;
 }
 
 .language {
-  background-color: #008000;
+  background-color: #191e3c;
   color: white;
   padding: 5px 12px;
   border-radius: 5px;
@@ -370,9 +382,10 @@ $width: 1000px;
   outline: none;
 }
 
-.input-one-image {
+.input-one-image-post {
   font-size: 16px;
   font-weight: 400;
+  border: none;
 }
 
 .login-button {

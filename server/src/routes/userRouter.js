@@ -28,7 +28,8 @@ router.post(
   userController.authenticate,
   userController.newSession,
   (req, res) => {
-    res.status(200).send();
+    const id = res.locals.userId;
+    res.status(200).json(id);
   }
 );
 
