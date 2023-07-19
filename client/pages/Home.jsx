@@ -7,7 +7,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 const Home = () => {
   //overlay state for showing the form, set true to appear
   const [showOverlay, setShowOverlay] = useState(false);
- 
+
   //state for the form inputs
   const [apiName, setApiName] = useState('');
   const [apiURL, setApiURL] = useState('');
@@ -16,7 +16,7 @@ const Home = () => {
   const [apiData, setApiData] = useState([]);
 
   const navigate = useNavigate();
-  
+
   const openOverlay = () => {
     setShowOverlay(true);
   };
@@ -50,7 +50,7 @@ const Home = () => {
           typeFramework: false,
           typeLibrary: false,
           description: apiDescription,
-          keywords: ['maps'],
+          // keywords: [],
         }),
       });
 
@@ -75,7 +75,7 @@ const Home = () => {
         const data = await response.json();
         const newData = JSON.parse(JSON.stringify(data));
         setApiData(newData);
-      } catch (err) {}
+      } catch (err) { }
     };
     fetchData();
   }, []);

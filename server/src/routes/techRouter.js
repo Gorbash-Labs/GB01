@@ -7,7 +7,7 @@ const userController = require('../controllers/userController');
 const router = express.Router();
 
 // Search for tech with at '/tech/search?keywords=XXXX' on 'req.query.keywords'
-router.get(
+router.post(
   '/search',
   techController.searchTech, //
   (req, res) => {
