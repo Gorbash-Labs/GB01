@@ -56,7 +56,8 @@ router.post(
   postController.makePost,
   postController.findPostsByTech,
   (req, res) => {
-    res.status(200).json(res.locals.foundData);
+    console.log('Made it through findPostsByTech');
+    res.status(200).json(res.locals.postList);
   },
 );
 

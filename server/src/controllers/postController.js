@@ -35,22 +35,32 @@ postController.makePost = async (req, res, next) => {
   //const { username } = req.cookies;
   // const uploader_id = req.cookies('SSID');
   // Get post from body
-  console.log('hello')
+  console.log('hello');
   let {
     title,
-    tech_id,  //needs to be unique to added tech. e.g., youtube api is 1 and google maps api is 2
-    uploader_id,  //can stay 0 for now? because no specific user atm, but loaded placeholder user in user table as user_id 0
+    tech_id, //needs to be unique to added tech. e.g., youtube api is 1 and google maps api is 2
+    uploader_id, //can stay 0 for now? because no specific user atm, but loaded placeholder user in user table as user_id 0
     typeReview, //false
     typeAdvice, //false
-    typeCodeSnippet,  //false
-    typeHelpOffer,  //false
+    typeCodeSnippet, //false
+    typeHelpOffer, //false
     languageid, //5 for javascript
-    comment,  
+    comment,
   } = req.body;
-  console.log(title, tech_id, uploader_id, typeReview, typeAdvice, typeCodeSnippet, typeHelpOffer, languageid, comment)
+  console.log(
+    title,
+    tech_id,
+    uploader_id,
+    typeReview,
+    typeAdvice,
+    typeCodeSnippet,
+    typeHelpOffer,
+    languageid,
+    comment,
+  );
   // {
   //   "title": "Youtube",
-  //   "tech_id": 4, 
+  //   "tech_id": 4,
   //   "uploader_id": 0,
   //   "typeReview": false,
   //   "typeAdvice": false,
@@ -62,11 +72,11 @@ postController.makePost = async (req, res, next) => {
   // }
   // retreive tech id, uploader id, and language id
   // code
-  
 
   try {
-    // Add the post to the DB    
-    db.query(
+    // Add the post to the DB
+    console.log('Starting insert...');
+    await db.query(
       `INSERT INTO posts (title, tech, uploader, type_review, type_advice, type_code_snippet, type_help_offer, language, comment) 
       VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9)`,
       [
@@ -79,12 +89,16 @@ postController.makePost = async (req, res, next) => {
         typeHelpOffer,
         languageid,
         comment,
-      ]
-    );  
+      ],
+    );
     // This could get PostId for confirmation and potentially better communication w/ front end
+    console.log('Insert success');
     return next();
   } catch (err) {
-    return next('error');
+    return next({
+      log: 'Encountered insert error in postController.makePost',
+      message: { err: 'Insert error.' },
+    });
   }
 };
 
@@ -125,13 +139,15 @@ postController.findPostsByTech = async (req, res, next) => {
   // Get all post with req.params.id == techId
   // Attach to res.locals.postList;
   const techId = req.params.id;
+  console.log('TechID from route params: ', techId);
   const lookupText = 'SELECT * FROM posts WHERE tech = $1';
   const lookupVals = [techId];
   try {
+    console.log('Starting lookup...');
     const { rows } = await db.query(lookupText, lookupVals);
     // console.log('Retrieved post lookup: ', rows);
     res.locals.postList = rows;
-    next();
+    return next();
   } catch (err) {
     return next({
       log: 'Encountered lookup error in postController.findPostsByTech',
