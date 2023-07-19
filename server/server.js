@@ -24,12 +24,14 @@ app.use(express.static('./dist'));
 //Catch Oauth button requests
 app.use('/api/oauth', (req, res) => {
   console.log('entered oauth on backend');
+  console.log(process.env.CLIENT_ID);
   const hrefString =
     'https://github.com/login/oauth/authorize?scope=user:email&client_id=' +
-    CLIENT_ID;
-  res.locals.href = hrefString;
-  console.log('res.locals.href: ', res.locals.href);
-  res.status(200).json(res.locals.href);
+    process.env.CLIENT_ID;
+  console.log(hrefString);
+  // res.locals.href = hrefString;
+  // console.log(res.locals);
+  res.redirect(hrefString);
 });
 
 // API router for server handling of db info
@@ -55,8 +57,8 @@ app.use((err, req, res, next) => {
 });
 
 app.listen(PORT, () => {
-  console.log('client id', process.env.CLIENT_ID);
-  console.log('client secret', process.env.CLIENT_SECRET);
+  // console.log('client id', process.env.CLIENT_ID);
+  // console.log('client secret', process.env.CLIENT_SECRET);
   console.log(`Server listening on port ${PORT}.`);
 });
 
