@@ -132,25 +132,33 @@ techController.makeTech = async (req, res, next) => {
 // works with one word searches
 techController.searchTech = async (req, res, next) => {
   const { keywords } = req.query;
-  
   const searchWords = keywords.split('+').map(word => word.toLowerCase().trim());
+  console.log('searchwords', searchWords);
 
-  const conditions = searchWords.map(word => `LOWER(keywords) LIKE '%${word}%'`);
+  // const conditions = searchWords.map(word => `LOWER(keywords) LIKE '%${word}%'`);
 
-  const conditionQuery = conditions.join(' OR ');
-
-  const query = `SELECT * FROM techs WHERE ${conditionQuery}`;
-
+  // const conditionQuery = conditions.join(' OR ');
+  const query = `SELECT * FROM techs`;
   try {
     const queryResult = await db.query(query);
 
+    // checking if column in each each row in tech table contains all keywords
+    const matchingTechs = queryResult.rows.filter((tech) => {
+      const techKeywords = tech.keywords.toLowerCase().split(',').map(word => word.trim());
+      console.log('techKeywords', techKeywords);
+      return searchWords.every((word) => {
+        console.log('word: ', word);
+        return techKeywords.includes(word)
+      });
+    });
+    console.log('matchingtechs: ', matchingTechs)
     // matchingTechs = queryResult.rows;
 
     // res.locals.techList = res.locals.techList || [];
     // res.locals.techList = res.locals.techList.concat(matchingTechs);
 
     // Use the spread operator to concatenate the matching techs to the techList
-    res.locals.techList = [...(res.locals.techList || []), ...queryResult.rows];
+    res.locals.techList = matchingTechs;
 
     return next();
   } catch (err) {
