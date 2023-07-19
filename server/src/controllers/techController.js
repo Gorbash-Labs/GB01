@@ -47,7 +47,7 @@ techController.findTech = async (req, res, next) => {
 // works
 techController.makeTech = async (req, res, next) => {
   // Grab req.body and users cookies make a new db entry
-  // console.log('req.body:', req.body);
+  console.log('req.body:', req.body);
   console.log('in create tech')
   const {
     name,
@@ -62,8 +62,8 @@ techController.makeTech = async (req, res, next) => {
    
   
   const keywords = name.toLowerCase().split(' ').join(',');
-  // console.log(keywords);
-  console.log('req.body:', name,typeApi,typeFramework,typeLibrary,link,description,image,keywords);           
+  console.log('keyword:', keywords);
+  // console.log('req.body:', name,typeApi,typeFramework,typeLibrary,link,description,image,keywords);           
   
   const text = `INSERT INTO techs (name, type_api, type_framework, type_library, link, description, image_url, keywords)
                 VALUES ($1, $2, $3, $4, $5, $6, $7, $8)`;
@@ -119,6 +119,7 @@ techController.makeTech = async (req, res, next) => {
 
     return next();
   } catch (err) {
+    console.error('Error creating tech:', err);
     return next({
       log: 'Express error handler caught at techController.makeTech',
       message: { err: 'Unable to make new tech' },
