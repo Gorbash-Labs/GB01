@@ -6,7 +6,8 @@
   "scripts": {
     "start": "concurrently \"webpack-dev-server --mode development --open --hot\" \"nodemon ./server/server.js\"",
     "serve": "nodemon server/server.js",
-    "build": "webpack --mode production"
+    "build": "webpack --mode production",
+    "front": "webpack-dev-server --mode development --open --hot"
   },
   "keywords": [],
   "author": "Gorbash Labs",

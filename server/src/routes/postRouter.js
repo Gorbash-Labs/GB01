@@ -54,6 +54,8 @@ router.post(
   '/',
   // userController.authenticate, // skipped for testing
   postController.makePost,
+  // should send back new list as well
+  techController.findTechAfterUpdate,
   (req, res) => {
     res.sendStatus(200);
   }
