@@ -24,10 +24,10 @@ const App = () => {
       <BrowserRouter>
         <Routes>
           <Route index element={<Home />} loggedIn={setLoggedInStatus} userId={loggedInStatus} />
-          <Route path="home" element={<Home />} loggedIn={setLoggedInStatus} userId={loggedInStatus} />
-          <Route path="comments/:id" element={<Posts />} loggedIn={setLoggedInStatus} userId={loggedInStatus} />
-          <Route path="login" element={<Login />} loggedIn={setLoggedInStatus} userId={loggedInStatus} />
-          <Route path="profile" element={<Profile />} loggedIn={setLoggedInStatus} userId={loggedInStatus} />
+          <Route path="/home" element={<Home />} loggedIn={setLoggedInStatus} userId={loggedInStatus} />
+          <Route path="/comments/:id" element={<Posts />} loggedIn={setLoggedInStatus} userId={loggedInStatus} />
+          <Route path="/login" element={<Login />} loggedIn={setLoggedInStatus} userId={loggedInStatus} />
+          <Route path="/profile" element={<Profile />} loggedIn={setLoggedInStatus} userId={loggedInStatus} />
         </Routes>
       </BrowserRouter>
     </UserContext.Provider>

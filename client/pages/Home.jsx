@@ -14,6 +14,9 @@ const Home = () => {
   const [apiDescription, setApiDescription] = useState('');
   const [apiImageURL, setApiImageURL] = useState('');
   const [apiData, setApiData] = useState([]);
+  const [typeApi, setTypeApi] = useState(false)
+  const [typeFramework, setTypeFramework] = useState(false)
+  const [typeLibrary, setTypeLibrary] = useState(false)
 
   const navigate = useNavigate();
   
@@ -29,7 +32,7 @@ const Home = () => {
     navigate(`/comments/${senderTechId}`); // received as route.params
     //
   }
-
+  // useEffect(() => {
   const addAPI = async () => {
     console.log('addAPI inside');
     event.preventDefault();
@@ -46,9 +49,9 @@ const Home = () => {
           name: apiName,
           link: apiURL,
           image: apiImageURL,
-          typeApi: false,
-          typeFramework: false,
-          typeLibrary: false,
+          typeApi: typeApi,
+          typeFramework: typeFramework,
+          typeLibrary: typeLibrary,
           description: apiDescription,
           keywords: ['maps'],
         }),
@@ -61,6 +64,7 @@ const Home = () => {
       console.log(err);
     }
   };
+// }, [apiName,apiURL,apiDescription]);
 
   // initializing the page
   useEffect(() => {
@@ -105,12 +109,27 @@ const Home = () => {
     });
   };
 
+  const handleSelectChange = (selectedOption) => {
+
+    setTypeApi(false);
+    setTypeFramework(false);
+    setTypeLibrary(false);
+  
+    if (selectedOption === 'Api') {
+      setTypeApi(true);
+    } else if (selectedOption === 'Framework') {
+      setTypeFramework(true);
+    } else if (selectedOption === 'Library') {
+      setTypeLibrary(true);
+    }
+  };
+
   return (
     <div>
       <Navbar />
 
       <div className="main-header">
-        <div>
+        
           <div className="content">
             <div className="home-top-all-content">
               <div className="home-top-title-button">
@@ -136,66 +155,28 @@ const Home = () => {
               <div className="overlay">
                 <div className="overlay-content">
                   <div>
-                    <form>
+                    
                       <div className="formGroup">
                         <h2>Add Tech</h2>
-                        <input
-                          type="text"
-                          className="input-one"
-                          placeholder="Add API Name"
-                          value={apiName}
-                          onChange={(event) => {
-                            setApiName(event.target.value);
-                          }}
-                        />
-
-                        <input
-                          type="text"
-                          className="input-one"
-                          placeholder="Add API URL"
-                          value={apiURL}
-                          onChange={(event) => {
-                            setApiURL(event.target.value);
-                          }}
-                        />
-                        <textarea
-                          className="input-one"
-                          rows="3"
-                          maxLength="150"
-                          placeholder="Add Brief Description"
-                          value={apiDescription}
-                          onChange={(event) => {
-                            setApiDescription(event.target.value);
-                          }}
-                        />
-                        <input
-                          type="text"
-                          className="input-one"
-                          placeholder="Add Image URL"
-                          value={apiImageURL}
-                          onChange={(event) => {
-                            setApiImageURL(event.target.value);
-                          }}
-                        />
-                        <input
-                          type="file"
-                          className="input-one"
-                          accept="image/*"
-                        />
+                        <input type="text" className="input-one" placeholder="Add API Name" value={apiName}onChange={(event) => {setApiName(event.target.value);}} />
+                        <input type="text"className="input-one"placeholder="Add API URL"value={apiURL}onChange={(event) => { setApiURL(event.target.value);}}/>
+                        <textarea className="input-one"rows="3"maxLength="150"placeholder="Add Brief Description"value={apiDescription}onChange={(event) => {setApiDescription(event.target.value);}} />
+                        <input type="text"className="input-one"placeholder="Add Image URL"value={apiImageURL}onChange={(event) => {setApiImageURL(event.target.value); }}/>
+                        <input type="file"className="input-one"accept="image/*"/>
+                        <select className="input-one" placeholder = 'Select your type'onChange={(e) => handleSelectChange(e.target.value)}>
+                          <option value = ''disabled selected>Select Type of Tech</option>
+                          <option> Framework </option>
+                          <option> Api </option>
+                          <option> Library </option>
+                        </select>
+                        <button className="login-button" onClick={addAPI}>Submit!</button>
                       </div>
-
-                      <div className="btn">
-                        <button className="login-button" onClick={addAPI}>
-                          Submit!
-                        </button>
-                      </div>
-                    </form>
+                    
                   </div>
                 </div>
               </div>
             )}
           </div>
-        </div>
       </div>
       <div className="one">
         <div className="scroll-container">
@@ -207,62 +188,3 @@ const Home = () => {
 };
 
 export default Home;
-
-// const mockData = [
-//   {
-//     header: 'Google Maps API',
-//     link: 'https://developers.google.com/maps/documentation/javascript/overview',
-//     paragraph:
-//       'Google Maps API allows you to embed maps into your website or application and customize them to fit your needs.',
-//     image: 'https://i.ibb.co/jzvCsB1/Screenshot-2023-07-16-at-3-17-57-PM.png',
-//   },
-//   {
-//     header: 'Google Maps API',
-//     link: 'https://developers.google.com/maps/documentation/javascript/overview',
-//     paragraph:
-//       'Google Maps API allows you to embed maps into your website or application and customize them to fit your needs.',
-//     image: 'https://i.ibb.co/jzvCsB1/Screenshot-2023-07-16-at-3-17-57-PM.png',
-//   },
-//   {
-//     header: 'Google Maps API',
-//     link: 'https://developers.google.com/maps/documentation/javascript/overview',
-//     paragraph:
-//       'Google Maps API allows you to embed maps into your website or application and customize them to fit your needs.',
-//     image: 'https://i.ibb.co/jzvCsB1/Screenshot-2023-07-16-at-3-17-57-PM.png',
-//   },
-//   {
-//     header: 'Google Maps API',
-//     link: 'https://developers.google.com/maps/documentation/javascript/overview',
-//     paragraph:
-//       'Google Maps API allows you to embed maps into your website or application and customize them to fit your needs.',
-//     image: 'https://i.ibb.co/jzvCsB1/Screenshot-2023-07-16-at-3-17-57-PM.png',
-//   },
-//   {
-//     header: 'Google Maps API',
-//     link: 'https://developers.google.com/maps/documentation/javascript/overview',
-//     paragraph:
-//       'Google Maps API allows you to embed maps into your website or application and customize them to fit your needs.',
-//     image: 'https://i.ibb.co/jzvCsB1/Screenshot-2023-07-16-at-3-17-57-PM.png',
-//   },
-//   {
-//     header: 'Google Maps API',
-//     link: 'https://developers.google.com/maps/documentation/javascript/overview',
-//     paragraph:
-//       'Google Maps API allows you to embed maps into your website or application and customize them to fit your needs.',
-//     image: 'https://i.ibb.co/jzvCsB1/Screenshot-2023-07-16-at-3-17-57-PM.png',
-//   },
-//   {
-//     header: 'Google Maps API',
-//     link: 'https://developers.google.com/maps/documentation/javascript/overview',
-//     paragraph:
-//       'Google Maps API allows you to embed maps into your website or application and customize them to fit your needs.',
-//     image: 'https://i.ibb.co/jzvCsB1/Screenshot-2023-07-16-at-3-17-57-PM.png',
-//   },
-//   {
-//     header: 'Google Maps API',
-//     link: 'https://developers.google.com/maps/documentation/javascript/overview',
-//     paragraph:
-//       'Google Maps API allows you to embed maps into your website or application and customize them to fit your needs.',
-//     image: 'https://i.ibb.co/jzvCsB1/Screenshot-2023-07-16-at-3-17-57-PM.png',
-//   },
-// ];
