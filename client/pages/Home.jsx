@@ -103,6 +103,7 @@ const Home = () => {
                 />
               </div> */}
             </div>
+
             {showOverlay && <AddTechPopup 
             overlayOff = {() => setShowOverlay(false)}
             handleAddTechSubmit={handleAddTechSubmit}/>}

@@ -2,6 +2,15 @@ import React from 'react';
 
 function AddTechPopup(props) {
 
+  console.log('props of AddTech Popup: ', props.overlayState)
+  const [showOverlay, setShowOverlay] = props.overlayState;
+  console.log(showOverlay, setShowOverlay);
+
+  const handleAddTechSubmit = async (e) => {
+
+    e.preventDefault();
+
+
   return (
     <div className="overlay">
       <div className="overlay-content">
