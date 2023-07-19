@@ -8,17 +8,20 @@ const router = express.Router();
 
 // USERS
 // Add new User to the database
+// changed ednpoint to 'U', change on frontend as well
 router.post(
-  '/newuser',
+  '/newUser',
   userController.makeUser,
   userController.newSession,
   (req, res) => {
     // if the user already exists send a bool back to frontend
     if (res.locals.existingUser) {
       console.log('user already exists pick a different username');
-      res.status(200).send();
+      res.status(400).json({ message: 'Username taken!' });
     }
-    res.status(200).send();
+
+    console.log('User created and session created successfully.');
+    return res.sendStatus(200);
   }
 );
 
@@ -28,12 +31,14 @@ router.post(
   userController.authenticate,
   userController.newSession,
   (req, res) => {
-    res.status(200).send();
+    res.status(200).json({ message: 'Login successful!' });
   }
 );
 
 //Sign-Out
-router.get('/signout', userController.endSession, (req, res) => {
+router.get('/signout', 
+userController.endSession, 
+(req, res) => {
   res.status(200).redirect('/');
 });
 
