@@ -74,7 +74,7 @@ const Home = () => {
                 />
               </div>
             </div>
-            {showOverlay && <AddTechPopup />}
+            {showOverlay && <AddTechPopup overlayState={showOverlay, setShowOverlay}/>}
           </div>
         </div>
       </div>

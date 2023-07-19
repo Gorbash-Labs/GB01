@@ -10,7 +10,7 @@ const Comments = () => {
   //this is the state for the accordian, when the accordian is clicked it invokes an active index
   const [activeIndex, setActiveIndex] = useState(null);
 
-  //state overlay that is changed to true when the button is clicked in order to appear 
+  //state overlay that is changed to true when the button is clicked in order to appear
   const [showOverlay, setShowOverlay] = useState(false);
 
   //here are the states for the form to keep track of each input
@@ -209,6 +209,7 @@ const Comments = () => {
 };
 
 export default Comments;
+
 
 
 
