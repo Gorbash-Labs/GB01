@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext, createContext } from 'react';
+import React, { useReducer, useEffect, useContext, createContext } from 'react';
 import { Editor } from '@tinymce/tinymce-react';
 import { useParams } from 'react-router-dom';
 import './Comments.scss';
@@ -28,7 +28,6 @@ const commentsPageStateInit = {
     title: '',
     language: '',
     editor: '',
-    entry: '',
     imageFile: null,
   },
   comments: [],
@@ -39,7 +38,9 @@ const commentsPageStateInit = {
 const commentsPageReducer = (state, action) => {
   switch (action.type) {
     case actions.OPEN_OVERLAY: {
-      return { ...state, formVisible: true };
+      const form = { ...state.form };
+      form.visible = true;
+      return { ...state, form };
     }
     case actions.EXIT_OVERLAY: {
       return {
@@ -48,12 +49,14 @@ const commentsPageReducer = (state, action) => {
       };
     }
     case actions.EXPAND_ACCORDION: {
-      return { ...state, accordianIndexExpanded: action.payload };
+      const accordianIndexExpanded =
+        action.payload === state.accordianIndexExpanded ? null : action.payload;
+      return { ...state, accordianIndexExpanded };
     }
     case actions.FORM_INPUT: {
-      const { stateVar, input } = action.payload;
+      const { formVar, input } = action.payload;
       const newState = { ...state };
-      newState[stateVar] = input;
+      newState.form[formVar] = input;
       return newState;
     }
     case actions.SUBMIT_FORM: {
@@ -64,12 +67,13 @@ const commentsPageReducer = (state, action) => {
     }
     case actions.NEW_TECH_DATA: {
       // happens on initial page load
-      const tech = action.payload;
+      const tech = action.payload || state.tech;
       return { ...state, loading: 'idle', tech };
     }
     case actions.NEW_POSTS_DATA: {
       // happens on initial page load AND successful post submission
-      const comments = action.payload;
+      const comments = action.payload || state.comments.slice();
+
       return { ...state, loading: 'idle', comments };
     }
     default:
@@ -99,23 +103,29 @@ const Comments = () => {
   useEffect(() => {
     switch (state.loading) {
       case 'load_page': {
+        console.log('loading comments page');
         const request = {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',
           },
         };
-        fetch('/api/tech', request)
+        fetch(`/api/tech/${id}`, request)
           .then(res => res.json())
           .then(data => {
-            dispatch({ type: actions.NEW_TECH_DATA, payload: data.tech });
+            const { name, link, description, image_url } = data.tech;
+            dispatch({
+              type: actions.NEW_TECH_DATA,
+              payload: { name, link, description, image_url },
+            });
             dispatch({ type: actions.NEW_POSTS_DATA, payload: data.posts });
           });
         break;
       }
 
       case 'submit_form': {
-        const { title, entry, language } = state.form;
+        const { title, editor, language } = state.form;
+        console.log('submitting post with comment ', editor);
         const request = {
           method: 'POST',
           headers: {
@@ -124,7 +134,7 @@ const Comments = () => {
           body: JSON.stringify({
             title,
             languageid: 1, // hard-coded : need parsing for language here
-            comment: entry, // hard code this if not working
+            comment: editor, // hard code this if not working
             tech_id: id,
             typeReview: false,
             typeAdvice: false,
@@ -148,7 +158,7 @@ const Comments = () => {
       default:
         break;
     }
-  }, state.loading);
+  }, [state.loading]);
 
   //from here we had starting typing out the states to handle the backend format but realized we did not have enough time so it is not connected/finished
   /*
@@ -170,58 +180,21 @@ const Comments = () => {
     )
   */
 
-  // initializing the page
-  useEffect(() => {
-    //the tech id is linked to the home page box technology clicked
-    const techId = id;
+  let comments = [];
+  for (let index = 0; index < state.comments.length; index++) {
+    const activeIndex = state.accordianIndexExpanded;
+    const item = state.comments[index];
 
-    const fetchData = async () => {
-      try {
-        const response = await fetch('/api/tech/' + techId, {
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        });
-        const data = await response.json();
-        const newData = JSON.parse(JSON.stringify(data));
-        // newData =  {tech: tech-obj, posts: [post-obj, post-obj, ..]}
-        console.log('Hello there hello there');
-        setCommentEntries(newData.posts);
-        setCurrentTech(newData.tech);
-        setTechName(newData.tech.name);
-        setTechDescription(newData.tech.description);
-        setTechLink(newData.tech.link);
-        setTechImage(newData.tech.image_url);
-        console.log(newData);
-      } catch (err) {}
-    };
-    fetchData();
-  }, []);
-
-  const openOverlay = e => {
-    // e.preventDefault();
-    setShowOverlay(true);
-  };
-
-  const handleAccordionClick = index => {
-    setActiveIndex(index === activeIndex ? null : index);
-  };
-
-  const handleEditorChange = (content, editor) => {
-    setEditorContent(content);
-  };
-
-  const comments = commentEntries.map((item, index) => {
-    console.log(item);
-    return (
+    comments.push(
       <div
         key={index}
         className={`accordion-item ${index === activeIndex ? 'active' : ''}`}>
         <div className='accordion-header-outer'>
           <div
             className='accordion-header'
-            onClick={() => handleAccordionClick(index)}>
+            onClick={() =>
+              dispatch({ type: actions.EXPAND_ACCORDION, payload: index })
+            }>
             <div>{item.title}</div>
             <div className='details'>
               <p className='username'>{item.username}</p>
@@ -239,9 +212,41 @@ const Comments = () => {
             </div>
           </div>
         )}
-      </div>
+      </div>,
     );
-  });
+  }
+
+  // const comments = state.comments.map((item, index) => {
+  //   return (
+  //     <div
+  //       key={index}
+  //       className={`accordion-item ${index === activeIndex ? 'active' : ''}`}>
+  //       <div className='accordion-header-outer'>
+  //         <div
+  //           className='accordion-header'
+  //           onClick={() =>
+  //             dispatch({ type: actions.EXPAND_ACCORDION, payload: index })
+  //           }>
+  //           <div>{item.title}</div>
+  //           <div className='details'>
+  //             <p className='username'>{item.username}</p>
+  //             <p className='tags'>Posted by: Steve</p>
+  //           </div>
+  //         </div>
+  //       </div>
+  //       {index === activeIndex && (
+  //         <div className='accordion-content'>
+  //           <div>
+  //             <div className='experience'>
+  //               {HelperFunctions.md(item.comment)}
+  //             </div>
+  //             <img src={item.image} alt='Image' className='accordion-image' />
+  //           </div>
+  //         </div>
+  //       )}
+  //     </div>
+  //   );
+  // });
 
   return (
     <>
@@ -266,7 +271,8 @@ const Comments = () => {
 };
 
 const MainHeader = () => {
-  const { tech } = useContext(StateContext);
+  const state = useContext(StateContext);
+  const tech = state.tech;
   const { visible } = useContext(FormContext);
   const dispatch = useContext(DispatchContext);
   return (
@@ -274,18 +280,22 @@ const MainHeader = () => {
       <div>
         <div className='content'>
           <div className='comment-data-box'>
-            <img className='comment-data-image' src={techImage}></img>
+            <img className='comment-data-image' src={tech.image}></img>
             <div>
-              <a href={techLink} className='comment-tech-link'>
-                <h2>{techName}</h2>
+              <a href={tech.link} className='comment-tech-link'>
+                <h2>{tech.name}</h2>
               </a>
-              <p className='comment-tech-description'>{techDescription}</p>
+              <p className='comment-tech-description'>{tech.description}</p>
             </div>
           </div>
-          <button className='button' onClick={openOverlay}>
+          <button
+            className='button'
+            onClick={() => {
+              dispatch({ type: actions.OPEN_OVERLAY });
+            }}>
             + ADD POST
           </button>
-          {showOverlay && (
+          {visible && (
             <div className='overlay-comments'>
               <div className='overlay-content-comments'>
                 <div>
@@ -313,9 +323,12 @@ const Form = () => {
             type='text'
             className='input-one-first'
             placeholder='Title'
-            value={titleEntry}
+            value={form.title}
             onChange={event => {
-              setTitleEntry(event.target.value);
+              dispatch({
+                type: actions.FORM_INPUT,
+                payload: { formVar: 'title', input: event.target.value },
+              });
             }}
           />
           <h5></h5>
@@ -323,22 +336,25 @@ const Form = () => {
             type='text'
             className='input-one-c'
             placeholder='Language Used'
-            // require
-            value={languageEntry}
+            value={form.language}
             onChange={event => {
-              setLanguageEntry(event.target.value);
+              dispatch({
+                type: actions.FORM_INPUT,
+                payload: { formVar: 'language', input: event.target.value },
+              });
             }}
           />
           <Editor
             apiKey='ba2mzqsjqzq6lv0fu4numgypg3j9125otxy4rpzttx7vji3q'
-            initialValue={initialVal}
             className='custom-editor'
-            onEditorChange={handleEditorChange}
-            value={entry}
-            onChange={event => {
-              console.log(event.target.value);
-              setEntry(event.target.value);
+            onEditorChange={(value, editor) => {
+              console.log('editor change', value);
+              dispatch({
+                type: actions.FORM_INPUT,
+                payload: { formVar: 'editor', input: value },
+              });
             }}
+            value={form.editor}
             init={{
               height: 300,
               max_height: 340,
@@ -361,14 +377,23 @@ const Form = () => {
             type='file'
             className='input-one-image'
             accept='image/*'
-            value={image}
+            value={form.image}
             onChange={event => {
-              setImage(event.target.value);
+              dispatch({
+                type: actions.FORM_INPUT,
+                payload: { formVar: 'imageFile', input: event.target.value },
+              });
             }}
           />
         </div>
         <div className='btn'>
-          <button type='submit' className='login-button' onClick={addComment}>
+          <button
+            type='submit'
+            className='login-button'
+            onClick={() => {
+              console.log('submitting form...');
+              dispatch({ type: actions.SUBMIT_FORM });
+            }}>
             Submit
           </button>
         </div>
