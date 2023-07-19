@@ -25,7 +25,7 @@ const Comments = () => {
   // LOCAL STATES
   const [postThreads, setPostThreads] = useState([]);
   const [searchLanguageText, setSearchLanguageText] = useState('');
-  const [languageDropdown, setLanguageDropdown] = useState(false);
+  const [languageDropdown, setLanguageDropdown] = useState(true);
   const [postLanguageDropdown, setPostLanguageDropdown] = useState(false);
   const [lang, setLang] = useState([]);
   const [currentTech, setCurrentTech] = useState();

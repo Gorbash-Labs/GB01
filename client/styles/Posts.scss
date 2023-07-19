@@ -125,7 +125,7 @@ $width: 1000px;
 
 .searches {
   display: flex;
-  gap: 15px;
+  gap: 25px;
 
   .input-bar {
     flex-grow: 1;
@@ -147,6 +147,7 @@ $width: 1000px;
     border-radius: 10px;
     padding: 15px;
     font-size: 16px;
+    margin-bottom: 0px;
   }
 
   .language-bar.active {
