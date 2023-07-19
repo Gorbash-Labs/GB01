@@ -28,31 +28,42 @@ postController.findPost = async (req, res, next) => {
   }
 };
 
+//kenny was here
 postController.makePost = async (req, res, next) => {
   // An authorized user is posting
   // Get username from cookies/session
   //const { username } = req.cookies;
   // const uploader_id = req.cookies('SSID');
-  const uploader_id = 8;
   // Get post from body
-  const {
-    tech_id,
-    typeReview,
-    typeAdvice,
-    typeCodeSnippet,
-    typeHelpOffer,
-    languageid,
-    title,
-    comment,
-  } = req.body;
-  const image = '';
+  // const {
+  //   tech_id,
+  //   typeReview,
+  //   typeAdvice,
+  //   typeCodeSnippet,
+  //   typeHelpOffer,
+  //   languageid,
+  //   title,
+  //   comment,
+  // } = req.body;
+  const sampleUrl = {
+    title: "something",
+    tech_id: 8,
+    uploader_id: 8,
+    typeReview: false,
+    typeAdvice: false,
+    typeCodeSnippet: false,
+    typeHelpOffer: false,
+    languageid: 8,
+    comment: "hello",
+  }
   // retreive tech id, uploader id, and language id
   // code
 
   try {
     // Add the post to the DB
+    console.log('trying to post to db')
     db.query(
-      `INSERT INTO posts (title, tech, uploader, type_review, type_advice, type_code_snippet, type_help_offer, language, comment, image) 
+      `INSERT INTO posts (title, tech, uploader, type_review, type_advice, type_code_snippet, type_help_offer, language, comment) 
       VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10)`,
       [
         title,
@@ -64,7 +75,6 @@ postController.makePost = async (req, res, next) => {
         typeHelpOffer,
         languageid,
         comment,
-        image,
       ]
     );
     // This could get PostId for confirmation and potentially better communication w/ front end
