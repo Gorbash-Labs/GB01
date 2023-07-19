@@ -172,7 +172,8 @@ userController.updateUser = async (req, res, next) => {
   const { name, password, contact } = req.body;
   const lookupText = `UPDATE users 
   SET name = $2, password = $3, contact = $4 
-  WHERE user_id = $1`;
+  WHERE user_id = $1
+  RETURNING *`;
   const lookupVals = [userId, name, password, contact];
   try {
     const response = await db.query(lookupText, lookupVals);
