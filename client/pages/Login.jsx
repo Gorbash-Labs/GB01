@@ -158,7 +158,7 @@ const Login = (props) => {
   return (
     <div>
       <Navbar />
-      <body>
+      <section>
         {!localStorage.getItem("accessToken") && !validLogin ?
           <>
             <div className="formHeader">
@@ -219,7 +219,7 @@ const Login = (props) => {
             </footer>
           </>
         }
-      </body >
+      </section >
     </div>
   )
 }
