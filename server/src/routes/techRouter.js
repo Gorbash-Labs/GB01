@@ -10,7 +10,7 @@ const router = express.Router();
 // works with single search word
 router.get(
   '/search',
-  techController.searchTech, //
+  techController.searchTech,
   (req, res) => {
     res.status(200).json(res.locals.techList);
   }
