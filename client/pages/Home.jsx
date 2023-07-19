@@ -160,7 +160,6 @@ const Home = () => {
   return (
     <OverlayDispatchContext.Provider value={overlayDispatch}>
       <OverlayFormContext.Provider value={overlayState}>
-        <Navbar />
         <MainHeader />
         <ApisContainer comments={comments} />
       </OverlayFormContext.Provider>

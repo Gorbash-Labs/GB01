@@ -243,7 +243,6 @@ const Comments = () => {
 
   return (
     <>
-      <Navbar />
       <DispatchContext.Provider value={dispatch}>
         <StateContext.Provider value={state}>
           <FormContext.Provider value={state.form}>
