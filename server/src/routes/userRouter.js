@@ -44,7 +44,9 @@ router.get(
   postController.findPostsByUser,
   (req, res) => {
     // res.locals.userRequest && res.locals.postList
-    res.status(200).json({user: res.locals.userRequest, posts: res.locals.postList});
+    res
+      .status(200)
+      .json({ user: res.locals.userRequest, posts: res.locals.postList });
   }
 );
 
