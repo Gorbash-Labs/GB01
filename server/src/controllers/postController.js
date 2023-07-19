@@ -35,36 +35,38 @@ postController.makePost = async (req, res, next) => {
   //const { username } = req.cookies;
   // const uploader_id = req.cookies('SSID');
   // Get post from body
-  // const {
-  //   tech_id,
-  //   typeReview,
-  //   typeAdvice,
-  //   typeCodeSnippet,
-  //   typeHelpOffer,
-  //   languageid,
-  //   title,
-  //   comment,
-  // } = req.body;
-  const sampleUrl = {
-    title: "something",
-    tech_id: 8,
-    uploader_id: 8,
-    typeReview: false,
-    typeAdvice: false,
-    typeCodeSnippet: false,
-    typeHelpOffer: false,
-    languageid: 8,
-    comment: "hello",
-  }
+  let {
+    title,
+    tech_id,  //needs to be unique to added tech. e.g., youtube api is 1 and google maps api is 2
+    uploader_id,  //can stay 0 for now? because no specific user atm, but loaded placeholder user in user table as user_id 0
+    typeReview, //false
+    typeAdvice, //false
+    typeCodeSnippet,  //false
+    typeHelpOffer,  //false
+    languageid, //5 for javascript
+    comment,  
+  } = req.body;
+  // {
+  //   "title": "Youtube",
+  //   "tech_id": 4, 
+  //   "uploader_id": 0,
+  //   "typeReview": false,
+  //   "typeAdvice": false,
+  //   "typeCodeSnippet": false,
+  //   "typeHelpOffer": false,
+  //   "languageid": 5,
+  //   "comment": "hello",
+  //   "image": "hello"
+  // }
   // retreive tech id, uploader id, and language id
   // code
+  
 
   try {
-    // Add the post to the DB
-    console.log('trying to post to db')
+    // Add the post to the DB    
     db.query(
       `INSERT INTO posts (title, tech, uploader, type_review, type_advice, type_code_snippet, type_help_offer, language, comment) 
-      VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10)`,
+      VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9)`,
       [
         title,
         tech_id,
@@ -76,13 +78,31 @@ postController.makePost = async (req, res, next) => {
         languageid,
         comment,
       ]
-    );
+    );    
     // This could get PostId for confirmation and potentially better communication w/ front end
     return next();
   } catch (err) {
     return next('error');
   }
 };
+
+//sends all rows to front-end with passed in tech_id 
+postController.sendBackPost = async (req, res, next) => {
+  const { tech_id } = req.body;
+
+  try {
+    const postQueryResult = await db.query(
+      'SELECT tech_id FROM posts WHERE tech_id = $1 ORDER BY post_id',
+      [
+        tech_id
+      ]
+    )
+    res.locals.foundData = postQueryResult.rows;
+    return next()
+  } catch(error) {
+    return next(error)
+  }  
+}
 
 postController.editPost = (req, res, next) => {
   // An authorized/authenticated user wants to edit the post saved to res.locals.postRequest.

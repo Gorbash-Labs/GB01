@@ -181,7 +181,7 @@ const ApisContainer = ({ comments }) => {
             </a>
             <p>{item.description}</p>
             <div className='button-comment'>
-              <button onClick={comments} id={item.tech_id}>
+              <button onClick={(e) => comments(e)} id={item.tech_id}>
                 Posts
               </button>
             </div>
@@ -300,7 +300,7 @@ const MainHeader = () => {
                       <button
                         className='login-button'
                         onClick={() => {
-                          dispatch('SUBMIT');
+                          dispatch({type: actions.SUBMIT});
                         }}
                       >
                         Submit!
