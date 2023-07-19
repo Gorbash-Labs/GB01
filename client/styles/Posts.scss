@@ -204,18 +204,24 @@ $width: 1000px;
 }
 // INPUT BAR
 
-//ACCORDION
 .accordion {
-  width: 100%;
-  max-width: $width;
-  margin: 0 auto;
+  width: $width;
   font-size: 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
 }
 
 .accordion-item {
   margin-bottom: 1px;
   display: flex;
   flex-direction: column;
+  border: 1px solid rgb(211, 211, 211);
+  padding: 25px;
+  border-radius: 10px;
+  &:hover {
+    box-shadow: 0px 0px 10px rgb(209, 209, 209);
+  }
 }
 
 .details {
@@ -234,34 +240,29 @@ $width: 1000px;
   font-size: 16px;
 }
 
-.accordion-header-outer-p {
-  margin-top: 18px;
-  margin-left: 5px;
-}
-.accordion-header-outer div {
-  margin-top: 18px;
-  margin-left: 5px;
-}
-.accordion-header {
+.language {
+  background-color: #008000;
+  color: white;
+  padding: 5px 12px;
+  border-radius: 5px;
+  font-size: 14px;
   display: flex;
-  justify-content: flex-end;
-  background-color: rgba(147, 147, 147, 0.5);
-  height: 85px;
-  margin-bottom: 10px;
-  margin-top: 10px;
+  align-items: center;
+}
+
+.accordion-header {
+  padding: 0;
+  display: flex;
+  // background-color: rgba(146, 139, 139, 0.5);
+  flex-grow: 1;
   font-size: 25px;
+  justify-content: space-between;
+  cursor: pointer;
+  flex-direction: column;
 }
 
 .acc-footer p {
   font-size: 18px;
-}
-
-.accordion-header {
-  display: flex;
-  justify-content: space-between;
-  padding: 10px;
-  cursor: pointer;
-  flex-direction: column;
 }
 
 .date {
@@ -274,15 +275,12 @@ $width: 1000px;
 }
 
 .accordion-content > div {
-  padding-left: 25px;
-  padding-right: 25px;
-  padding-top: 0px;
-  margin-left: 28px;
-  margin-right: 50px;
+  margin-top: 20px;
+  padding: 25px;
   display: flex;
-  justify-content: center;
-  background-color: rgba(147, 147, 147, 0.2);
+  background-color: rgba(150, 165, 174, 0.2);
   position: relative;
+  border-radius: $text-border;
   flex-direction: column;
 }
 
