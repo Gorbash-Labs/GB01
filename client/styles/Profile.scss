@@ -1,38 +1,70 @@
-.body {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  grid-template-rows: 15% auto;
-  gap: 10px;
-  margin: 10px;
-  padding: 10px;
-  border: 2px black solid;
-  width: 90%;
-  height:90%;
-  min-height: 500px;
-  min-width: 90%;
+.basicInfo {
+  list-style: none;
 }
 
-.profile_image {
-  border: 2px navy solid;
-  width: 80px;
+.homeButton,
+.editButton {
+  height: 25px;
+  width: 75px;
+  margin: 5px;
 }
 
-.profile_text {
-  border: 2px navy solid;
+.profilePage {
+  display: flex;
+  box-sizing: border-box;
+  width: 100vw;
+  flex-direction: column;
+  margin: 15px;
 }
 
-.profile_pass {
-  border: 2px navy solid;
+.header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 95%;
+  margin: 15px;
 }
 
-.profile_friends_list {
-  border: 2px olive solid;
+.headerLeft,
+.headerRight {
+  display: flex;
+  flex-direction: column;
 }
 
-.profile_comments_list {
-  border: 2px olive solid;
+.basicInfoContents {
+  display: flex;
+  flex-direction: column;
 }
 
-.profile_APIs_list {
-  border: 2px olive solid;
+.editButton {
+  display: flex;
+  align-self: flex-end;
+}
+
+.headerRight {
+  display: flex;
+  align-items: center;
+}
+
+.editImg {
+  height: 20px;
+  width: 20px;
+}
+
+.imgContainer {
+  display: flex;
+  height: 200px;
+  width: 200px;
+  justify-content: flex-end;
+}
+
+.headerLeft {
+  display: flex;
+  justify-content: flex-start;
+}
+
+.postContainer {
+  display: flex;
+  width: 80%;
+  align-self: center;
 }
