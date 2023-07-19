@@ -1,44 +1,48 @@
-div {
-  display: flex;
-  justify-content: space-between;
-  box-sizing: border-box;
-}
-
-ul {
+.basicInfo {
   list-style: none;
 }
 
-button {
+.homeButton,
+.editButton {
   height: 25px;
   width: 75px;
   margin: 5px;
 }
 
 .profilePage {
+  display: flex;
+  box-sizing: border-box;
   width: 100vw;
   flex-direction: column;
   margin: 15px;
 }
 
 .header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
   width: 95%;
   margin: 15px;
 }
 
 .headerLeft,
 .headerRight {
+  display: flex;
   flex-direction: column;
 }
 
 .basicInfoContents {
+  display: flex;
   flex-direction: column;
 }
 
 .editButton {
+  display: flex;
   align-self: flex-end;
 }
 
 .headerRight {
+  display: flex;
   align-items: center;
 }
 
@@ -48,16 +52,19 @@ button {
 }
 
 .imgContainer {
+  display: flex;
   height: 200px;
   width: 200px;
   justify-content: flex-end;
 }
 
 .headerLeft {
+  display: flex;
   justify-content: flex-start;
 }
 
 .postContainer {
+  display: flex;
   width: 80%;
   align-self: center;
 }
