@@ -11,69 +11,144 @@ const actions = {
   EXPAND_ACCORDION: 'EXPAND_ACCORDION',
   FORM_INPUT: 'FORM_INPUT', // types of form input are title, lang, contentEntry, image file
   SUBMIT_FORM: 'SUBMIT_FORM',
+  LOAD_PAGE: 'LOAD_PAGE',
+  NEW_TECH_DATA: 'NEW_TECH_DATA',
+  NEW_POSTS_DATA: 'NEW_POSTS_DATA',
 };
 
 const commentsPageStateInit = {
+  tech: {
+    name: '',
+    link: '',
+    description: '',
+    image_url: '',
+  },
+  form: {
+    visible: false,
+    title: '',
+    language: '',
+    editor: '',
+    entry: '',
+    imageFile: null,
+  },
+  comments: [],
   accordianIndexExpanded: null,
-  formVisible: false,
-  contentEditor: '',
-  contentEntry: null,
-  techName: '',
-  techLink: '',
-  techDescription: '',
-  techImage: '',
-  imageFile: null,
   loading: 'idle',
 };
 
 const commentsPageReducer = (state, action) => {
   switch (action.type) {
-    case actions.SAMPLE: {
-      return state;
-    }
     case actions.OPEN_OVERLAY: {
-      return {
-        ...state,
-        formVisible: true,
-      };
+      return { ...state, formVisible: true };
     }
     case actions.EXIT_OVERLAY: {
       return {
         ...state,
-        formVisible: false,
-        
+        form: { ...commentsPageStateInit.form },
       };
     }
     case actions.EXPAND_ACCORDION: {
-      return state;
+      return { ...state, accordianIndexExpanded: action.payload };
     }
     case actions.FORM_INPUT: {
-      return state;
+      const { stateVar, input } = action.payload;
+      const newState = { ...state };
+      newState[stateVar] = input;
+      return newState;
     }
     case actions.SUBMIT_FORM: {
-      return state;
+      return { ...state, loading: 'submit_form' };
+    }
+    case actions.LOAD_PAGE: {
+      return { ...state, loading: 'load_page' };
+    }
+    case actions.NEW_TECH_DATA: {
+      // happens on initial page load
+      const tech = action.payload;
+      return { ...state, loading: 'idle', tech };
+    }
+    case actions.NEW_POSTS_DATA: {
+      // happens on initial page load AND successful post submission
+      const comments = action.payload;
+      return { ...state, loading: 'idle', comments };
     }
     default:
       return state;
   }
 };
 
+const StateContext = createContext();
+const FormContext = createContext();
+const DispatchContext = createContext();
+
 const Comments = () => {
-  //this is the state for the accordian, when the accordian is clicked it invokes an active index
-  const [activeIndex, setActiveIndex] = useState(null);
+  // Tech ID specified by react route params
+  const { id } = useParams();
 
-  //state overlay that is changed to true when the button is clicked in order to appear
-  const [showOverlay, setShowOverlay] = useState(false);
+  const [state, dispatch] = useReducer(
+    commentsPageReducer,
+    commentsPageStateInit,
+  );
 
-  //here are the states for the form to keep track of each input
-  const [editorContent, setEditorContent] = useState('');
-  const initialVal = ` - Technical notes / Key insights`;
-  const [techName, setTechName] = useState('');
-  const [techLink, setTechLink] = useState('');
-  const [techDescription, setTechDescription] = useState('');
-  const [techImage, setTechImage] = useState('');
-  const [entry, setEntry] = useState();
-  const [image, setImage] = useState();
+  // initial page load
+  useEffect(() => {
+    dispatch({ type: actions.LOAD_PAGE });
+  }, []);
+
+  // all loading state handlers (fetch requests)
+  useEffect(() => {
+    switch (state.loading) {
+      case 'load_page': {
+        const request = {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        };
+        fetch('/api/tech', request)
+          .then(res => res.json())
+          .then(data => {
+            dispatch({ type: actions.NEW_TECH_DATA, payload: data.tech });
+            dispatch({ type: actions.NEW_POSTS_DATA, payload: data.posts });
+          });
+        break;
+      }
+
+      case 'submit_form': {
+        const { title, entry, language } = state.form;
+        const request = {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            title,
+            languageid: 1, // hard-coded : need parsing for language here
+            comment: entry, // hard code this if not working
+            tech_id: id,
+            typeReview: false,
+            typeAdvice: false,
+            typeCodeSnippet: false,
+            typeHelpOffer: false,
+          }),
+        };
+        fetch('/api/post', request)
+          .then(res => res.json())
+          .then(data => {
+            console.log('Success! Data: ', data);
+            if (data.length > state.comments.length)
+              dispatch({ type: actions.NEW_POSTS_DATA, payload: data });
+          })
+          .catch(err => {
+            console.log('Error: ', err);
+          });
+        break;
+      }
+
+      default:
+        break;
+    }
+  }, state.loading);
 
   //from here we had starting typing out the states to handle the backend format but realized we did not have enough time so it is not connected/finished
   /*
@@ -81,78 +156,19 @@ const Comments = () => {
         post_id SERIAL PRIMARY KEY,
         title TEXT NOT NULL,
         tech INTEGER NOT NULL,
-        FOREIGN KEY(tech) REFERENCES techs(tech_id),
-        uploader INTEGER NOT NULL,
-        FOREIGN KEY(uploader) REFERENCES users(user_id),
-        type_review BOOLEAN,
-        type_advice BOOLEAN,
-        type_code_snippet BOOLEAN,
-        type_help_offer BOOLEAN,
+          FOREIGN KEY(tech) REFERENCES techs(tech_id),
+        uploader INTEGER NOT NULL, *TO-DO (currently hard-coded)
+          FOREIGN KEY(uploader) REFERENCES users(user_id),
+        type_review BOOLEAN, *TO-DO
+        type_advice BOOLEAN, *TO-DO
+        type_code_snippet BOOLEAN, *TO-DO
+        type_help_offer BOOLEAN, *TO-DO
         language INTEGER NOT NULL,
-        FOREIGN KEY(language) REFERENCES languages (language_id),
+          FOREIGN KEY(language) REFERENCES languages (language_id),
         comment VARCHAR(5000) NOT NULL,
         image TEXT
     )
   */
-
-  // title TEXT NOT NULL,
-  const [titleEntry, setTitleEntry] = useState();
-
-  // tech INTEGER NOT NULL,
-  const [currentTech, setCurrentTech] = useState();
-  // uploader INTEGER NOT NULL,
-
-  // type_review BOOLEAN,
-
-  // type_code_snippet BOOLEAN,
-
-  // type_advice BOOLEAN,
-
-  // type_help_offer BOOLEAN,
-
-  // comment VARCHAR(5000) NOT NULL,
-
-  // language INTEGER NOT NULL,
-  const [languageEntry, setLanguageEntry] = useState();
-  const [commentEntries, setCommentEntries] = useState([]);
-
-  //to find id of our url
-  const { id } = useParams();
-
-  const addComment = async () => {
-    event.preventDefault();
-    console.log(id, titleEntry, entry, image);
-    try {
-      setShowOverlay(false);
-      //on the button click the overlay is set back to false
-      const response = await fetch('/api/post', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-
-        body: JSON.stringify({
-          // userId: number, found via backend
-
-          tech_id: id,
-          typeReview: false,
-          typeAdvice: false,
-          typeCodeSnippet: false,
-          typeHelpOffer: false,
-          languageid: 1,
-          title: titleEntry,
-          comment: entry,
-          image: image,
-        }),
-      });
-
-      const data = await response.json();
-      console.log('success');
-      console.log('data returned', data);
-    } catch (err) {
-      console.log(err);
-    }
-  };
 
   // initializing the page
   useEffect(() => {
@@ -228,19 +244,31 @@ const Comments = () => {
   });
 
   return (
-    <div>
+    <>
       <Navbar />
-      <MainHeader />
-      <div className='input-container'>
-        <input type='text' className='input-bar' placeholder='Search APIs...' />
-      </div>
-
-      <div className='accordion'>{comments}</div>
-    </div>
+      <DispatchContext.Provider value={dispatch}>
+        <StateContext.Provider value={state}>
+          <FormContext.Provider value={state.form}>
+            <MainHeader />
+            <div className='input-container'>
+              <input
+                type='text'
+                className='input-bar'
+                placeholder='Search APIs...'
+              />
+            </div>
+            <div className='accordion'>{comments}</div>
+          </FormContext.Provider>
+        </StateContext.Provider>
+      </DispatchContext.Provider>
+    </>
   );
 };
 
 const MainHeader = () => {
+  const { tech } = useContext(StateContext);
+  const { visible } = useContext(FormContext);
+  const dispatch = useContext(DispatchContext);
   return (
     <div className='main-header'>
       <div>
@@ -273,6 +301,8 @@ const MainHeader = () => {
 };
 
 const Form = () => {
+  const form = useContext(FormContext);
+  const dispatch = useContext(DispatchContext);
   return (
     <form>
       <div className='formGroup-two'>
