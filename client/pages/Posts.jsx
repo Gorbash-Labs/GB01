@@ -27,7 +27,8 @@ const Comments = () => {
   const [searchLanguageText, setSearchLanguageText] = useState('');
   const [languageDropdown, setLanguageDropdown] = useState(false);
   const [postLanguageDropdown, setPostLanguageDropdown] = useState(false);
-  const [lang, setLang] = useState(['C', 'C++', 'JavaScript', 'Python']);
+  const [lang, setLang] = useState([]);
+  const [currentTech, setCurrentTech] = useState();
 
   // ADD POST STATES
   // tech ID
@@ -44,8 +45,6 @@ const Comments = () => {
   const [postLanguageText, setPostLanguageText] = useState('');
   // title TEXT NOT NULL,
   const [titleEntry, setTitleEntry] = useState();
-  // tech INTEGER NOT NULL,
-  const [currentTech, setCurrentTech] = useState();
   // comment VARCHAR(5000) NOT NULL,
   const [entry, setEntry] = useState();
   // language INTEGER NOT NULL,
@@ -68,16 +67,16 @@ const Comments = () => {
           typeAdvice: false,
           typeCodeSnippet: false,
           typeHelpOffer: false,
-          languageid: 1,
+          languageName: postLanguageText, // or just
           title: titleEntry,
           comment: entry,
           image: image,
         }),
       });
-      console.log(response);
-      const data = await response.json();
-      setPostThreads(data);
-      console.log('data returned', data);
+      // console.log(response);
+      // const data = await response.json();
+      // setPostThreads(data);
+      // console.log('data returned', data);
       setShowOverlay(false);
       console.log('Closing Overlay');
     } catch (err) {
@@ -118,6 +117,7 @@ const Comments = () => {
         setTechDescription(newData.tech.description);
         setTechLink(newData.tech.link);
         setTechImage(newData.tech.image_url);
+        setLang(newData.languages);
         console.log(newData);
       } catch (err) {}
     };
@@ -136,21 +136,19 @@ const Comments = () => {
   };
 
   const posts = postThreads.map((item, index) => {
-    // console.log(item);
     return (
       <div
         key={index}
         className={`accordion-item ${index === activeIndex ? 'active' : ''}`}
+        onClick={() => handleAccordionClick(index)}
       >
-        <div
-          className="accordion-header"
-          onClick={() => handleAccordionClick(index)}
-        >
-          <div>{item.title}</div>
-          <div className="details">
-            <p className="username">{item.username}</p>
-            <p className="tags">Posted by: Steve</p>
+        <div className="accordion-header">
+          <div style={{ display: 'flex', gap: 15, alignItems: 'center' }}>
+            <div>{item.title}</div>
+
+            <div className="language">{lang[item.language]}</div>
           </div>
+          <div className="tags">Goru User: Steve {item.uploader}</div>
         </div>
 
         {index === activeIndex && (

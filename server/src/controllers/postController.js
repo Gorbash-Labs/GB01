@@ -41,35 +41,44 @@ postController.makePost = async (req, res, next) => {
     typeAdvice,
     typeCodeSnippet,
     typeHelpOffer,
-    languageid,
+    languageName,
     title,
     comment,
   } = req.body;
+
   const image = '';
   // retreive tech id, uploader id, and language id
   // code
 
+  const { rows } = await db.query(
+    `SELECT language_id FROM languages WHERE name = $1`,
+    [languageName]
+  );
+  const languageId = rows[0].language_id;
   try {
+    console.log(req.body);
+    console.log('language id: ', languageId);
+    const values = [
+      title,
+      tech_id,
+      uploader_id,
+      typeReview,
+      typeAdvice,
+      typeCodeSnippet,
+      typeHelpOffer,
+      languageId,
+      comment,
+      image,
+    ];
     // Add the post to the DB
-    db.query(
+    await db.query(
       `INSERT INTO posts (title, tech, uploader, type_review, type_advice, type_code_snippet, type_help_offer, language, comment, image) 
       VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10)`,
-      [
-        title,
-        tech_id,
-        uploader_id,
-        typeReview,
-        typeAdvice,
-        typeCodeSnippet,
-        typeHelpOffer,
-        languageid,
-        comment,
-        image,
-      ]
+      values
     );
-    res.local.techId = tech_id;
-    // This could get PostId for confirmation and potentially better communication w/ front end
+    console.log('Successfully Inserted Post');
 
+    res.locals.techId = tech_id;
     return next();
   } catch (err) {
     return next('error');
@@ -107,6 +116,15 @@ postController.findPostsByUser = async (req, res, next) => {
       message: { err: 'Lookup error.' },
     });
   }
+};
+
+postController.findLanguagesByTech = async (req, res, next) => {
+  // get a list of languages
+  const name = await db.query(`SELECT name FROM languages`);
+  const languages = name.rows.map((pairing) => pairing.name);
+  console.log(languages);
+  res.locals.languages = languages;
+  return next();
 };
 
 postController.findPostsByTech = async (req, res, next) => {
