@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import BasicInfo from '../components/BasicInfo.jsx';
 
-const ProfileHeader = ({ user, userId }) => {
+const ProfileHeader = ({ user, setUser, globalId }) => {
   const [edit, setEdit] = useState(false);
   const [editText, setEditText] = useState('Edit');
   const [newUsername, setNewUsername] = useState(user.name);
@@ -40,6 +40,7 @@ const ProfileHeader = ({ user, userId }) => {
         }),
       });
       const data = await response.json();
+      setUser(data);
     } catch (err) {
       console.log('err');
     }

@@ -56,4 +56,8 @@ router.get('/', userController.findAllUsers, (req, res) => {
   res.status(200).json({ user: res.locals.userRequest });
 });
 
+router.patch('/:id', userController.updateUser, (req, res) => {
+  res.status(200).json(res.locals.newUserInfo);
+});
+
 module.exports = router;

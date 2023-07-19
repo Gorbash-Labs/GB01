@@ -27,7 +27,7 @@ const Profile = () => {
   return (
     <div className="profilePage">
       {/* TODO: button to navigate back to home page */}
-      <ProfileHeader user={user} userId={UserContext} />
+      <ProfileHeader user={user} globalId={globalId} setUser={setUser} />
       <ProfileBody posts={posts} />
     </div>
   );
