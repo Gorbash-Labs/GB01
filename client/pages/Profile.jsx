@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-// import '../styles/Profile.scss';
+import '../styles/Profile.scss';
 import { UserContext } from '../contexts/Contexts.jsx'; //userContext = username
 import ProfileHeader from '../components/ProfileHeader.jsx';
 import ProfileBody from '../components/ProfileBody.jsx';
@@ -14,7 +14,6 @@ const Profile = () => {
       try {
         const response = await fetch(`/api/user/Steve`);
         const data = await response.json();
-        console.log('profile user data:', data);
         setUser(data.user);
         setPosts(data.posts);
       } catch (err) {
@@ -22,8 +21,6 @@ const Profile = () => {
       }
     };
     getData();
-    console.log('user:', user);
-    console.log('posts:', posts);
   }, []);
   /* 
    "user": {
