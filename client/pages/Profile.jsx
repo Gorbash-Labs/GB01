@@ -1,16 +1,17 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import '../styles/Profile.scss';
-import { UserContext } from '../contexts/Contexts.jsx'; //userContext = username
+import { UserIdContext } from '../contexts/Contexts.jsx'; //userContext = username
 import ProfileHeader from '../components/ProfileHeader.jsx';
 import ProfileBody from '../components/ProfileBody.jsx';
 
 const Profile = () => {
   const [user, setUser] = useState({});
   const [posts, setPosts] = useState({});
+  const { globalId } = useContext(UserIdContext);
 
   useEffect(() => {
     const getData = async () => {
-      // const response = await fetch(`/api/user/${UserContext}`);
+      // const response = await fetch(`/api/user/${globalId}`);
       try {
         const response = await fetch(`/api/user/Steve`);
         const data = await response.json();
