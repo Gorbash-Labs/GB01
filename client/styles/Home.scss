@@ -1,3 +1,6 @@
+body{
+  background-color: rgba(131, 40, 176, 0.729);
+}
 .pageMaterial {
   display: flex;
   justify-content: center;
@@ -80,7 +83,7 @@
 }
 
 .input-one {
-  height: 40px;
+  height: 30px;
   border: 1px solid #ccc;
   font-size: 16px;
   font-weight: 400;
@@ -193,12 +196,13 @@
 
 .box {
   display: flex;
-  background-color: #f1f1f1;
-  padding: 20px;
   flex-direction: column;
+  background-color: whitesmoke;
+  padding: 20px;
   width: 315px;
   height: 290px;
   word-wrap: break-word;
+  border-radius: 18px;
 
   &:hover {
     box-shadow: 0 0 10px rgb(190, 105, 105);
