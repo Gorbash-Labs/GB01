@@ -38,6 +38,8 @@
     "@mui/styled-engine": "^5.13.2",
     "@tinymce/tinymce-react": "^4.3.0",
     "app-root-path": "^3.1.0",
+    "bcrypt": "^5.1.0",
+    "body-parser": "^1.20.2",
     "cookie-parser": "^1.4.6",
     "dart-sass": "^1.25.0",
     "express": "^4.18.2",

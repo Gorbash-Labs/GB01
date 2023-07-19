@@ -49,7 +49,10 @@ name: string (e.g CTRI17)
         link TEXT,
         description VARCHAR(300),
         image_url TEXT
+        keywords VARCHAR(255);
     )
+
+
 
 
 ***TECH-KEYWORDS***
