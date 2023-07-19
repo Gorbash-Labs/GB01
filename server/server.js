@@ -1,6 +1,7 @@
 const path = require('path');
 const express = require('express');
 const cookieParser = require('cookie-parser');
+const dotenv = require('dotenv').config();
 
 // require in dotenv.config
 // use process.env.variable name to extract the hidden info from the .env file
@@ -43,6 +44,8 @@ app.use((err, req, res, next) => {
 });
 
 app.listen(PORT, () => {
+  console.log('client id',process.env.CLIENT_ID);
+  console.log('client secret',process.env.CLIENT_SECRET);
   console.log(`Server listening on port ${PORT}.`);
 });
 
