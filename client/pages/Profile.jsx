@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import '../styles/Profile.scss';
+// import '../styles/Profile.scss';
 import { UserContext } from '../contexts/Contexts.jsx'; //userContext = username
 import ProfileHeader from '../components/ProfileHeader.jsx';
 import ProfileBody from '../components/ProfileBody.jsx';
