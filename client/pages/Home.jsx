@@ -3,7 +3,7 @@ import Navbar from '../components/Navbar.jsx';
 import Apicard from '../components/Apicard.jsx';
 import './Home.scss';
 import { useNavigate, useParams } from 'react-router-dom';
-import SearchBar from '../components/SearchBar.jsx'
+import SearchBar from '../components/SearchBar.jsx';
 
 const actions = {
   SHOW_OVERLAY: 'SHOW_OVERLAY',
@@ -54,7 +54,6 @@ const overlayStateReducer = (state, action) => {
       return { ...state, loading: 'idle', apiData: action.payload };
     }
     case actions.EXIT: {
-      console.log('IS THIS WORKING')
       return {
         ...state,
         visible: false,
@@ -173,7 +172,6 @@ const ApisContainer = ({ comments }) => {
   const { apiData } = useContext(OverlayFormContext);
   const renderBox = () => {
     return apiData.map((item, index) => {
-      console.log(item);
       return (
         <div className='box' key={index}>
           <div className='image-container'>
@@ -228,22 +226,22 @@ const MainHeader = () => {
               </div>
             </div>
             <div className='input-container'>
-              <SearchBar
-                
-              />
+              <SearchBar />
             </div>
           </div>
           {visible && (
             <div className='overlay'>
-
               <div className='overlay-content'>
                 <div>
-
                   <form>
                     <div className='formGroup'>
-                      <button className='exitButton' onClick={() => {
-                        dispatch({ type: actions.EXIT });
-                      }}>X</button>
+                      <button
+                        className='exitButton'
+                        onClick={() => {
+                          dispatch({ type: actions.EXIT });
+                        }}>
+                        X
+                      </button>
                       <h2>Add Tech</h2>
                       <input
                         type='text'
