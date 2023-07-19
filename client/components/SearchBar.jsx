@@ -1,6 +1,7 @@
 import React, { useRef, useContext, useEffect } from 'react';
 import { Button, TextField } from '@mui/material';
 import { OverlayDispatchContext, OverlayFormContext } from '../pages/Home.jsx';
+
 export default function SearchBar(props) {
   const query = useRef();
   const dispatch = useContext(OverlayDispatchContext);
