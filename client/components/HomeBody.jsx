@@ -29,7 +29,7 @@ export function HomeBody() {
 
       return (
         <div type = 'button' className="box" key={index}  onClick={comments} id={item.tech_id}>
-            <img src={item.image_url} alt="Tech" className="api-image"  /> 
+            <img src={item.image_url} alt="Tech" className="api-image"  />
             <a href={item.link} className="tech-item-name">
               {item.name}
             </a>
