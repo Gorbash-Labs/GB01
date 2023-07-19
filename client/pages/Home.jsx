@@ -308,7 +308,7 @@ const MainHeader = () => {
                       <button
                         className='login-button'
                         onClick={() => {
-                          dispatch({type: actions.SUBMIT});
+                          dispatch('SUBMIT');
                         }}
                       >
                         Submit!
