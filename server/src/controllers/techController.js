@@ -45,6 +45,8 @@ techController.findTech = async (req, res, next) => {
 
 techController.findTechAfterUpdate = async (req, res, next) => {
   // res.local.techId is id
+  console.log('in techController.findTechAfterUpdate');
+  return next();
 };
 
 techController.makeTech = async (req, res, next) => {
