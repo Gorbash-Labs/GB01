@@ -3,7 +3,7 @@ import Navbar from '../components/Navbar.jsx';
 import Apicard from '../components/Apicard.jsx';
 import './Home.scss';
 import { useNavigate, useParams } from 'react-router-dom';
-import SearchBar from '../components/SearchBar.jsx'
+import SearchBar from '../components/SearchBar.jsx';
 
 const actions = {
   SHOW_OVERLAY: 'SHOW_OVERLAY',
@@ -54,7 +54,7 @@ const overlayStateReducer = (state, action) => {
       return { ...state, loading: 'idle', apiData: action.payload };
     }
     case actions.EXIT: {
-      console.log('IS THIS WORKING')
+      console.log('IS THIS WORKING');
       return {
         ...state,
         visible: false,
@@ -68,13 +68,13 @@ const overlayStateReducer = (state, action) => {
       return state;
   }
 };
-const OverlayDispatchContext = createContext();
-const OverlayFormContext = createContext();
+export const OverlayDispatchContext = createContext();
+export const OverlayFormContext = createContext();
 
 const Home = () => {
   const [overlayState, overlayDispatch] = useReducer(
     overlayStateReducer,
-    overlayStateInit,
+    overlayStateInit
   );
 
   const navigate = useNavigate();
@@ -175,16 +175,16 @@ const ApisContainer = ({ comments }) => {
     return apiData.map((item, index) => {
       console.log(item);
       return (
-        <div className='box' key={index}>
-          <div className='image-container'>
-            <img src={item.image_url} alt='Tech' className='api-image' />
+        <div className="box" key={index}>
+          <div className="image-container">
+            <img src={item.image_url} alt="Tech" className="api-image" />
           </div>
-          <div className='api-content'>
-            <a href={item.link} className='tech-item-name'>
+          <div className="api-content">
+            <a href={item.link} className="tech-item-name">
               {item.name}
             </a>
             <p>{item.description}</p>
-            <div className='button-comment'>
+            <div className="button-comment">
               <button onClick={comments} id={item.tech_id}>
                 Posts
               </button>
@@ -195,9 +195,9 @@ const ApisContainer = ({ comments }) => {
     });
   };
   return (
-    <div className='one'>
-      <div className='scroll-container'>
-        <div className='grid-container'>{renderBox()}</div>
+    <div className="one">
+      <div className="scroll-container">
+        <div className="grid-container">{renderBox()}</div>
       </div>
     </div>
   );
@@ -208,49 +208,51 @@ const MainHeader = () => {
     useContext(OverlayFormContext);
   const dispatch = useContext(OverlayDispatchContext);
   return (
-    <div className='main-header'>
+    <div className="main-header">
       <div>
-        <div className='content'>
-          <div className='home-top-all-content'>
-            <div className='home-top-title-button'>
+        <div className="content">
+          <div className="home-top-all-content">
+            <div className="home-top-title-button">
               <h2>Cohort: CTRI 17</h2> {/* Hard coded org name */}
               <div>
-                <img src='./logo.png'></img>
+                <img src="./logo.png"></img>
               </div>
               <div>
                 <button
-                  className='button'
+                  className="button"
                   onClick={() => {
                     dispatch({ type: actions.SHOW_OVERLAY });
-                  }}>
+                  }}
+                >
                   + ADD TECH
                 </button>
               </div>
             </div>
-            <div className='input-container'>
-              <SearchBar
-                
-              />
+            <div className="input-container">
+              <SearchBar />
             </div>
           </div>
           {visible && (
-            <div className='overlay'>
-
-              <div className='overlay-content'>
+            <div className="overlay">
+              <div className="overlay-content">
                 <div>
-
                   <form>
-                    <div className='formGroup'>
-                      <button className='exitButton' onClick={() => {
-                        dispatch({ type: actions.EXIT });
-                      }}>X</button>
+                    <div className="formGroup">
+                      <button
+                        className="exitButton"
+                        onClick={() => {
+                          dispatch({ type: actions.EXIT });
+                        }}
+                      >
+                        X
+                      </button>
                       <h2>Add Tech</h2>
                       <input
-                        type='text'
-                        className='input-one'
-                        placeholder='Add API Name'
+                        type="text"
+                        className="input-one"
+                        placeholder="Add API Name"
                         value={apiName}
-                        onChange={event => {
+                        onChange={(event) => {
                           dispatch({
                             type: actions.NAME_INPUT,
                             payload: event.target.value,
@@ -259,11 +261,11 @@ const MainHeader = () => {
                       />
 
                       <input
-                        type='text'
-                        className='input-one'
-                        placeholder='Add API URL'
+                        type="text"
+                        className="input-one"
+                        placeholder="Add API URL"
                         value={apiURL}
-                        onChange={event => {
+                        onChange={(event) => {
                           dispatch({
                             type: actions.URL_INPUT,
                             payload: event.target.value,
@@ -271,12 +273,12 @@ const MainHeader = () => {
                         }}
                       />
                       <textarea
-                        className='input-one'
-                        rows='3'
-                        maxLength='150'
-                        placeholder='Add Brief Description'
+                        className="input-one"
+                        rows="3"
+                        maxLength="150"
+                        placeholder="Add Brief Description"
                         value={apiDescription}
-                        onChange={event => {
+                        onChange={(event) => {
                           dispatch({
                             type: actions.DESCRIPTION_INPUT,
                             payload: event.target.value,
@@ -284,11 +286,11 @@ const MainHeader = () => {
                         }}
                       />
                       <input
-                        type='text'
-                        className='input-one'
-                        placeholder='Add Image URL'
+                        type="text"
+                        className="input-one"
+                        placeholder="Add Image URL"
                         value={apiImageURL}
-                        onChange={event => {
+                        onChange={(event) => {
                           dispatch({
                             type: actions.IMAGE_URL_INPUT,
                             payload: event.target.value,
@@ -296,18 +298,19 @@ const MainHeader = () => {
                         }}
                       />
                       <input
-                        type='file'
-                        className='input-one'
-                        accept='image/*'
+                        type="file"
+                        className="input-one"
+                        accept="image/*"
                       />
                     </div>
 
-                    <div className='btn'>
+                    <div className="btn">
                       <button
-                        className='login-button'
+                        className="login-button"
                         onClick={() => {
                           dispatch({ type: 'SUBMIT' });
-                        }}>
+                        }}
+                      >
                         Submit!
                       </button>
                     </div>
