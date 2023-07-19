@@ -1,6 +1,8 @@
 const path = require('path');
 const express = require('express');
 const cookieParser = require('cookie-parser');
+// const bodyParser = require('body-parser');
+
 
 const app = express();
 const PORT = 3000;
@@ -13,12 +15,13 @@ const userRouter = require(path.join(__dirname, '/src/routes/userRouter'));
 // Parse incoming JSON, static reqeusts, forms, and cookies
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+// app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(express.static('./dist'));
 
 // API router for server handling of db info
 app.use('/api/tech', techRouter);
-app.use('/api/post', postRouter);
+app.use('/api/post', postRouter); 
 app.use('/api/user', userRouter);
 
 // Default unknown page handler
