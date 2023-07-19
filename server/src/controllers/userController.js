@@ -68,7 +68,7 @@ userController.authenticate = async (req, res, next) => {
 
   // If they don't have a valid session, check req.body for username + password
   const { username, password } = req.body;
-  console.log(req.body)
+  console.log(req.body);
   // Hash salt + Pwd and check database. If valid, next.
   try {
     // Add USER_ID on res.locals.userId
@@ -76,7 +76,7 @@ userController.authenticate = async (req, res, next) => {
       `SELECT user_id FROM users WHERE name = $1 AND password = $2`,
       [username, password]
     );
-    console.log(rows[0].user_id)
+    console.log(rows[0].user_id);
     const id = rows[0].user_id;
 
     if (!id) {
@@ -154,6 +154,41 @@ userController.findAllUsers = async (req, res, next) => {
   } catch (err) {
     return next({
       log: 'Encountered lookup error in postController.findPostsByUser',
+      message: { err: 'Lookup error.' },
+    });
+  }
+};
+
+// CREATE TABLE users (
+//   user_id SERIAL PRIMARY KEY,
+//   name TEXT NOT NULL,
+//   password TEXT NOT NULL,
+//   contact TEXT NOT NULL,
+//   permissions INTEGER DEFAULT 0
+// )
+
+userController.updateUser = async (req, res, next) => {
+  const userId = req.params.id;
+  const { name, password, contact } = req.body;
+  const lookupText = `UPDATE users 
+  SET name = $2, password = $3, contact = $4 
+  WHERE user_id = $1
+  RETURNING *`;
+  const lookupVals = [userId, name, password, contact];
+  try {
+    const response = await db.query(lookupText, lookupVals);
+    console.log('Retrieved updated user: ', response.rows[0]);
+    if (!response) {
+      return next({
+        log: 'Failed to update user in userController.updateUser',
+        message: { err: 'Lookup error.' },
+      });
+    }
+    res.locals.newUserInfo = response.rows[0];
+    next();
+  } catch (err) {
+    return next({
+      log: 'Encountered update error in userController.updateUser',
       message: { err: 'Lookup error.' },
     });
   }
