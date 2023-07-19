@@ -8,9 +8,6 @@ export default function Navbar(){
     function home(){
         navigate("/Home")
     }
-    function comments(){
-        navigate("/Comments")
-    }
     function Login(){
       navigate("/Login")
     }
@@ -20,10 +17,9 @@ export default function Navbar(){
 
     return (
         <ul className="Navbar">
-            <li onClick={home}>Home</li>
-            <li onClick={comments}>Comments</li>
-            <li onClick={Login}>Login</li>
-            <li onClick={Profile}>Profile</li>
+            <li id='allbuttons' onClick={home}>Home</li>
+            <li id='allbuttons' onClick={Login}>Login</li>
+            <li id='allbuttons' onClick={Profile}>Profile</li>
         </ul>
     )
 }
