@@ -7,11 +7,11 @@ add a universal "Text color" to a "variables" pallete scss file AND import that 
 @import './client/styles/_variables.scss';
 
 .Navbar {
-  padding: 8px;
+  padding: 10px;
   display: flex;
   list-style-type: none;
   justify-content: flex-end;
-  background-color: $third;
+  background-color: #6190E8;
   color: black;
 }
 
