@@ -6,7 +6,9 @@
   "scripts": {
     "start": "concurrently \"webpack-dev-server --mode development --open --hot\" \"nodemon ./server/server.js\"",
     "serve": "nodemon server/server.js",
-    "build": "webpack --mode production"
+    "build": "webpack --mode production",
+    "ws-serve": "nodemon server/ws-server.js"
+    
   },
   "keywords": [],
   "author": "Gorbash Labs",
@@ -42,7 +44,8 @@
     "react-router": "^6.14.1",
     "react-router-dom": "^6.14.1",
     "tinymce": "^6.6.0",
-    "url-loader": "^4.1.1"
+    "url-loader": "^4.1.1",
+    "ws": "^8.13.0"
   },
   "repository": {
     "type": "git",

@@ -11,6 +11,7 @@ import Profile from './pages/Profile.jsx';
 import styles from './stylesheets/_appStyles.scss';
 import './stylesheets/app.scss';
 import CommentsFeed from './pages/Feed.jsx';
+import Chat from './pages/Chat.jsx';
 
 const App = () => {
   //create a High Level state for whether the user is logged in or not
@@ -25,6 +26,7 @@ const App = () => {
         <Route path="commentsfeed" element={<CommentsFeed />} />
         <Route path="login" element={<Login />} />
         <Route path="profile" element={<Profile />} />
+        <Route path="chat" element={<Chat />} />
       </Routes>
     </BrowserRouter>
   );
