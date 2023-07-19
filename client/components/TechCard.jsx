@@ -10,16 +10,42 @@ function techCard(props) {
   }
 
   return (
-    <div className="box" onClick={handleCommentClick}>
-      <div className="image-container">
-        <img src={props.image_url} alt="Tech" className="api-image" />
+    <div className="topic-item" onClick={handleCommentClick}>
+      <div className="img-container">
+        <img
+          src={props.image_url}
+          alt="Tech"
+          className="api-image"
+          width={70}
+          height={70}
+        />
       </div>
-      <div className="api-content">
-        <a href={props.link} className="tech-item-name">
+
+      <div className="text-container">
+        <h3 href={props.link} className="topic-item-name">
           {props.name}
-        </a>
+        </h3>
         <p>{props.description}</p>
-        <div className="button-comment"></div>
+        <div className="stats-container">
+          <a>Created By: Tyler</a>
+          <a>Posts: 5</a>
+        </div>
+      </div>
+      <div className="buttons-container">
+        <button
+          onClick={(e) => {
+            props.handleEdit;
+          }}
+        >
+          EDIT
+        </button>
+        <button
+          onClick={(e) => {
+            props.handleDelete;
+          }}
+        >
+          DELETE
+        </button>
       </div>
     </div>
   );

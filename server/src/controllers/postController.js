@@ -31,12 +31,13 @@ postController.findPost = async (req, res, next) => {
 postController.retrievePosts = async (req, res, next) => {
   // Get a post with req.params.id == postId
   // Attach to res.locals.postRequest;
-  const lookupText = 'SELECT * FROM posts';
+  const lookupText = 'SELECT * FROM posts INNER JOIN users ON posts.uploader = users.user_id';
+  //SELECT * FROM posts INNER JOIN users ON posts.uploader = users.user_id WHERE tech = $1
   try {
-    const { arrOfComments } = await db.query(lookupText);
+    const arrOfComments = await db.query(lookupText);
     console.log('Retrieved general comments: ', arrOfComments);
     res.locals.comments = arrOfComments;
-    next();
+    return next();
   } catch (err) {
     return next({
       log: 'Encountered lookup error in postController.retrievePosts',

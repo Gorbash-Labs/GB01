@@ -64,7 +64,10 @@ userController.endSession = (req, res, next) => {
 userController.authenticate = async (req, res, next) => {
   // Here for verifying authentication of new users
   // If they have a valid session already, next()
-  if (req.cookies('SSID')) next;
+  if (req.cookies('SSID')) {
+    res.locals.userId = 'cookies User id needed here';
+    return next();
+  }
 
   // If they don't have a valid session, check req.body for username + password
   const { username, password } = req.body;

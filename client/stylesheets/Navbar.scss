@@ -10,9 +10,18 @@ add a universal "on hover color" to a "variables" pallete scss file AND import t
   list-style-type: none;
   align-items: center;
   justify-content: space-between;
-  background-color: $third;
-  color: black;
+  background-color: white;
+  color: rgb(96, 96, 96);;
   height: 35px;
+
+  img {
+    position: fixed;
+    top: 25px;
+    left: 50%;
+    
+    height: 40px;
+    transform: translate(-50%, -50%);
+  }
 
   #right {
     display: flex;

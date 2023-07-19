@@ -44,16 +44,16 @@ const Home = () => {
       );
     });
   };
-
+  //ADD a NEW Tech API
   const handleAddTechSubmit = async (e) => {
     e.preventDefault();
-
-
 
     const body = {
       name: e.target.name.value,
       link: e.target.link.value,
-      image: e.target.image.value ? e.target.image.value : 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/60/Ferret_icon_%28flipped%29_%28The_Noun_Project%29.svg/1200px-Ferret_icon_%28flipped%29_%28The_Noun_Project%29.svg.png',
+      image: e.target.image.value
+        ? e.target.image.value
+        : 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/60/Ferret_icon_%28flipped%29_%28The_Noun_Project%29.svg/1200px-Ferret_icon_%28flipped%29_%28The_Noun_Project%29.svg.png',
       typeApi: false,
       typeFramework: false,
       typeLibrary: false,
@@ -62,7 +62,7 @@ const Home = () => {
     };
 
     try {
-      setShowOverlay(false)
+      setShowOverlay(false);
 
       const response = await fetch('/api/tech', {
         method: 'POST',
@@ -74,111 +74,63 @@ const Home = () => {
 
       const data = await response.json();
       fetchData();
-  
     } catch (err) {
       console.log(err);
     }
   };
-
+  //EDIT a Tech API
+  const handleEdit = (e) => {};
+  //DELETE a Tech API
+  const handleDelete = (e) => {};
   return (
-    <div>
-      <div className="main-header">
-        <div>
-          <div className="content">
-            <div className="home-top-all-content">
-              <div className="home-top-title-button">
-                <h2>Cohort: CTRI 17</h2>
-                <div>
-                  <img src="./logo.png"></img>
-                </div>
-                <div>
-                  <button className="button" onClick={()=> setShowOverlay(true)}>
-                    + ADD TOPIC
-                  </button>
-                </div>
-              </div>
-              {/* <div className="input-container">
-                <input
-                  type="text"
-                  className="input-bar-home"
-                  placeholder="Search APIs..."
-                />
-              </div> */}
-            </div>
-
-            {showOverlay && <AddTechPopup 
-            overlayState={showOverlay}
-            overlayOff = {() => setShowOverlay(false)}
-            handleAddTechSubmit={handleAddTechSubmit}/>}
-          </div>
-        </div>
+    <div className="main-container">
+      {showOverlay && (
+        <AddTechPopup
+          overlayState={showOverlay}
+          overlayOff={() => setShowOverlay(false)}
+          handleAddTechSubmit={handleAddTechSubmit}
+        />
+      )}
+ 
+      <div className="content-header">
+        <h1>Tech Topics</h1>
+        <button className="button" onClick={() => setShowOverlay(true)}>
+          NEW TOPIC
+        </button>
       </div>
-      <div className="one">
-        <div className="scroll-container">
-          <div className="grid-container">{renderBox()}</div>
-        </div>
-      </div>
+      <div className="topic-container">{renderBox()}</div>
     </div>
+
+    //     <div className="main-header">
+    //       <div>
+    //         <div className="content">
+    //           <div className="home-top-all-content">
+    //             <div className="home-top-title-button">
+    //               <h2>Cohort: CTRI 17</h2>
+    //               <div>
+
+    //               </div>
+    //               <div></div>
+    //             </div>
+    //             {/* <div className="input-container">
+    //               <input
+    //                 type="text"
+    //                 className="input-bar-home"
+    //                 placeholder="Search APIs..."
+    //               />
+    //             </div> */}
+    //           </div>
+
+    //         </div>
+    //       </div>
+    //     </div>
+    //     <div className="main-container">
+    //       <div className="title-button-container"></div>
+
+    //     </div>
+    //   </div>
+    // );
   );
 };
 
 export default Home;
-
-// const mockData = [
-//   {
-//     header: 'Google Maps API',
-//     link: 'https://developers.google.com/maps/documentation/javascript/overview',
-//     paragraph:
-//       'Google Maps API allows you to embed maps into your website or application and customize them to fit your needs.',
-//     image: 'https://i.ibb.co/jzvCsB1/Screenshot-2023-07-16-at-3-17-57-PM.png',
-//   },
-//   {
-//     header: 'Google Maps API',
-//     link: 'https://developers.google.com/maps/documentation/javascript/overview',
-//     paragraph:
-//       'Google Maps API allows you to embed maps into your website or application and customize them to fit your needs.',
-//     image: 'https://i.ibb.co/jzvCsB1/Screenshot-2023-07-16-at-3-17-57-PM.png',
-//   },
-//   {
-//     header: 'Google Maps API',
-//     link: 'https://developers.google.com/maps/documentation/javascript/overview',
-//     paragraph:
-//       'Google Maps API allows you to embed maps into your website or application and customize them to fit your needs.',
-//     image: 'https://i.ibb.co/jzvCsB1/Screenshot-2023-07-16-at-3-17-57-PM.png',
-//   },
-//   {
-//     header: 'Google Maps API',
-//     link: 'https://developers.google.com/maps/documentation/javascript/overview',
-//     paragraph:
-//       'Google Maps API allows you to embed maps into your website or application and customize them to fit your needs.',
-//     image: 'https://i.ibb.co/jzvCsB1/Screenshot-2023-07-16-at-3-17-57-PM.png',
-//   },
-//   {
-//     header: 'Google Maps API',
-//     link: 'https://developers.google.com/maps/documentation/javascript/overview',
-//     paragraph:
-//       'Google Maps API allows you to embed maps into your website or application and customize them to fit your needs.',
-//     image: 'https://i.ibb.co/jzvCsB1/Screenshot-2023-07-16-at-3-17-57-PM.png',
-//   },
-//   {
-//     header: 'Google Maps API',
-//     link: 'https://developers.google.com/maps/documentation/javascript/overview',
-//     paragraph:
-//       'Google Maps API allows you to embed maps into your website or application and customize them to fit your needs.',
-//     image: 'https://i.ibb.co/jzvCsB1/Screenshot-2023-07-16-at-3-17-57-PM.png',
-//   },
-//   {
-//     header: 'Google Maps API',
-//     link: 'https://developers.google.com/maps/documentation/javascript/overview',
-//     paragraph:
-//       'Google Maps API allows you to embed maps into your website or application and customize them to fit your needs.',
-//     image: 'https://i.ibb.co/jzvCsB1/Screenshot-2023-07-16-at-3-17-57-PM.png',
-//   },
-//   {
-//     header: 'Google Maps API',
-//     link: 'https://developers.google.com/maps/documentation/javascript/overview',
-//     paragraph:
-//       'Google Maps API allows you to embed maps into your website or application and customize them to fit your needs.',
-//     image: 'https://i.ibb.co/jzvCsB1/Screenshot-2023-07-16-at-3-17-57-PM.png',
-//   },
-// ];

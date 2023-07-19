@@ -8,7 +8,7 @@ import Home from './pages/Home.jsx';
 import Comments from './pages/Comments.jsx';
 import Login from './pages/Login.jsx';
 import Profile from './pages/Profile.jsx';
-import styles from './stylesheets/_appStyles.scss';
+import styles from './stylesheets/appStyles.scss';
 import './stylesheets/app.scss';
 import Feed from './pages/Feed.jsx';
 import Chat from './pages/Chat.jsx';

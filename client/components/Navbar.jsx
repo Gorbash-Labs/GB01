@@ -27,6 +27,8 @@ export default function Navbar() {
           CHAT
         </p>
       </div>
+      <img src="./goru-logo.png" height={100}></img>
+
       <div id="right">
         <p onClick={home}>HOME</p>
         <p onClick={Feed}>FEED</p>

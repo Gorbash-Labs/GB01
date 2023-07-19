@@ -54,4 +54,14 @@ router.get(
   }
 );
 
+router.put(
+  '/:id',
+
+)
+
+router.delete(
+  '/:id',
+  
+)
+
 module.exports = router;

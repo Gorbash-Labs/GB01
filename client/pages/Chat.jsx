@@ -1,19 +1,18 @@
 import React, { useEffect } from 'react';
 // import WebSocket from 'ws';
-import { io } from 'socket.io-client'
+import socketIO from 'socket.io-client'
+// const socket = socketIO.connect('http://localhost:3000')
 
 function Chat() {
-  let sock = new WebSocket('ws://localhost:5000');
-  sock.binaryType = 'blob';
 
   useEffect(() => {
     
-    const element = document.querySelector('#chat-box');
-    sock.onmessage = (e) => {
-        e.data.text().then(data => 
-            element.innerHTML += data + '<br>'
-        )
-    };
+    // const element = document.querySelector('#chat-box');
+    // socket.onmessage = (e) => {
+    //     e.data.text().then(data => 
+    //         element.innerHTML += data + '<br>'
+    //     )
+    // };
 
 
     // const socket = io('http://localhost:5000')
@@ -27,7 +26,7 @@ function Chat() {
 
   const onClick = () => {
     let text = document.getElementById('text').value;
-    sock.send(JSON.stringify(text));
+    socket.send(JSON.stringify(text));
   };
 
   return (

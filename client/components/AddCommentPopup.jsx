@@ -5,8 +5,6 @@ import { Editor } from '@tinymce/tinymce-react';
 
 function AddCommentPopup(props) {
   const { id } = useParams();
-  
-
 
   return (
     <div className="overlay-comments">

@@ -47,15 +47,15 @@ const Comments = () => {
   const [commentData, setcommentData] = useState([]);
 
   const handleAddCommentClick = async (e) => {
-    console.log("Comment Submit Event: ", e.target);
+    console.log("Comment Submit Event: ", e);
     e.preventDefault();
 
     const body = {
       tech_id: id,
-      typeReview: true,
-      typeAdvice: false,
-      typeCodeSnippet: false,
-      typeHelpOffer: false,
+      typeReview: document.getElementById('tags_review').checked,
+      typeAdvice: document.getElementById('tags_advice').checked,
+      typeCodeSnippet: document.getElementById('tags_code_snippet').checked,
+      typeHelpOffer: document.getElementById('tags_help_offer').checked,
       languageid: 1,
       title: document.querySelector('#title').value,
       comment: document.querySelector('#comment').value,
@@ -63,6 +63,7 @@ const Comments = () => {
       
     };
 
+    console.log("Comment body tags:  ", body);
     try {
       await fetch('/api/post', {
         method: 'POST',

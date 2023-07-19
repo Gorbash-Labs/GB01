@@ -2,11 +2,30 @@ const path = require('path');
 const express = require('express');
 const cookieParser = require('cookie-parser');
 
-// const http = require('http').Server(app)
-// const cors = require('cors')
-
 const app = express();
 const PORT = 3000;
+
+// const http = require('http').Server(app)
+const cors = require('cors');
+
+
+// app.use(cors)
+
+//WEBSOCKET SERVER
+// const socketIO = require('socket.io')(http, {
+//   cors: {
+//     origin: 'http://127.0.0.1:8080',
+//     credentials: true
+//   },
+// });
+
+// socketIO.on('connection', (socket) => {
+//   console.log('user connected', socket.id);
+//   // socket.on('custom-event', (item) => {
+//   //   console.log(item);
+//   // });
+
+// });
 
 // Routers
 const techRouter = require(path.join(__dirname, '/src/routes/techRouter'));
@@ -44,19 +63,5 @@ app.use((err, req, res, next) => {
 app.listen(PORT, () => {
   console.log(`Server listening on port ${PORT}.`);
 });
-
-//WEBSOCKET SERVER
-// const io = require('socket.io')(5000, {
-//   cors: {
-//     origin: ['http://127.0.0.1:8080/chat']
-//   }
-// })
-
-// io.on('connection', socket => {
-//   console.log(socket.id)
-//   socket.on('custom-event', (item) => { 
-//     console.log(item)
-//    })
-// })
 
 module.exports = app;
