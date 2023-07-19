@@ -22,21 +22,11 @@ const Profile = () => {
     };
     getData();
   }, []);
-  /* 
-   "user": {
-        "user_id": 1,
-        "name": "Steve",
-        "password": "1234",
-        "contact": "steve@gmail.com",
-        "permissions": 0,
-        "community": 1
-    },
-  */
 
   return (
     <div className="profilePage">
       {/* TODO: button to navigate back to home page */}
-      <ProfileHeader user={user} />
+      <ProfileHeader user={user} userId={UserContext} />
       <ProfileBody posts={posts} />
     </div>
   );
