@@ -14,7 +14,6 @@ const Home = () => {
           type="text"
           className="input-bar-home"
           placeholder="Search APIs..."
-          e
         />
       </div>
       <HomeBody />

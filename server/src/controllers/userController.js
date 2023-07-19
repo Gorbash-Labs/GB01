@@ -64,19 +64,22 @@ userController.endSession = (req, res, next) => {
 userController.authenticate = async (req, res, next) => {
   // Here for verifying authentication of new users
   // If they have a valid session already, next()
-  if (req.cookies('SSID')) next;
+  if (req.cookies) next;
 
   // If they don't have a valid session, check req.body for username + password
   const { username, password } = req.body;
+  console.log(req.body)
   // Hash salt + Pwd and check database. If valid, next.
   try {
     // Add USER_ID on res.locals.userId
-    const userIdResult = await db.query(
-      `SELECT user_id FROM users WHERE name = $1, password = $2`,
+    const { rows } = await db.query(
+      `SELECT user_id FROM users WHERE name = $1 AND password = $2`,
       [username, password]
     );
+    console.log(rows[0].user_id)
+    const id = rows[0].user_id;
 
-    if (userIdResult.length == 0) {
+    if (!id) {
       return next({
         log: 'usercontroller.authenticate: Invalid username or password',
         status: 401,
@@ -84,7 +87,7 @@ userController.authenticate = async (req, res, next) => {
       });
     }
 
-    res.locals.userId = userId[0];
+    res.locals.userId = id;
 
     console.log('UserId saved');
 

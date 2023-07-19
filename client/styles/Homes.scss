@@ -51,8 +51,8 @@ body {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 20px;
-  overflow-y: auto;
-  max-height: 65vh;
+  // overflow-y: auto;
+  // max-height: 100vh;
   justify-items: center;
 
   .box {
