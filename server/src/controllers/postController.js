@@ -35,6 +35,7 @@ postController.makePost = async (req, res, next) => {
   //const { username } = req.cookies;
   // const uploader_id = req.cookies('SSID');
   // Get post from body
+  console.log('hello')
   let {
     title,
     tech_id,  //needs to be unique to added tech. e.g., youtube api is 1 and google maps api is 2
@@ -46,6 +47,7 @@ postController.makePost = async (req, res, next) => {
     languageid, //5 for javascript
     comment,  
   } = req.body;
+  console.log(title, tech_id, uploader_id, typeReview, typeAdvice, typeCodeSnippet, typeHelpOffer, languageid, comment)
   // {
   //   "title": "Youtube",
   //   "tech_id": 4, 
@@ -85,24 +87,6 @@ postController.makePost = async (req, res, next) => {
     return next('error');
   }
 };
-
-//sends all rows to front-end with passed in tech_id 
-postController.sendBackPost = async (req, res, next) => {
-  const { tech_id } = req.body;
-
-  try {
-    const postQueryResult = await db.query(
-      'SELECT tech_id FROM posts WHERE tech_id = $1 ORDER BY post_id',
-      [
-        tech_id
-      ]
-    )
-    res.locals.foundData = postQueryResult.rows;
-    return next()
-  } catch(error) {
-    return next(error)
-  }  
-}
 
 postController.editPost = (req, res, next) => {
   // An authorized/authenticated user wants to edit the post saved to res.locals.postRequest.

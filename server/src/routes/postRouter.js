@@ -53,7 +53,7 @@ router.put(
 router.post(
   '/',
   // userController.authenticate, // skipped for testing
-  postController.makePost, postController.sendBackPost,
+  postController.makePost, 
   (req, res) => {
     res.status(200).json(res.locals.foundData);
   }
