@@ -3,6 +3,7 @@
   grid-template-rows: 1;
   justify-content: center;
   margin: 15px;
+  animation: flyinleft 1s;
 }
 
 .form_contents {
@@ -41,4 +42,14 @@
   display: flex;
   justify-content: flex-end;
   margin: 10px;
+}
+@keyframes flyinleft{
+  from{
+    opacity:0;
+    transform: translatex(360px)
+  }
+  to{
+    opacity:1;
+    transform: translateX(0);
+  }
 }
