@@ -1,14 +1,23 @@
 const db = require('../config/profileSchema.js');
+const bcrypt = require('bcrypt');
+
 
 const userController = {};
 
 userController.makeUser = async (req, res, next) => {
   const { username, password, contact } = req.body;
-  //Check and see if username is taken
-  const result = await db.query('SELECT name FROM users WHERE name = $1', [
-    username,
-  ]);
+  console.log('username, password, contact:', username, password, contact);
 
+  // Expect req.body has username and password
+  if (username === undefined || password === undefined)
+    return next({
+      log: 'Express error handler caught at userController.makeUser',
+      message: { err: 'Name or pw does not exist' },
+    });
+
+  //Check and see if username is taken
+  const result = await db.query('SELECT name FROM users WHERE name = $1', [username]);
+  
   if (result.rows.length > 0) {
     res.locals.existingUser = true;
     return next({
@@ -17,13 +26,6 @@ userController.makeUser = async (req, res, next) => {
       message: 'Username taken',
     });
   }
-
-  // Expect req.body has username and password
-  if (username === undefined || password === undefined)
-    return next({
-      log: 'Express error handler caught at userController.makeUser',
-      message: { err: 'Name or pw does not exist' },
-    });
 
   // Create new user in DB with hashed Pwd
   const text = `INSERT INTO users (name, password, contact, community)

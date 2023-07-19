@@ -8,10 +8,11 @@ const router = express.Router();
 
 // USERS
 // Add new User to the database
+// changed ednpoint to 'U', change on frontend as well
 router.post(
-  '/newuser',
+  '/newUser',
   userController.makeUser,
-  userController.newSession,
+  // userController.newSession,
   (req, res) => {
     // if the user already exists send a bool back to frontend
     if (res.locals.existingUser) {

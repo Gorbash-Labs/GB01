@@ -2,6 +2,7 @@ const db = require('../config/profileSchema.js');
 
 const techController = {};
 
+// works
 techController.getAllTech = async (req, res, next) => {
   // Get full list from db and Return full tech list on res.locals.techList
   try {
@@ -18,6 +19,7 @@ techController.getAllTech = async (req, res, next) => {
   //res.locals.techList
 };
 
+// havent touched yet
 techController.findTech = async (req, res, next) => {
   // Look up id on db and place on res.locals.techRequest
   try {
@@ -127,6 +129,7 @@ techController.makeTech = async (req, res, next) => {
   }
 };
 
+// works with one word searches
 techController.searchTech = async (req, res, next) => {
   const { searchString } = req.body;
   const query = `SELECT * FROM techs WHERE LOWER(keywords) LIKE $1`;
@@ -154,4 +157,30 @@ techController.searchTech = async (req, res, next) => {
   }
 };
 
+// working on delete controller
+techController.deleteTech = async (req, res, next) => {
+  const { id } = req.params;
+
+  try {
+    await db.query(`
+    DELETE
+    FROM techs
+    WHERE tech_id = $1`,
+    [id]
+    );
+    return next();
+
+  } catch (err) {
+    console.log('Error while deleting a tech:', err);
+
+    return next({
+      log: 'Express error handler caught at techController.deleteTech',
+      message: { err: 'Unable to delete a tech' },
+    });
+  }
+}
+
+
 module.exports = techController;
+
+// https://react.dev/
