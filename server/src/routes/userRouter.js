@@ -40,6 +40,19 @@ router.get('/signout', userController.endSession, (req, res) => {
 
 // Look up a single user by name
 router.get(
+  '/id/:id',
+  userController.findUserById,
+  postController.findPostsByUser,
+  (req, res) => {
+    // res.locals.userRequest && res.locals.postList
+    res
+      .status(200)
+      .json({ user: res.locals.userRequest, posts: res.locals.postList });
+  }
+);
+
+// Look up a single user by name
+router.get(
   '/:userName',
   userController.findUser,
   postController.findPostsByUser,
@@ -55,6 +68,10 @@ router.get(
 router.get('/', userController.findAllUsers, (req, res) => {
   // res.locals.userRequest && res.locals.postList
   res.status(200).json({ user: res.locals.userRequest });
+});
+
+router.patch('/:id', userController.updateUser, (req, res) => {
+  res.status(200).json(res.locals.newUserInfo);
 });
 
 module.exports = router;
