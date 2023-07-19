@@ -37,15 +37,23 @@ router.get('/signout', userController.endSession, (req, res) => {
   res.status(200).redirect('/');
 });
 
-// Look up a single user
+// Look up a single user by name
 router.get(
-  '/:id',
+  '/:userName',
   userController.findUser,
   postController.findPostsByUser,
   (req, res) => {
     // res.locals.userRequest && res.locals.postList
-    res.status(200).json({user: res.locals.userRequest, posts: res.locals.postList});
+    res
+      .status(200)
+      .json({ user: res.locals.userRequest, posts: res.locals.postList });
   }
 );
+
+//find all users
+router.get('/', userController.findAllUsers, (req, res) => {
+  // res.locals.userRequest && res.locals.postList
+  res.status(200).json({ user: res.locals.userRequest });
+});
 
 module.exports = router;
