@@ -34,7 +34,7 @@ router.put(
   postController.editPost,
   (req, res) => {
     res.status(200).send();
-  }
+  },
 );
 
 // Delete a single post
@@ -46,17 +46,18 @@ router.put(
   postController.deletePost,
   (req, res) => {
     res.status(200).send();
-  }
+  },
 );
 
 // Add new Post to the database
 router.post(
-  '/',
+  '/:id',
   // userController.authenticate, // skipped for testing
-  postController.makePost, 
+  postController.makePost,
+  postController.findPostsByTech,
   (req, res) => {
     res.status(200).json(res.locals.foundData);
-  }
+  },
 );
 
 // // Fetch all posts for an 'all posts' display that likely won't be used

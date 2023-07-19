@@ -221,8 +221,7 @@ const MainHeader = () => {
                   className='button'
                   onClick={() => {
                     dispatch({ type: actions.SHOW_OVERLAY });
-                  }}
-                >
+                  }}>
                   + ADD TECH
                 </button>
               </div>
@@ -308,9 +307,8 @@ const MainHeader = () => {
                       <button
                         className='login-button'
                         onClick={() => {
-                          dispatch('SUBMIT');
-                        }}
-                      >
+                          dispatch({ type: 'SUBMIT' });
+                        }}>
                         Submit!
                       </button>
                     </div>
