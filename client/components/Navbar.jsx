@@ -6,7 +6,7 @@ export default function Navbar() {
   function home() {
     navigate('/home');
   }
-  function comments() {
+  function Feed() {
     navigate('/feed');
   }
   function Login() {
@@ -29,7 +29,7 @@ export default function Navbar() {
       </div>
       <div id="right">
         <p onClick={home}>HOME</p>
-        <p onClick={comments}>FEED</p>
+        <p onClick={Feed}>FEED</p>
         {localStorage.getItem('username') ? (
           <p onClick={Profile}>PROFILE</p>
         ) : (

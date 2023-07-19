@@ -47,6 +47,7 @@ const Comments = () => {
   const [commentData, setcommentData] = useState([]);
 
   const handleAddCommentClick = async (e) => {
+    console.log("Comment Submit Event: ", e.target);
     e.preventDefault();
 
     const body = {
@@ -59,6 +60,7 @@ const Comments = () => {
       title: document.querySelector('#title').value,
       comment: document.querySelector('#comment').value,
       image: null,
+      
     };
 
     try {
@@ -101,13 +103,26 @@ const Comments = () => {
 
       const newData = JSON.parse(JSON.stringify(data));
       // newData =  {tech: tech-obj, posts: [post-obj, post-obj, ..]}
-      setcommentData(data.posts);
+      // idk what this does
       setCurrentTech(newData.tech);
       setTechName(newData.tech.name);
       setTechDescription(newData.tech.description);
       setTechLink(newData.tech.link);
       setTechImage(newData.tech.image_url);
-      console.log(newData);
+
+
+
+      setcommentData(data.posts);
+
+
+      console.log('New Data: ', newData);
+
+      /*
+      commentData = {
+        posts: [{comment, image, language, post_id, tech, title, uploader(int)}, {...} ],
+        tech: {tech: 2}
+      }
+      */
     } catch (err) {}
   };
 
@@ -171,8 +186,11 @@ const Comments = () => {
                 >
                   <div>{item.title}</div>
                   <div className="details">
-                    <p className="username">{item.username}</p>
-                    <p className="tags">Posted by: Steve</p>
+                    <p className="username">{item.name}</p>
+                    {item.type_review && <p className="tags_review">Review</p>}
+                    {item.type_advice && <p className="tags_advice">Advice</p>}
+                    {item.type_code_snippet && <p className="tags_code_snippet">Code</p>}
+                    {item.type_help_offer && <p className="tags_help_offer">Help!</p>}
                   </div>
                 </div>
               </div>

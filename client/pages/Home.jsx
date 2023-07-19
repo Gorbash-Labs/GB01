@@ -48,10 +48,12 @@ const Home = () => {
   const handleAddTechSubmit = async (e) => {
     e.preventDefault();
 
+
+
     const body = {
       name: e.target.name.value,
       link: e.target.link.value,
-      image: e.target.image.value,
+      image: e.target.image.value ? e.target.image.value : 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/60/Ferret_icon_%28flipped%29_%28The_Noun_Project%29.svg/1200px-Ferret_icon_%28flipped%29_%28The_Noun_Project%29.svg.png',
       typeApi: false,
       typeFramework: false,
       typeLibrary: false,
@@ -105,6 +107,7 @@ const Home = () => {
             </div>
 
             {showOverlay && <AddTechPopup 
+            overlayState={showOverlay}
             overlayOff = {() => setShowOverlay(false)}
             handleAddTechSubmit={handleAddTechSubmit}/>}
           </div>

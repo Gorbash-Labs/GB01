@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 // import WebSocket from 'ws';
+import { io } from 'socket.io-client'
 
 function Chat() {
   let sock = new WebSocket('ws://localhost:5000');
@@ -7,12 +8,21 @@ function Chat() {
 
   useEffect(() => {
     
-    const element = document.querySelector('#item');
+    const element = document.querySelector('#chat-box');
     sock.onmessage = (e) => {
         e.data.text().then(data => 
             element.innerHTML += data + '<br>'
         )
     };
+
+
+    // const socket = io('http://localhost:5000')
+    // socket.on('connect', () => { 
+    //   displayMessage('You were connected with id:', socket.id)
+    //  })
+
+    //  socket.emit('custom-event', {username: 'kevin',
+    // message: 'my message'})
   }, []);
 
   const onClick = () => {
@@ -22,10 +32,10 @@ function Chat() {
 
   return (
     <div className="chat-container-main">
-      Chat Feature
+      <div id="chat-box"></div>
       <input type="text" id="text" placeholder="Your message"></input>
       <button onClick={onClick}>Submit</button>
-      <div id="item"></div>
+      
     </div>
   );
 }

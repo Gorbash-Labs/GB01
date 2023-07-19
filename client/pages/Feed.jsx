@@ -9,7 +9,13 @@ function Feed() {
       .then((data) => console.log(data));
   }, []);
 
-  return <div>Feed Page</div>;
+  return (
+    <div className="wrapper">
+      <div>
+        Feed Page
+      </div>
+    </div>
+  )
 }
 
 export default Feed;

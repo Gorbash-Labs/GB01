@@ -2,6 +2,9 @@ const path = require('path');
 const express = require('express');
 const cookieParser = require('cookie-parser');
 
+// const http = require('http').Server(app)
+// const cors = require('cors')
+
 const app = express();
 const PORT = 3000;
 
@@ -41,5 +44,19 @@ app.use((err, req, res, next) => {
 app.listen(PORT, () => {
   console.log(`Server listening on port ${PORT}.`);
 });
+
+//WEBSOCKET SERVER
+// const io = require('socket.io')(5000, {
+//   cors: {
+//     origin: ['http://127.0.0.1:8080/chat']
+//   }
+// })
+
+// io.on('connection', socket => {
+//   console.log(socket.id)
+//   socket.on('custom-event', (item) => { 
+//     console.log(item)
+//    })
+// })
 
 module.exports = app;

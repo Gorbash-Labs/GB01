@@ -9,6 +9,15 @@
 html {
     font-family: -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto, Ubuntu;
 }
+
+.chat-container-main {
+    #chat-box {
+        height: 500px;
+        width: 500px;
+        border: solid black
+    };
+
+}
 /* //navbar
 //searchbar comments
 //searchbar home
