@@ -115,10 +115,34 @@ userController.authorizeEdit = (req, res, next) => {
   }
 };
 
+//find user by name
 userController.findUser = async (req, res, next) => {
   const userName = req.params.userName;
   const lookupText = 'SELECT * FROM users WHERE name = $1';
   const lookupVals = [userName];
+  try {
+    const { rows } = await db.query(lookupText, lookupVals);
+    console.log('Retrieved user lookup: ', rows);
+    if (rows.length === 0) {
+      return next({
+        log: 'Failed to find matching user in userController.findUser',
+        message: { err: 'Lookup error.' },
+      });
+    }
+    res.locals.userRequest = rows[0];
+    next();
+  } catch (err) {
+    return next({
+      log: 'Encountered lookup error in postController.findPostsByUser',
+      message: { err: 'Lookup error.' },
+    });
+  }
+};
+
+userController.findUserById = async (req, res, next) => {
+  const id = req.params.id;
+  const lookupText = 'SELECT * FROM users WHERE user_id = $1';
+  const lookupVals = [id];
   try {
     const { rows } = await db.query(lookupText, lookupVals);
     console.log('Retrieved user lookup: ', rows);
