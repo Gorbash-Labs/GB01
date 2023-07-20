@@ -6,58 +6,47 @@ import Navbar from '../components/Navbar.jsx';
 // import CLIENT_ID from '../../.env';
 
 const Login = (props) => {
-  // const [resData, setResData] = useState();
-  // const handleLogin = () => {
-  //   console.log('invoked handleLogin');
-  //   fetch('/api/oauth')
-  //     .then((res) => {
-  //       console.log(res)
-  //     }
-  //     res.json()})
-  //     .then((data) => {
-  //       console.log(data);
-  //     })
-  //     .catch((err) => console.log('an error occurred'));
-  // };
-
   useEffect(() => {
     // if (cookie exists) then redirect to home page
-    // let username = getCookie
     console.log(document.cookie);
+    const cookieString = document.cookie;
+    const cookieObj = {};
+    let currentlyBuilding = 'cookieName';
+    let cookieName = '';
+    let cookieVal = '';
+    for (let i = 0; i < cookieString.length; i++) {
+      let currentChar = cookieString[i];
+      if (currentChar === '=') {
+        currentlyBuilding = 'cookieVal';
+      } else if (currentChar === ';') {
+        currentlyBuilding = 'cookieName';
+        cookieObj[cookieName] = cookieVal;
+        cookieName = '';
+        cookieVal = '';
+      } else if (i === cookieString.length - 1) {
+        cookieVal += currentChar;
+        currentlyBuilding = 'cookieName';
+        cookieObj[cookieName] = cookieVal;
+        cookieName = '';
+        cookieVal = '';
+      } else if (currentChar === ' ') continue;
+      else {
+        if (currentlyBuilding === 'cookieName') cookieName += currentChar;
+        if (currentlyBuilding === 'cookieVal') cookieVal += currentChar;
+      }
+    }
+    console.log('cookieObj: ', cookieObj);
+    if (cookieObj.userName) {
+      localStorage.setItem('username', cookieObj.userName);
+      window.location.href = 'http://localhost:8080';
+      alert('Successfully Logged In');
+    } else alert('Please log in');
   }, []);
 
   const handleLogin = (e) => {
-    console.log('handleLogin invoked');
-    // fetch('/api/oauth')
-    //   .then((res) => res.json())
-    //   .then((data) => {
-    //     console.log('data:', data);
-    //     console.log(data);
-    //     window.location.href = data;
-    //     console.log('returned to home');
-    //   })
-    //   .catch((err) => {
-    //     console.log(err);
-    //   });
     window.location.href = '/api/oauth';
-    console.log('after window.location.href');
   };
 
-  // async function handleLogin() {
-  //   const res = await fetch('localhost8080/oauth');
-  //   const data = await res.json();
-  //   this.setResData({ data });
-  // }
-
-  // const handleClick =
-  // const CLIENT_ID = process.env.CLIENT_ID;
-  // console.log(CLIENT_ID);
-  // console.log;
-
-  // const hrefString =
-  //   'https://github.com/login/oauth/authorize?scope=user:email&client_id=' +
-  //   CLIENT_ID;
-  // console.log(CLIENT_ID);
   return (
     <div className="wrapper">
       <Navbar />
