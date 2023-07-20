@@ -20,6 +20,9 @@ export default function Navbar() {
   function LogOut() {
     setGlobalId('');
   }
+  function CreateUser() {
+    navigate('/createuser');
+  }
 
   return (
     <div className="Nav">

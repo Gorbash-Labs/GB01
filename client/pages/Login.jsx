@@ -12,8 +12,8 @@ const Login = (props) => {
   const CLIENT_SECRETS = 'a0c26008058e961a4ceea77439f79c8ec02f916c';
   //create a state of invalid usernmae/passowrd initialixed to false
   const [validLogin, setvalidLogin] = useState(false);
-  const navigate = useNavigate();
-  const { setGlobalId } = useContext(UserIdContext);
+  const navigate = useNavigate()
+  const { setGlobalId } = useContext(UserIdContext)
 
   const [info, setInfo] = useState({ username: '', password: '' });
   const [userData, setUserData] = useState({});
@@ -110,82 +110,76 @@ const Login = (props) => {
     if (typeof id === 'number') {
       setGlobalId(id);
       setvalidLogin(true);
+
     } else {
-      alert('invalid username/password');
+      alert("invalid username/password")
     }
   };
 
-  if (loading) {
-    return <div>loading</div>;
-  } else {
-    return (
-      <div>
-        <Navbar />
-        <div className="loginbackground">
-          {!localStorage.getItem('accessToken') && !validLogin ? (
-            <>
-              <div className="formHeader">
-                <h3>Welcome back!</h3>
-                <h3>Log in with your name and password</h3>
+  return (
+    <div>
+      <Navbar />
+      <div className="loginbackground">
+        {!localStorage.getItem("accessToken") && !validLogin ?
+          <>
+            <div className="formHeader">
+              <h3>Welcome back!</h3>
+              <h3>Log in with your name and password</h3>
+            </div>
+            <div class="container">
+              <div class="login-form">
+                <h2>Login</h2>
+                <label for="username">Username</label>
+                <input
+                  type="text"
+                  id="username"
+                  className='logininput'
+                  name="username"
+                  required
+                  value={info.username}
+                  onChange={e => {
+                    setInfo({ ...info, username: e.target.value })
+                  }} />
+                <label for="password">Password</label>
+                <input
+                  type="password"
+                  id="password"
+                  className='logininput'
+                  name="password"
+                  required
+                  value={info.password}
+                  onChange={e => {
+                    setInfo({ ...info, password: e.target.value })
+                  }} />
+                <button id='allbuttons' type="submit" onClick={handleClick}>Login</button>
               </div>
-              <div class="container">
-                <div class="login-form">
-                  <h2>Login</h2>
-                  <label for="username">Username</label>
-                  <input
-                    type="text"
-                    id="username"
-                    className="logininput"
-                    name="username"
-                    required
-                    value={info.username}
-                    onChange={(e) => {
-                      setInfo({ ...info, username: e.target.value });
-                    }}
-                  />
-                  <label for="password">Password</label>
-                  <input
-                    type="password"
-                    id="password"
-                    className="logininput"
-                    name="password"
-                    required
-                    value={info.password}
-                    onChange={(e) => {
-                      setInfo({ ...info, password: e.target.value });
-                    }}
-                  />
-                  <button id="allbuttons" type="submit" onClick={handleClick}>
-                    Login
-                  </button>
-                </div>
-              </div>
-              <hr width="70%" />
+            </div>
+            <hr width="70%" />
 
-              <div class="container" onClick={loginByGithub}>
-                <a class="github-button">
-                  <img
-                    src="https://github.githubassets.com/images/modules/logos_page/Octocat.png"
-                    alt="GitHub logo"
-                    class="github-logo"
-                  />
-                  <span>Login with GitHub</span>
-                </a>
-              </div>
-            </>
-          ) : (
-            <>
-              <h2>Successfully Logged In</h2>
-              <button onClick={getUserData}>Get User Data</button>
-              {Object.keys(userData).length !== 0 ? (
-                <>
-                  <h4>Hi there {userData.login}</h4>
-                </>
-              ) : (
-                <>
-                  <h4>No data available</h4>
-                </>
-              )}
+            <div class="container" onClick={loginByGithub}>
+              <a class="github-button">
+                <img src="https://github.githubassets.com/images/modules/logos_page/Octocat.png" alt="GitHub logo" class="github-logo" />
+                <span>Login with GitHub</span>
+              </a>
+            </div>
+          </>
+          :
+          <>
+            <h2>Successfully Logged In</h2>
+            <button onClick={getUserData}>Get User Data</button>
+            {Object.keys(userData).length !== 0 ?
+              <>
+                <div className="text">
+                  <h4>Hey there {userData.login}</h4>
+                </div>
+
+                <img className="user-image" src={userData.avatar_url} />
+              </>
+              :
+              <>
+                <h4>No data available</h4>
+              </>
+            }
 
               <footer>
                 <p>&copy; 2023 Goru. All rights reserved.</p>

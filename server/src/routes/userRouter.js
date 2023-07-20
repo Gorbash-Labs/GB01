@@ -16,7 +16,7 @@ router.post(
     // if the user already exists send a bool back to frontend
     if (res.locals.existingUser) {
       console.log('user already exists pick a different username');
-      res.status(200).send();
+      res.status(201).send();
     }
     res.status(200).send();
   }
