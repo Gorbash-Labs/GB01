@@ -50,21 +50,10 @@ userController.makeUser = async (req, res, next) => {
   }
 };
 
-userController.newSession = (req, res, next) => {
-  // Here after creating or authenticating. Make a new 1.5 minute session and send them cookies.
-  res.cookie('SSID', res.locals.userId, { maxAge: 90000, httpOnly: true });
-  next();
-};
-
-userController.endSession = (req, res, next) => {
-  res.clearCookie('SSID');
-  next();
-};
-
 userController.authenticate = async (req, res, next) => {
   // Here for verifying authentication of new users
   // If they have a valid session already, next()
-  if (req.cookies) next;
+  // if (req.cookies.SSID) return next();
 
   // If they don't have a valid session, check req.body for username + password
   const { username, password } = req.body;
@@ -97,6 +86,20 @@ userController.authenticate = async (req, res, next) => {
       log: 'Error occured in userController.authenticate.',
     });
   }
+};
+
+userController.newSession = (req, res, next) => {
+  // Here after creating or authenticating. Make a new 1.5 minute session and send them cookies.
+  console.log(res.locals.userId);
+  res.cookie('SSID', res.locals.userId, { maxAge: 90000, httpOnly: true }); //,
+  console.log('I just made a cookie in userController.newSession');
+  next();
+};
+
+userController.endSession = (req, res, next) => {
+  res.clearCookie('SSID');
+  console.log('Cookie cleared');
+  next();
 };
 
 userController.authorizeEdit = (req, res, next) => {

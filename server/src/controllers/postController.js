@@ -8,6 +8,7 @@ postController.findPost = async (req, res, next) => {
   const postId = req.params.id;
   const lookupText = 'SELECT * FROM posts WHERE post_id = $1';
   const lookupVals = [postId];
+  // 'SELECT * FROM posts WHERE post_id = $1';
   try {
     const { rows } = await db.query(lookupText, lookupVals);
     if (rows.length === 0) {
@@ -19,6 +20,10 @@ postController.findPost = async (req, res, next) => {
     }
     console.log('Retrieved post lookup: ', rows[0]);
     res.locals.postRequest = rows[0];
+
+    // create a new table for name or join with the one from above
+    //res.locals
+
     next();
   } catch (err) {
     return next({
@@ -32,8 +37,9 @@ postController.makePost = async (req, res, next) => {
   // An authorized user is posting
   // Get username from cookies/session
   //const { username } = req.cookies;
-  // const uploader_id = req.cookies('SSID');
-  const uploader_id = 8;
+  const uploader_id = req.cookies['SSID'];
+  console.log('uploader_id: ', uploader_id);
+  // const uploader_id = 1;
   // Get post from body
   const {
     tech_id,
@@ -50,38 +56,50 @@ postController.makePost = async (req, res, next) => {
   // retreive tech id, uploader id, and language id
   // code
 
-  const { rows } = await db.query(
-    `SELECT language_id FROM languages WHERE name = $1`,
-    [languageName]
-  );
-  const languageId = rows[0].language_id;
   try {
-    console.log(req.body);
-    console.log('language id: ', languageId);
-    const values = [
-      title,
-      tech_id,
-      uploader_id,
-      typeReview,
-      typeAdvice,
-      typeCodeSnippet,
-      typeHelpOffer,
-      languageId,
-      comment,
-      image,
-    ];
-    // Add the post to the DB
-    await db.query(
-      `INSERT INTO posts (title, tech, uploader, type_review, type_advice, type_code_snippet, type_help_offer, language, comment, image) 
-      VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10)`,
-      values
+    const { rows } = await db.query(
+      `SELECT language_id FROM languages WHERE name = $1`,
+      [languageName]
     );
-    console.log('Successfully Inserted Post');
+    const languageId = rows[0].language_id;
+    console.log('passed language id search', languageId);
 
-    res.locals.techId = tech_id;
-    return next();
+    try {
+      const values = [
+        title,
+        tech_id,
+        uploader_id, // uploader is temp before session
+        typeReview,
+        typeAdvice,
+        typeCodeSnippet,
+        typeHelpOffer,
+        languageId,
+        comment,
+        '', // no real image passing back yet ?
+      ];
+      console.log(values);
+      // Add the post to the DB
+      await db.query(
+        `INSERT INTO posts (title, tech, uploader, type_review, type_advice, type_code_snippet, type_help_offer, language, comment, image) 
+        VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10)`,
+        values
+      );
+      // INSERT INTO posts (title, tech, uploader, type_review, type_advice, type_code_snippet, type_help_offer, language, comment, image) VALUES ('Google Maps Java', '1', 8 , false, false, false, false, 4, ''
+      console.log('Successfully Inserted Post');
+
+      res.locals.techId = tech_id;
+      return next();
+    } catch (err) {
+      return next({
+        log: 'Encountered Insert to Posts error in postController.makePost',
+        message: { err: 'MakePost error.' },
+      });
+    }
   } catch (err) {
-    return next('error');
+    return next({
+      log: 'Encountered find Language error in postController.makePost',
+      message: { err: 'Find Language error.' },
+    });
   }
 };
 
@@ -131,7 +149,11 @@ postController.findPostsByTech = async (req, res, next) => {
   // Get all post with req.params.id == techId
   // Attach to res.locals.postList;
   const techId = req.params.id;
-  const lookupText = 'SELECT * FROM posts WHERE tech = $1';
+  const lookupText = `SELECT posts.*, users.name AS uploader
+  FROM posts 
+  JOIN users ON posts.uploader = users.user_id
+  WHERE tech = $1`;
+
   const lookupVals = [techId];
   try {
     const { rows } = await db.query(lookupText, lookupVals);
@@ -140,8 +162,8 @@ postController.findPostsByTech = async (req, res, next) => {
     next();
   } catch (err) {
     return next({
-      log: 'Encountered lookup error in postController.findPostsByTech',
-      message: { err: 'Lookup error.' },
+      log: 'Encountered lookup error in postController.makePost',
+      message: { err: 'MakePost error.' },
     });
   }
 };

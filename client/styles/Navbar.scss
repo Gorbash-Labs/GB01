@@ -5,15 +5,26 @@ add a universal "background color" to a "variables" pallete scss file AND import
 add a universal "Text color" to a "variables" pallete scss file AND import that to _appStyles.css}
 */
 @import './client/styles/_variables.scss';
-
+.Nav {
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.131);
+  display: flex;
+  justify-content: center;
+  background-color: #ffffff;
+}
 .Navbar {
-  padding: 10px;
+  width: 1200px;
+  height: 70px;
   display: flex;
   list-style-type: none;
   justify-content: flex-start;
-  background-color: #191e3c;
-}
+  align-items: center;
 
+  gap: 20px;
+}
+.icon {
+  width: 50px;
+  height: auto;
+}
 /*
 add a universal "on hover color" to a "variables" pallete scss file AND import that to _appStyles.css}
 */
@@ -22,10 +33,15 @@ add a universal "on hover color" to a "variables" pallete scss file AND import t
   color: $fourth;
 }
 
-.Navbar li {
-  margin-left: 10px;
-}
+// .Navbar li {
+//   margin-left: 10px;
+// }
 
-.Navbar li:last-child {
-  margin-right: 40px;
+// .Navbar li:last-child {
+//   margin-right: 40px;
+// }
+
+.NavButton {
+  color: none;
+  font-size: 14px;
 }

@@ -6,17 +6,18 @@
 .loginbackground {
   font-size: 20px;
   background-size: 400% 400%;
-  background: linear-gradient(86.3deg, #97b7e1 3.6%, #79acef 87.6%);
+  // background: linear-gradient(86.3deg, #97b7e1 3.6%, #79acef 87.6%);
   height: 100vh;
 }
 
-
 .formHeader {
+  margin-top: 100px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   animation: flyinleft 1s ease-in;
+  color: white;
 }
 
 .container {
@@ -106,9 +107,7 @@ button:active {
   transition: background-color 0.2s ease;
   background: linear-gradient(90deg, #03a9f4, #f441a5, #ffeb3b, #03a9f4);
   background-size: 400%;
-
 }
-
 
 @keyframes animate {
   0% {
@@ -191,7 +190,6 @@ h4 {
   position: reltive;
 }
 
-
 // .text h4::after {
 //   content: 'Hey there';
 //   position: relative;
@@ -202,7 +200,7 @@ h4 {
 // }
 
 .text h4::after {
-  animation: animate 7s infinite
+  animation: animate 7s infinite;
 }
 
 // @keyframes animate {
@@ -226,14 +224,28 @@ h4 {
 // }
 
 .text h4::after {
-  background-image: linear-gradient(60deg, #00d0ff, #4dff03, #ff0058, #ffbc00, #ff0058);
+  background-image: linear-gradient(
+    60deg,
+    #00d0ff,
+    #4dff03,
+    #ff0058,
+    #ffbc00,
+    #ff0058
+  );
   -webkit-background-clip: text;
-  color: transparent
+  color: transparent;
 }
 
 .text h4 {
   color: #333;
-  background-image: linear-gradient(60deg, #00d0ff, #4dff03, #ff0058, #ffbc00, #ff0058);
+  background-image: linear-gradient(
+    60deg,
+    #00d0ff,
+    #4dff03,
+    #ff0058,
+    #ffbc00,
+    #ff0058
+  );
   -webkit-background-clip: text;
   color: transparent;
 }
