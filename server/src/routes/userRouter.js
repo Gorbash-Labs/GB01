@@ -6,6 +6,8 @@ const userController = require('../controllers/userController');
 
 const router = express.Router();
 
+// /api/user
+
 // USERS
 // Add new User to the database
 // changed ednpoint to 'U', change on frontend as well
@@ -22,7 +24,7 @@ router.post(
 
     console.log('User created and session created successfully.');
     return res.sendStatus(200);
-  }
+  },
 );
 
 // Login
@@ -33,13 +35,11 @@ router.post(
   (req, res) => {
     // send back username, maybe contact?, cookie?
     res.status(200).json({ message: 'Login successful!' });
-  }
+  },
 );
 
 //Sign-Out
-router.get('/signout', 
-userController.endSession, 
-(req, res) => {
+router.get('/signout', userController.endSession, (req, res) => {
   res.status(200).redirect('/');
 });
 
@@ -50,8 +50,10 @@ router.get(
   postController.findPostsByUser,
   (req, res) => {
     // res.locals.userRequest && res.locals.postList
-    res.status(200).json({user: res.locals.userRequest, posts: res.locals.postList});
-  }
+    res
+      .status(200)
+      .json({ user: res.locals.userRequest, posts: res.locals.postList });
+  },
 );
 
 module.exports = router;

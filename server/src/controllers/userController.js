@@ -1,7 +1,6 @@
 const db = require('../config/profileSchema.js');
 const bcrypt = require('bcrypt');
 
-
 const userController = {};
 
 // works
@@ -17,8 +16,10 @@ userController.makeUser = async (req, res, next) => {
     });
 
   //Check and see if username is taken
-  const result = await db.query('SELECT name FROM users WHERE name = $1', [username]);
-  
+  const result = await db.query('SELECT name FROM users WHERE name = $1', [
+    username,
+  ]);
+
   if (result.rows.length > 0) {
     res.locals.existingUser = true;
     return next({
@@ -32,7 +33,7 @@ userController.makeUser = async (req, res, next) => {
   try {
     const hashedPassword = await bcrypt.hash(password, 10);
 
-      // Create new user in DB with hashed Pwd
+    // Create new user in DB with hashed Pwd
     const text = `INSERT INTO users (name, password, contact, community) VALUES ($1, $2, $3, $4)`;
     const values = [username, hashedPassword, contact, 1]; // 1 for CTRI17
 
@@ -42,7 +43,7 @@ userController.makeUser = async (req, res, next) => {
     // Add USER_ID on res.locals.userId
     const { rows } = await db.query(
       `SELECT user_id FROM users WHERE name = $1`,
-      [username]
+      [username],
     );
     const { user_id } = rows[0];
 
@@ -85,11 +86,12 @@ userController.authenticate = async (req, res, next) => {
   // Hash salt + Pwd and check database. If valid, next.
   try {
     // Add USER_ID on res.locals.userId
-    const userResult = await db.query(`
+    const userResult = await db.query(
+      `
       SELECT user_id, password 
       FROM users 
       WHERE name = $1`,
-      [username]
+      [username],
     );
     // if user exists error
     if (userResult.rows.length === 0) {
@@ -107,11 +109,11 @@ userController.authenticate = async (req, res, next) => {
       return next({
         log: 'usercontroller.authenticate: Invalid password',
         status: 401,
-        message: 'Invalid password',
+        message: 'Invalid username or password',
       });
     }
 
-    console.log('passwords match!')
+    console.log('passwords match!');
 
     res.locals.userId = userResult.rows[0].user_id;
 
