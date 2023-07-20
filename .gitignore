@@ -4,4 +4,4 @@ dist/bundle.js
 *.DS_Store
 images/
 awsConfig.js
-libs/
+secrets.js
