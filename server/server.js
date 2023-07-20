@@ -2,6 +2,10 @@ const path = require('path');
 const express = require('express');
 const cookieParser = require('cookie-parser');
 
+// require in dotenv.config
+// use process.env.variable name to extract the hidden info from the .env file
+// test with a console log of process.env and see if it prints an object with the variable names as the strings and the keys as the values
+
 const app = express();
 const PORT = 3000;
 
