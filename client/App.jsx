@@ -7,6 +7,7 @@ import Home from './pages/Home.jsx';
 import Posts from './pages/Posts.jsx';
 import Login from './pages/Login.jsx';
 import Profile from './pages/Profile.jsx';
+import { CreateUser } from './pages/CreateUser.jsx';
 import './styles/app.scss';
 import { UserIdContext } from './contexts/Contexts.jsx';
 
@@ -33,6 +34,12 @@ const App = () => {
             userId={loggedInStatus}
           />
           <Route
+            path = "/createuser"
+            element ={<CreateUser/>}
+            loggedIn={setLoggedInStatus}
+            userId={loggedInStatus}
+          />
+          <Route
             path="/comments/:id"
             element={<Posts />}
             loggedIn={setLoggedInStatus}
@@ -51,6 +58,7 @@ const App = () => {
             userId={loggedInStatus}
           />
         </Routes>
+        
       </BrowserRouter>
     </UserIdContext.Provider>
   );
