@@ -31,12 +31,13 @@ postController.findPost = async (req, res, next) => {
 postController.retrievePosts = async (req, res, next) => {
   // Get a post with req.params.id == postId
   // Attach to res.locals.postRequest;
-  const lookupText = 'SELECT * FROM posts';
+  const lookupText = 'SELECT * FROM posts INNER JOIN users ON posts.uploader = users.user_id';
+  //SELECT * FROM posts INNER JOIN users ON posts.uploader = users.user_id WHERE tech = $1
   try {
-    const { arrOfComments } = await db.query(lookupText);
+    const arrOfComments = await db.query(lookupText);
     console.log('Retrieved general comments: ', arrOfComments);
     res.locals.comments = arrOfComments;
-    next();
+    return next();
   } catch (err) {
     return next({
       log: 'Encountered lookup error in postController.retrievePosts',
@@ -66,7 +67,7 @@ postController.makePost = async (req, res, next) => {
   // retreive tech id, uploader id, and language id
   // code
 
-/*
+  /*
     CREATE TABLE posts(
         post_id SERIAL PRIMARY KEY,
         title TEXT NOT NULL,
@@ -148,7 +149,7 @@ postController.findPostsByTech = async (req, res, next) => {
   // Get all post with req.params.id == techId
   // Attach to res.locals.postList;
   const techId = req.params.id;
-  const lookupText = 'SELECT * FROM posts WHERE tech = $1';
+  const lookupText = 'SELECT * FROM posts INNER JOIN users ON posts.uploader = users.user_id WHERE tech = $1';
   const lookupVals = [techId];
   try {
     const { rows } = await db.query(lookupText, lookupVals);

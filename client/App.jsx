@@ -6,11 +6,11 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Navbar from './components/Navbar.jsx';
 import Home from './pages/Home.jsx';
 import Comments from './pages/Comments.jsx';
-import Login from './pages/Oauth.jsx';
+import Login from './pages/Login.jsx';
 import Profile from './pages/Profile.jsx';
-import styles from './stylesheets/_appStyles.scss';
+import styles from './stylesheets/appStyles.scss';
 import './stylesheets/app.scss';
-import CommentsFeed from './pages/Feed.jsx';
+import Feed from './pages/Feed.jsx';
 import Chat from './pages/Chat.jsx';
 
 const App = () => {
@@ -23,7 +23,7 @@ const App = () => {
         <Route index element={<Home />} />
         <Route path="home" element={<Home />} />
         <Route path="comments/:id" element={<Comments />} />
-        <Route path="commentsfeed" element={<CommentsFeed />} />
+        <Route path="feed" element={<Feed />} />
         <Route path="login" element={<Login />} />
         <Route path="profile" element={<Profile />} />
         <Route path="chat" element={<Chat />} />

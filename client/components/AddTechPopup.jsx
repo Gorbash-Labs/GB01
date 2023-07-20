@@ -2,9 +2,12 @@ import React from 'react';
 
 function AddTechPopup(props) {
 
-  console.log('props of AddTech Popup: ', props.overlayState)
-  const [showOverlay, setShowOverlay] = props.overlayState;
-  console.log(showOverlay, setShowOverlay);
+
+  // console.log('props of AddTech Popup: ', props.overlayState)
+  // const [showOverlay, setShowOverlay] = props.overlayState;
+  // console.log(showOverlay, setShowOverlay);
+
+
 
   return (
     <div className="overlay">
@@ -34,7 +37,7 @@ function AddTechPopup(props) {
             <input
               type="text"
               className="input-one"
-              placeholder="Add Image URL"
+              placeholder="add image url(optional)"
               id="image"
             />
             <input type="submit" value="Add" />

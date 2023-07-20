@@ -5,8 +5,6 @@ import { Editor } from '@tinymce/tinymce-react';
 
 function AddCommentPopup(props) {
   const { id } = useParams();
-  
-
 
   return (
     <div className="overlay-comments">
@@ -36,6 +34,17 @@ function AddCommentPopup(props) {
                 placeholder="comment"
                 id="comment"
               />
+              <input type="radio" id="tags_review" value="true"/>
+              <label className="tags_text">Review</label>
+
+              <input type="radio" id="tags_advice" value="true"/>
+              <label className="tags_text">Advice</label>
+
+              <input type="radio" id="tags_code_snippet" value="true"/>
+              <label className="tags_text">Code Snippet</label>
+
+              <input type="radio" id="tags_help_offer" value="true"/>
+              <label className="tags_text">Help Offer</label>
               {/* <Editor
                       apiKey="ba2mzqsjqzq6lv0fu4numgypg3j9125otxy4rpzttx7vji3q"
                       initialValue={initialVal}

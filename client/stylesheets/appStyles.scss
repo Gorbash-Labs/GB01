@@ -1,0 +1,30 @@
+@import './variables.scss';
+@import './Navbar.scss';
+@import './app.scss';
+@import './Home.scss';
+@import './Comments.scss';
+@import './Login.scss';
+@import './Profile.scss';
+
+html {
+  font-family: -apple-system, system-ui, BlinkMacSystemFont, 'Segoe UI', Roboto,
+    Ubuntu;
+    background-color: rgb(234, 234, 234);
+  
+}
+
+.chat-container-main {
+  #chat-box {
+    height: 500px;
+    width: 500px;
+    border: solid black;
+  }
+}
+/* //navbar
+//searchbar comments
+//searchbar home
+//home
+//login
+//profile
+//comments
+ */

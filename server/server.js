@@ -9,6 +9,28 @@ const cookieParser = require('cookie-parser');
 const app = express();
 const PORT = 3000;
 
+// const http = require('http').Server(app)
+const cors = require('cors');
+
+
+// app.use(cors)
+
+//WEBSOCKET SERVER
+// const socketIO = require('socket.io')(http, {
+//   cors: {
+//     origin: 'http://127.0.0.1:8080',
+//     credentials: true
+//   },
+// });
+
+// socketIO.on('connection', (socket) => {
+//   console.log('user connected', socket.id);
+//   // socket.on('custom-event', (item) => {
+//   //   console.log(item);
+//   // });
+
+// });
+
 // Routers
 const techRouter = require(path.join(__dirname, '/src/routes/techRouter'));
 const postRouter = require(path.join(__dirname, '/src/routes/postRouter'));
