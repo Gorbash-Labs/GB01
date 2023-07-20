@@ -38,7 +38,7 @@ router.put(
 );
 
 // Delete a single post
-router.put(
+router.delete(
   '/:id',
   postController.findPost,
   userController.authenticate,

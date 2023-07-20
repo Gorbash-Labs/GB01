@@ -3,6 +3,7 @@ add a universal "background color" to a "variables" pallete scss file AND import
 add a universal "Text color" to a "variables" pallete scss file AND import that to _appStyles.css}
 add a universal "on hover color" to a "variables" pallete scss file AND import that to _appStyles.css}
 */
+$primary-purple:#5c4ac0;
 
 .Navbar {
   padding: 10px;
@@ -38,7 +39,7 @@ add a universal "on hover color" to a "variables" pallete scss file AND import t
     }
   }
   p:hover {
-    background-color: $fifth;
-    color: $fourth;
+    color: $primary-purple;
+    text-decoration: underline;
   }
 }

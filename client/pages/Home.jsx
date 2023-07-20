@@ -82,25 +82,27 @@ const Home = () => {
   const handleEdit = (e) => {};
   //DELETE a Tech API
   const handleDelete = (e) => {};
-  return (
-    <div className="main-container">
-      {showOverlay && (
-        <AddTechPopup
-          overlayState={showOverlay}
-          overlayOff={() => setShowOverlay(false)}
-          handleAddTechSubmit={handleAddTechSubmit}
-        />
-      )}
- 
-      <div className="content-header">
-        <h1>Tech Topics</h1>
-        <button className="button" onClick={() => setShowOverlay(true)}>
-          NEW TOPIC
-        </button>
-      </div>
-      <div className="topic-container">{renderBox()}</div>
-    </div>
 
+  return (
+    <div className="home-body">
+      <div className="main-container">
+        {showOverlay && (
+          <AddTechPopup
+            overlayState={showOverlay}
+            overlayOff={() => setShowOverlay(false)}
+            handleAddTechSubmit={handleAddTechSubmit}
+          />
+        )}
+
+        <div className="content-header">
+          <h1>Tech Topics</h1>
+          <button className="button" onClick={() => setShowOverlay(true)}>
+            NEW TOPIC
+          </button>
+        </div>
+        <div className="topic-container">{renderBox()}</div>
+      </div>
+    </div>
     //     <div className="main-header">
     //       <div>
     //         <div className="content">

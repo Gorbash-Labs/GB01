@@ -196,11 +196,6 @@ const Feed = () => {
                     <div className="experience">
                       {HelperFunctions.md(item.comment)}
                     </div>
-                    <img
-                      src={item.image}
-                      alt="Image"
-                      className="accordion-image"
-                    />
                   </div>
                 </div>
               )}
