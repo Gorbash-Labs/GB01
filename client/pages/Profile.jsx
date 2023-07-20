@@ -13,7 +13,7 @@ const Profile = () => {
     const getData = async () => {
       // const response = await fetch(`/api/user/${globalId}`);
       try {
-        const response = await fetch(`/api/user/id/${globalId}`);
+        const response = await fetch(`/api/user/id/1`);
         const data = await response.json();
         setUser(data.user);
         setPosts(data.posts);

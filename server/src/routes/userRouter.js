@@ -16,7 +16,7 @@ router.post(
     // if the user already exists send a bool back to frontend
     if (res.locals.existingUser) {
       console.log('user already exists pick a different username');
-      res.status(200).send();
+      res.status(201).send();
     }
     res.status(200).send();
   }
@@ -36,6 +36,15 @@ router.post(
 //Sign-Out
 router.get('/signout', userController.endSession, (req, res) => {
   res.status(200).redirect('/');
+});
+
+//Is already signed in
+router.get('/checkSession', (req, res) => {
+  if (req.cookies.SSID) {
+    res.status(200).json({ authenticate: true, id: req.cookies.SSID });
+  } else {
+    res.status(200).json({ authenticate: false });
+  }
 });
 
 // Look up a single user by name

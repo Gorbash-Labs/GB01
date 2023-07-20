@@ -1,11 +1,10 @@
 import React, { useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
-// import { uploadFile } from 'react-s3';
-import axios from 'axios';
 import BasicInfo from '../components/BasicInfo.jsx';
 window.Buffer = window.Buffer || require('buffer').Buffer;
 
 const ProfileHeader = ({ user, setUser, globalId }) => {
+  const [userImg, setUserImg] = useState(user.profile_picture);
   const [edit, setEdit] = useState(false);
   const [editText, setEditText] = useState('Edit');
   const [newUsername, setNewUsername] = useState(user.name);
@@ -21,7 +20,7 @@ const ProfileHeader = ({ user, setUser, globalId }) => {
 
   const handleFileChange = (e) => {
     e.preventDefault();
-    const fileObj = e.target.files && e.target.files[0];
+    const fileObj = e.target.files[0];
     if (!fileObj) return;
     console.log('fileObj is ', fileObj);
     e.target.value = null;
@@ -31,46 +30,15 @@ const ProfileHeader = ({ user, setUser, globalId }) => {
 
   const sendImg = async (img) => {
     const formData = new FormData();
-    await formData.append('image', img);
-    console.log('formData', formData);
-    await axios
-      .post(`/api/aws`, formData, {
-        headers: { 'Content-Type': 'multipart/form-data' },
-      })
-      .then((res) => console.log('sent image'))
-      .catch((err) => console.log(err));
-    // try {
-    //   const response = await fetch(`/api/aws`, {
-    //     method: 'POST',
-    //     headers: {
-    //       'Content-Type': 'multipart/form-data',
-    //     },
-    //     body: img,
-    //   });
-    // } catch (err) {
-    //   console.log('err');
-    // }
+    formData.append('image', img, img.name);
+    const res = await fetch(`/api/aws`, {
+      method: 'POST',
+      body: formData,
+    });
+    const data = await res.json();
+    console.log('response', data);
+    setUserImg(data);
   };
-
-  // //aws bucket config info
-  // const config = {
-  //   bucketName: 'goru-v1.1-image',
-  //   region: 'us-east-1',
-  //   dirName: 'profilePics',
-  //   accessKeyId: 'AKIAVKLTZQOTX2AGXIFE',
-  //   secretAccessKey: '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',
-  //   s3Url: 'http://goru-v1.1-image.s3-website-us-east-1.amazonaws.com',
-  // };
-  // //handler function for AWS file upload to S3 bucket
-  // async function upload(file) {
-  //   try {
-  //     const response = await uploadFile(file, config);
-  //     const url = response.location;
-  //     console.log(url);
-  //   } catch (err) {
-  //     console.log('aws upload error:', err);
-  //   }
-  // }
 
   const handleSubmit = () => {
     navigate('/home');
@@ -129,7 +97,10 @@ const ProfileHeader = ({ user, setUser, globalId }) => {
         <h1>Hello {user.name}</h1>
         <div
           className="imgContainer"
-          style={{ backgroundImage: `url("${user.imgUrl}")` }}
+          style={{
+            backgroundImage: `url(${userImg})`,
+          }}
+          // style={{ backgroundImage: `url("${user.imgUrl}")` }}
         >
           <input
             style={{ display: 'none' }}

@@ -3,3 +3,4 @@ package-lock.json
 dist/bundle.js
 *.DS_Store
 images/
+awsConfig.js
