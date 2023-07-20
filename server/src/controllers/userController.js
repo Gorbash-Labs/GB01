@@ -41,7 +41,7 @@ userController.makeUser = async (req, res, next) => {
       [username]
     );
     const { user_id } = rows[0];
-
+      
     res.locals.userId = user_id;
     console.log(res.locals.userId);
     return next();

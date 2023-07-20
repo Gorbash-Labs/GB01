@@ -20,6 +20,9 @@ export default function Navbar(){
     function LogOut(){
       setGlobalId('')
     }
+    function CreateUser(){
+      navigate("/createuser")
+    }
 
     return (
       <div>
@@ -32,7 +35,7 @@ export default function Navbar(){
       ) : (<ul className="Navbar">
         <li id='allbuttons' onClick={home}>Home</li>
         <li id='allbuttons' onClick={Login}>Login</li>
-        <li id='allbuttons' >Create Account</li>
+        <li id='allbuttons' onClick={CreateUser}>Create Account</li>
       </ul>)}
     </div>
     )
