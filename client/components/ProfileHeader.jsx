@@ -1,6 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
+// import { uploadFile } from 'react-s3';
+import axios from 'axios';
 import BasicInfo from '../components/BasicInfo.jsx';
+window.Buffer = window.Buffer || require('buffer').Buffer;
 
 const ProfileHeader = ({ user, setUser, globalId }) => {
   const [edit, setEdit] = useState(false);
@@ -9,6 +12,65 @@ const ProfileHeader = ({ user, setUser, globalId }) => {
   const [newUserPass, setNewUserPass] = useState(user.name);
   const [newUserContact, setNewUserContact] = useState(user.name);
   const navigate = useNavigate();
+
+  const inputRef = useRef(null);
+  const handleImg = (e) => {
+    e.preventDefault();
+    inputRef.current.click();
+  };
+
+  const handleFileChange = (e) => {
+    e.preventDefault();
+    const fileObj = e.target.files && e.target.files[0];
+    if (!fileObj) return;
+    console.log('fileObj is ', fileObj);
+    e.target.value = null;
+    sendImg(fileObj);
+    // upload(fileObj);
+  };
+
+  const sendImg = async (img) => {
+    const formData = new FormData();
+    await formData.append('image', img);
+    console.log('formData', formData);
+    await axios
+      .post(`/api/aws`, formData, {
+        headers: { 'Content-Type': 'multipart/form-data' },
+      })
+      .then((res) => console.log('sent image'))
+      .catch((err) => console.log(err));
+    // try {
+    //   const response = await fetch(`/api/aws`, {
+    //     method: 'POST',
+    //     headers: {
+    //       'Content-Type': 'multipart/form-data',
+    //     },
+    //     body: img,
+    //   });
+    // } catch (err) {
+    //   console.log('err');
+    // }
+  };
+
+  // //aws bucket config info
+  // const config = {
+  //   bucketName: 'goru-v1.1-image',
+  //   region: 'us-east-1',
+  //   dirName: 'profilePics',
+  //   accessKeyId: 'AKIAVKLTZQOTX2AGXIFE',
+  //   secretAccessKey: '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',
+  //   s3Url: 'http://goru-v1.1-image.s3-website-us-east-1.amazonaws.com',
+  // };
+  // //handler function for AWS file upload to S3 bucket
+  // async function upload(file) {
+  //   try {
+  //     const response = await uploadFile(file, config);
+  //     const url = response.location;
+  //     console.log(url);
+  //   } catch (err) {
+  //     console.log('aws upload error:', err);
+  //   }
+  // }
 
   const handleSubmit = () => {
     navigate('/home');
@@ -69,7 +131,13 @@ const ProfileHeader = ({ user, setUser, globalId }) => {
           className="imgContainer"
           style={{ backgroundImage: `url("${user.imgUrl}")` }}
         >
-          <button className="editImg"></button>
+          <input
+            style={{ display: 'none' }}
+            ref={inputRef}
+            type="file"
+            onChange={handleFileChange}
+          />
+          <button className="editImg" onClick={handleImg}></button>
         </div>
       </div>
     </div>
