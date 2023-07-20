@@ -1,22 +1,36 @@
-import React, { useRef } from 'react';
+import React, { useRef, useContext, useEffect } from 'react';
 import { Button, TextField } from '@mui/material';
+import { OverlayDispatchContext, OverlayFormContext } from '../pages/Home.jsx';
 
 export default function SearchBar(props) {
   const query = useRef();
+  const dispatch = useContext(OverlayDispatchContext);
+  const handleSearch = async (e) => {
+    // const dispatch = useContext(OverlayDispatchContext); // you may need to import the context
+    // which may mean we want the contexts to be in a separate file to import in home as well
 
-  const handleSearch = (e) => {
     e.preventDefault();
     const queryVal = query.current.value;
-
-    fetch('/api/tech/search', {
-      method: POST,
-      body: JSON.stringify({
-        searchString: queryVal,
-      }),
+    queryVal = queryVal.replace(/\s/g, '+');
+    console.log('queryVal', queryVal);
+    // fetch(`/api/tech/search/?keywords=${queryVal}`,
+    const fetchData = await fetch(`/api/tech/search/?keywords=${queryVal}`, {
+      method: 'GET',
       headers: {
         'Content-Type': 'application/json',
       },
     });
+
+    if (fetchData.status !== 200) {
+      return 'This was an error in the fetch';
+    }
+    const data = await fetchData.json();
+    console.log('data', data);
+
+    // subscribe the search bar to the dispatch context from the home
+    dispatch({ type: 'NEW_DATA', payload: data });
+
+    // console.log('data', data);
   };
 
   return (
