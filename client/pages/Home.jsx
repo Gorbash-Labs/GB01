@@ -5,70 +5,16 @@ import './Home.scss';
 import { useNavigate, useParams } from 'react-router-dom';
 import SearchBar from '../components/SearchBar.jsx';
 
-const actions = {
-  SHOW_OVERLAY: 'SHOW_OVERLAY',
-  NAME_INPUT: 'NAME_INPUT',
-  URL_INPUT: 'URL_INPUT',
-  IMAGE_URL_INPUT: 'IMAGE_URL_INPUT',
-  DESCRIPTION_INPUT: 'DESCRIPTION_INPUT',
-  SUBMIT: 'SUBMIT',
-  LOAD: 'LOAD',
-  NEW_DATA: 'NEW_DATA',
-  EXIT: 'EXIT',
-};
+import {
+  homePageActions as actions,
+  homePageStateInit as overlayStateInit,
+  homePageReducer as overlayStateReducer,
+} from '../reducers/homePageReducers.jsx';
 
-const overlayStateInit = {
-  visible: false,
-  loading: 'idle',
-  apiName: '',
-  apiUrl: '',
-  apiDescription: '',
-  apiImageUrl: '',
-  apiData: [],
-};
-
-const overlayStateReducer = (state, action) => {
-  switch (action.type) {
-    case actions.SHOW_OVERLAY: {
-      return { ...state, visible: true };
-    }
-    case actions.NAME_INPUT: {
-      return { ...state, apiName: action.payload };
-    }
-    case actions.URL_INPUT: {
-      return { ...state, apiUrl: action.payload };
-    }
-    case actions.IMAGE_URL_INPUT: {
-      return { ...state, apiImageUrl: action.payload };
-    }
-    case actions.DESCRIPTION_INPUT: {
-      return { ...state, apiDescription: action.payload };
-    }
-    case actions.LOAD: {
-      return { ...state, loading: 'load' };
-    }
-    case actions.SUBMIT: {
-      return { ...state, loading: 'submit' };
-    }
-    case actions.NEW_DATA: {
-      return { ...state, loading: 'idle', apiData: action.payload };
-    }
-    case actions.EXIT: {
-      return {
-        ...state,
-        visible: false,
-        apiName: '',
-        apiUrl: '',
-        apiDescription: '',
-        apiImageUrl: '',
-      };
-    }
-    default:
-      return state;
-  }
-};
-const OverlayDispatchContext = createContext();
-const OverlayFormContext = createContext();
+import {
+  StateContext as OverlayFormContext,
+  DispatchContext as OverlayDispatchContext,
+} from '../contexts/contexts.jsx';
 
 const Home = () => {
   const [overlayState, overlayDispatch] = useReducer(
@@ -95,62 +41,60 @@ const Home = () => {
     const { loading, apiImageURL, apiDescription, apiName, apiUrl } =
       overlayState;
     switch (loading) {
-      case 'load':
-        {
-          const fetchData = async () => {
-            try {
-              const response = await fetch('/api/tech', {
-                method: 'GET',
-                headers: {
-                  'Content-Type': 'application/json',
-                },
-              });
-              const data = await response.json();
-              const newData = JSON.parse(JSON.stringify(data));
-              overlayDispatch({ type: actions.NEW_DATA, payload: newData });
-            } catch (err) {
-              console.log('Error occurred loading data from backend');
-            }
-          };
-          fetchData();
-        }
+      case 'load': {
+        const fetchData = async () => {
+          try {
+            const response = await fetch('/api/tech', {
+              method: 'GET',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+            });
+            const data = await response.json();
+            const newData = JSON.parse(JSON.stringify(data));
+            overlayDispatch({ type: actions.NEW_DATA, payload: newData });
+          } catch (err) {
+            console.log('Error occurred loading data from backend');
+          }
+        };
+        fetchData();
         break;
+      }
 
-      case 'submit':
-        {
-          const fetchData = async () => {
-            try {
-              const response = await fetch('/api/tech', {
-                method: 'POST',
-                headers: {
-                  'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                  name: apiName,
-                  link: apiURL,
+      case 'submit': {
+        const fetchData = async () => {
+          try {
+            const response = await fetch('/api/tech', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({
+                name: apiName,
+                link: apiURL,
 
-                  image: apiImageURL,
-                  typeApi: false,
-                  typeFramework: false,
-                  typeLibrary: false,
-                  description: apiDescription,
-                  keywords: ['maps'],
-                }),
-              });
+                image: apiImageURL,
+                typeApi: false,
+                typeFramework: false,
+                typeLibrary: false,
+                description: apiDescription,
+                keywords: ['maps'],
+              }),
+            });
 
-              const data = await response.json();
-              console.log('success');
-              console.log('data returned', data);
-              if (data.length > overlayState.apiData.length) {
-                overlayDispatch({ type: actions.NEW_DATA, payload: data });
-              }
-              overlayDispatch({ type: actions.EXIT });
-            } catch (err) {
-              console.log('Error occurred submitting data to backend');
+            const data = await response.json();
+            console.log('success');
+            console.log('data returned', data);
+            if (data.length > overlayState.apiData.length) {
+              overlayDispatch({ type: actions.NEW_DATA, payload: data });
             }
-          };
-        }
+            overlayDispatch({ type: actions.EXIT });
+          } catch (err) {
+            console.log('Error occurred submitting data to backend');
+          }
+        };
         break;
+      }
 
       default:
         break;

@@ -1,12 +1,20 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import ReactDOM from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 //add containers and requirements for JS
 import Navbar from '../components/Navbar.jsx';
 
+import { UserDispatchContext } from '../contexts/contexts.jsx';
+import { userStateActions } from '../reducers/userReducers.jsx';
+
 const Login = props => {
   //create a state of invalid usernmae/passowrd initialixed to false
   const [invalidLogin, setShowInvalidLogin] = useState(false);
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+
+  const userDispatch = useContext(UserDispatchContext);
+
   //
   //when someone puts in their form info, handle a login request
   // const handleLogin = async e => {
@@ -84,10 +92,43 @@ const Login = props => {
   //       });
   //   }
   // };
-  const handleLogin = e => {
+  const handleLogin = async e => {
     e.preventDefault();
-    props.setLoggedInStatus(true);
+    if (username === '' || password === '') return;
+    const request = {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ username, password }),
+    };
+    const res = await fetch('/api/user/login', request);
+    const data = await res.json();
+    console.log(data);
+    if (data.message !== 'Login successful!') {
+      alert('Unsuccessful login attempt');
+    } else {
+      userDispatch({ type: userStateActions.LOGIN, payload: username });
+    }
+    setUsername('');
+    setPassword('');
   };
+
+  useEffect(() => {
+    const request = {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ username, password }),
+    };
+    fetch('/api/user/login', request)
+      .then(res => res.json())
+      .then(data => {
+        console.log(data);
+        if (data.message === 'Login successful!') {
+          userDispatch({ type: userStateActions.LOGIN, payload: username });
+        }
+        setUsername('');
+        setPassword('');
+      });
+  }, []);
 
   return (
     <div className='wrapper'>
@@ -100,15 +141,21 @@ const Login = props => {
                 type='text'
                 className='login_username'
                 placeholder='Username'
-                value='username'></input>
+                onInput={e => {
+                  setUsername(e.target.value);
+                }}
+                value={username}></input>
               <label>Password</label>
               <input
                 type='text'
                 className='login_password'
                 placeholder='Password'
-                value='password'></input>
+                value={password}
+                onInput={e => {
+                  setPassword(e.target.value);
+                }}></input>
               <label>New User?</label>
-              <input type='radio' value='new_user'></input>
+              <input type='checkbox' value='new_user'></input>
             </form>
           </div>
         </div>
