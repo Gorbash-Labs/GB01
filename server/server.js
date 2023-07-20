@@ -1,6 +1,7 @@
 const path = require('path');
 const express = require('express');
 const cookieParser = require('cookie-parser');
+const dotenv = require('dotenv').config();
 
 // require in dotenv.config
 // use process.env.variable name to extract the hidden info from the .env file
@@ -41,6 +42,55 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(express.static('./dist'));
+
+//Catch Oauth button requests
+app.use('/api/oauth', (req, res) => {
+  console.log('entered oauth on backend');
+  console.log(process.env.CLIENT_ID);
+  const hrefString =
+    'https://github.com/login/oauth/authorize?scope=user:email&client_id=' +
+    process.env.CLIENT_ID;
+  console.log(hrefString);
+  res.redirect(hrefString);
+});
+
+app.use('/api/authenticate', (req, res) => {
+  console.log('rerouted from oauth page');
+  tempCode = req.query.code;
+  const clientID = process.env.CLIENT_ID;
+  const clientSecret = process.env.CLIENT_SECRET;
+  let accessToken;
+  fetch(
+    `https://github.com/login/oauth/access_token?client_id=${clientID}&client_secret=${clientSecret}&code=${tempCode}`,
+    {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+      },
+    }
+  )
+    .then((response) => response.json())
+    .then((data) => {
+      accessToken = data.access_token;
+      fetch('https://api.github.com/user', {
+        headers: { Authorization: `Bearer ${accessToken}` },
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          const userName = data.name;
+          res.cookie(`userName`, userName);
+          return res.redirect('http://localhost:8080/login');
+        })
+        .catch((err) => {
+          console.log('error occurred');
+        });
+    })
+    .catch((err) => {
+      console.log('an error occurred');
+    });
+});
+
+// on load of log in page, send fetch request to server to get data stored in server
 
 // API router for server handling of db info
 app.use('/api/tech', techRouter);
