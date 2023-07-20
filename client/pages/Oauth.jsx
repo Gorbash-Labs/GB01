@@ -20,6 +20,12 @@ const Login = (props) => {
   //     .catch((err) => console.log('an error occurred'));
   // };
 
+  useEffect(() => {
+    // if (cookie exists) then redirect to home page
+    // let username = getCookie
+    console.log(document.cookie);
+  }, []);
+
   const handleLogin = (e) => {
     console.log('handleLogin invoked');
     // fetch('/api/oauth')
@@ -27,11 +33,14 @@ const Login = (props) => {
     //   .then((data) => {
     //     console.log('data:', data);
     //     console.log(data);
+    //     window.location.href = data;
+    //     console.log('returned to home');
     //   })
     //   .catch((err) => {
     //     console.log(err);
     //   });
     window.location.href = '/api/oauth';
+    console.log('after window.location.href');
   };
 
   // async function handleLogin() {

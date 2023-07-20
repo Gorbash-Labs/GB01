@@ -31,8 +31,57 @@ app.use('/api/oauth', (req, res) => {
   console.log(hrefString);
   // res.locals.href = hrefString;
   // console.log(res.locals);
+  // res.status(200).json(res.locals.href);
   res.redirect(hrefString);
 });
+
+app.use('/api/authenticate', (req, res) => {
+  console.log('rerouted from oauth page');
+  console.log(req.query);
+  tempCode = req.query.code;
+  console.log('tempCode: ', tempCode);
+  const clientID = process.env.CLIENT_ID;
+  console.log('clientID: ', clientID);
+  const clientSecret = process.env.CLIENT_SECRET;
+  let accessToken;
+  fetch(
+    `https://github.com/login/oauth/access_token?client_id=${clientID}&client_secret=${clientSecret}&code=${tempCode}`,
+    {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+      },
+    }
+  )
+    .then((response) => response.json())
+    .then((data) => {
+      console.log('data: ', data);
+      accessToken = data.access_token;
+      console.log('accessToken: ', accessToken);
+
+      fetch('https://api.github.com/user', {
+        headers: { Authorization: `Bearer ${accessToken}` },
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          console.log(data);
+          const userName = data.name;
+          res.cookie(`userName`, userName);
+          return res.redirect('http://localhost:8080/login');
+        })
+        .catch((err) => {
+          console.log('error occurred');
+        });
+    })
+    .catch((err) => {
+      console.log('an error occurred');
+    });
+  // res.locals.tempCode = tempCode;
+  // res.sendStatus(200).json(res.locals.tempCode);
+  console.log('accessToken log 2:', accessToken);
+});
+
+// on load of log in page, send fetch request to server to get data stored in server
 
 // API router for server handling of db info
 app.use('/api/tech', techRouter);
