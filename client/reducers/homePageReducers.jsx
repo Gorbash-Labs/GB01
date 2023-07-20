@@ -7,6 +7,7 @@ export const homePageActions = {
   SUBMIT: 'SUBMIT',
   LOAD: 'LOAD',
   NEW_DATA: 'NEW_DATA',
+  FETCH_ERR: 'FETCH_ERR',
   EXIT: 'EXIT',
 };
 
@@ -45,6 +46,9 @@ export const homePageReducer = (state, action) => {
     }
     case homePageActions.NEW_DATA: {
       return { ...state, loading: 'idle', apiData: action.payload };
+    }
+    case homePageActions.FETCH_ERR: {
+      return { ...state, loading: 'idle' };
     }
     case homePageActions.EXIT: {
       return {

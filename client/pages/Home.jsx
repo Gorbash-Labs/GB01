@@ -38,63 +38,72 @@ const Home = () => {
 
   // loading state changed: making a fetch IF NOT IDLE
   useEffect(() => {
-    const { loading, apiImageURL, apiDescription, apiName, apiUrl } =
+    const { loading, apiImageUrl, apiDescription, apiName, apiUrl, apiData } =
       overlayState;
     switch (loading) {
-      case 'load': {
-        const fetchData = async () => {
-          try {
-            const response = await fetch('/api/tech', {
-              method: 'GET',
-              headers: {
-                'Content-Type': 'application/json',
-              },
-            });
-            const data = await response.json();
-            const newData = JSON.parse(JSON.stringify(data));
-            overlayDispatch({ type: actions.NEW_DATA, payload: newData });
-          } catch (err) {
-            console.log('Error occurred loading data from backend');
-          }
-        };
-        fetchData();
-        break;
-      }
-
-      case 'submit': {
-        const fetchData = async () => {
-          try {
-            const response = await fetch('/api/tech', {
-              method: 'POST',
-              headers: {
-                'Content-Type': 'application/json',
-              },
-              body: JSON.stringify({
-                name: apiName,
-                link: apiURL,
-
-                image: apiImageURL,
-                typeApi: false,
-                typeFramework: false,
-                typeLibrary: false,
-                description: apiDescription,
-                keywords: ['maps'],
-              }),
-            });
-
-            const data = await response.json();
-            console.log('success');
-            console.log('data returned', data);
-            if (data.length > overlayState.apiData.length) {
-              overlayDispatch({ type: actions.NEW_DATA, payload: data });
+      case 'load':
+        {
+          const fetchData = async () => {
+            try {
+              const response = await fetch('/api/tech', {
+                method: 'GET',
+                headers: {
+                  'Content-Type': 'application/json',
+                },
+              });
+              const data = await response.json();
+              const newData = JSON.parse(JSON.stringify(data));
+              overlayDispatch({ type: actions.NEW_DATA, payload: newData });
+            } catch (err) {
+              console.log('Error occurred loading data from backend');
             }
-            overlayDispatch({ type: actions.EXIT });
-          } catch (err) {
-            console.log('Error occurred submitting data to backend');
-          }
-        };
+          };
+          fetchData();
+        }
         break;
-      }
+
+      case 'submit':
+        {
+          const fetchData = async () => {
+            try {
+              const response = await fetch('/api/tech', {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                  name: apiName,
+                  link: apiUrl,
+                  image: apiImageUrl,
+                  typeApi: false,
+                  typeFramework: false,
+                  typeLibrary: false,
+                  description: apiDescription,
+                }),
+              });
+              console.log('success');
+              if (response.status === 200) {
+                const data = apiData.slice();
+                data.push({
+                  name: apiName,
+                  link: apiUrl,
+                  image: apiImageUrl,
+                  typeApi: false,
+                  typeFramework: false,
+                  typeLibrary: false,
+                  description: apiDescription,
+                });
+                overlayDispatch({ type: actions.NEW_DATA, payload: data });
+              }
+              overlayDispatch({ type: actions.EXIT });
+            } catch (err) {
+              console.log('Error occurred submitting data to backend');
+              overlayDispatch({ type: actions.FETCH_ERR, payload: err });
+            }
+          };
+          fetchData();
+        }
+        break;
 
       default:
         break;
@@ -113,32 +122,33 @@ const Home = () => {
 
 const ApisContainer = ({ comments }) => {
   const { apiData } = useContext(OverlayFormContext);
-  const renderBox = () => {
-    return apiData.map((item, index) => {
-      return (
-        <div className='box' key={index}>
-          <div className='image-container'>
-            <img src={item.image_url} alt='Tech' className='api-image' />
-          </div>
-          <div className='api-content'>
-            <a href={item.link} className='tech-item-name'>
-              {item.name}
-            </a>
-            <p>{item.description}</p>
-            <div className='button-comment'>
-              <button onClick={comments} id={item.tech_id}>
-                Posts
-              </button>
-            </div>
+  const renderBox = [];
+  for (let index = 0; index < apiData.length; index++) {
+    const item = apiData[index];
+    renderBox.push(
+      <div className='box' key={index}>
+        <div className='image-container'>
+          <img src={item.image_url} alt='Tech' className='api-image' />
+        </div>
+        <div className='api-content'>
+          <a href={item.link} className='tech-item-name'>
+            {item.name}
+          </a>
+          <p>{item.description}</p>
+          <div className='button-comment'>
+            <button onClick={comments} id={item.tech_id}>
+              Posts
+            </button>
           </div>
         </div>
-      );
-    });
-  };
+      </div>,
+    );
+  }
+
   return (
     <div className='one'>
       <div className='scroll-container'>
-        <div className='grid-container'>{renderBox()}</div>
+        <div className='grid-container'>{renderBox}</div>
       </div>
     </div>
   );
@@ -246,8 +256,9 @@ const MainHeader = () => {
                     <div className='btn'>
                       <button
                         className='login-button'
-                        onClick={() => {
-                          dispatch({ type: 'SUBMIT' });
+                        onClick={e => {
+                          e.preventDefault();
+                          dispatch({ type: actions.SUBMIT });
                         }}>
                         Submit!
                       </button>
