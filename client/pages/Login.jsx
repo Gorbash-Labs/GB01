@@ -17,7 +17,7 @@ const Login = (props) => {
   //create a state of invalid usernmae/passowrd initialixed to false
   const [validLogin, setvalidLogin] = useState(false);
   const navigate = useNavigate()
-  const {setGlobalId} = useContext(UserIdContext)
+  const { setGlobalId } = useContext(UserIdContext)
 
   const [info, setInfo] = useState({ username: '', password: '' })
   const [userData, setUserData] = useState({})
@@ -90,8 +90,8 @@ const Login = (props) => {
     if (typeof id === 'number') {
       setGlobalId(id)
       setvalidLogin(true);
-      
-    }else{
+
+    } else {
       alert("invalid username/password")
     }
   }
@@ -99,7 +99,7 @@ const Login = (props) => {
   return (
     <div>
       <Navbar />
-      <div className = "loginbackground">
+      <div className="loginbackground">
         {!localStorage.getItem("accessToken") && !validLogin ?
           <>
             <div className="formHeader">
@@ -113,7 +113,7 @@ const Login = (props) => {
                 <input
                   type="text"
                   id="username"
-                  className ='logininput'
+                  className='logininput'
                   name="username"
                   required
                   value={info.username}
@@ -124,14 +124,14 @@ const Login = (props) => {
                 <input
                   type="password"
                   id="password"
-                  className ='logininput'
+                  className='logininput'
                   name="password"
                   required
                   value={info.password}
                   onChange={e => {
                     setInfo({ ...info, password: e.target.value })
                   }} />
-                <button id= 'allbuttons' type="submit" onClick={handleClick}>Login</button>
+                <button id='allbuttons' type="submit" onClick={handleClick}>Login</button>
               </div>
             </div>
             <hr width="70%" />
@@ -149,7 +149,11 @@ const Login = (props) => {
             <button onClick={getUserData}>Get User Data</button>
             {Object.keys(userData).length !== 0 ?
               <>
-                <h4>Hi there {userData.login}</h4>
+                <div className="text">
+                  <h4>Hey there {userData.login}</h4>
+                </div>
+
+                <img className="user-image" src={userData.avatar_url} />
               </>
               :
               <>
