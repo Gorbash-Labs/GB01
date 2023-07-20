@@ -38,14 +38,12 @@ router.put(
 );
 
 // Delete a single post
+//id is the post id
 router.delete(
   '/:id',
-  postController.findPost,
-  userController.authenticate,
-  userController.authorizeEdit,
   postController.deletePost,
   (req, res) => {
-    res.status(200).send();
+    res.status(200).json(res.locals.deleted);
   }
 );
 

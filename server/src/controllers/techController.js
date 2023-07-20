@@ -57,7 +57,7 @@ techController.makeTech = async (req, res, next) => {
     keywords,
   } = req.body;
 
-  const text = `INSERT INTO techs (name, type_api, type_framework,         
+  const text = `INSERT INTO techs (name, type_api, type_framework,
                 type_library, link, description, image_url)
                 VALUES ($1, $2, $3, $4,$5,$6,$7)`;
   const values = [
@@ -119,5 +119,24 @@ techController.searchTech = (req, res, next) => {
   next();
   //res.locals.techList
 };
+
+techController.deleteTech = async (req, res, next) => {
+  console.log('IN the DELTETECH func')
+
+  try {
+    console.log('deleteTech parameters: ', req.params)
+    const tech_id = req.params.id
+    const response = await db.query(`DELETE FROM posts WHERE tech=${tech_id};
+      DELETE FROM techs WHERE tech_id=${tech_id}`)
+    console.log('response from delete tech', response);
+    res.locals.deleted = response;
+    return next();
+  } catch (err) {
+    return next ({
+      log: 'Express error handler caught at techController.deleteTech',
+      message: { err: 'Unable to DELETE tech' },
+    })
+  }
+}
 
 module.exports = techController;

@@ -60,8 +60,10 @@ router.put(
 )
 
 router.delete(
-  '/:id',
-  
+  '/:id', techController.deleteTech, (req, res) => {
+    res.status(200).json(res.locals.deleted);
+  }
+
 )
 
 module.exports = router;

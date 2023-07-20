@@ -135,7 +135,9 @@ const Comments = () => {
     setEditorContent(content);
   };
 
-  const editComment = (e) => {};
+  const editComment = (e) => {
+
+  };
   const deleteComment = async (e) => {
     //-->get the post id # so we can look it up for deletion
     console.log('event to delete', e);
@@ -144,8 +146,10 @@ const Comments = () => {
       method: 'DELETE',
     });
     //return a delete statement
-    console.log('response of delete', response);
+    console.log('response of delete', response.json());
     alert('You deleted a comment, hope your happy with yourself..');
+    fetchData();
+    setActiveIndex(null)
   };
 
   return (

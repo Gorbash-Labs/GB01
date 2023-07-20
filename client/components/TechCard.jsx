@@ -33,16 +33,17 @@ function techCard(props) {
       </div>
       <div className="buttons-container">
         <button
-          onClick={(e) => {
-            props.handleEdit;
-          }}
+          onClick={
+            props.handleEdit
+          }
         >
           EDIT
         </button>
         <button
-          onClick={(e) => {
-            props.handleDelete;
-          }}
+          id={props.id}
+          onClick={
+            props.handleDelete
+          }
         >
           DELETE
         </button>
