@@ -10,7 +10,7 @@ export default function SearchBar(props) {
     // which may mean we want the contexts to be in a separate file to import in home as well
 
     e.preventDefault();
-    const queryVal = query.current.value;
+    let queryVal = query.current.value;
     queryVal = queryVal.replace(/\s/g, '+');
     console.log('queryVal', queryVal);
     // fetch(`/api/tech/search/?keywords=${queryVal}`,

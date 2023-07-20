@@ -21,7 +21,7 @@ const Comments = () => {
 
   const [state, dispatch] = useReducer(
     commentsPageReducer,
-    commentsPageStateInit,
+    commentsPageStateInit
   );
 
   // initial page load
@@ -41,8 +41,8 @@ const Comments = () => {
           },
         };
         fetch(`/api/tech/${id}`, request)
-          .then(res => res.json())
-          .then(data => {
+          .then((res) => res.json())
+          .then((data) => {
             console.log('data received...');
             const { name, link, description, image_url } = data.tech;
             dispatch({
@@ -52,7 +52,7 @@ const Comments = () => {
             console.log('Updating posts: ', data.posts);
             dispatch({ type: actions.NEW_POSTS_DATA, payload: data.posts });
           })
-          .catch(err => {
+          .catch((err) => {
             console.log('Error when loading page: ', err);
           });
         break;
@@ -80,18 +80,18 @@ const Comments = () => {
           }),
         };
         fetch(`/api/post/${id}`, request)
-          .then(res => {
+          .then((res) => {
             console.log('Initial response received');
             test = res;
             return res.json();
           })
-          .then(data => {
+          .then((data) => {
             console.log('Success! Data: ', data);
             test = data;
             if (data.length > state.comments.length)
               dispatch({ type: actions.NEW_POSTS_DATA, payload: data });
           })
-          .catch(err => {
+          .catch((err) => {
             console.log('Error in post submission: ', err);
             console.log('Last response: ', test);
             dispatch({ type: actions.LOAD_PAGE });
@@ -132,32 +132,34 @@ const Comments = () => {
     comments.push(
       <div
         key={index}
-        className={`accordion-item ${index === activeIndex ? 'active' : ''}`}>
-        <div className='accordion-header-outer'>
+        className={`accordion-item ${index === activeIndex ? 'active' : ''}`}
+      >
+        <div className="accordion-header-outer">
           <div
-            className='accordion-header'
-            onClick={e => {
+            className="accordion-header"
+            onClick={(e) => {
               e.preventDefault();
               dispatch({ type: actions.EXPAND_ACCORDION, payload: index });
-            }}>
+            }}
+          >
             <div>{item.title}</div>
-            <div className='details'>
-              <p className='username'>{item.username}</p>
-              <p className='tags'>Posted by: Steve</p>
+            <div className="details">
+              <p className="username">{item.username}</p>
+              <p className="tags">Posted by: Steve</p>
             </div>
           </div>
         </div>
         {index === activeIndex && (
-          <div className='accordion-content'>
+          <div className="accordion-content">
             <div>
-              <div className='experience'>
+              <div className="experience">
                 {HelperFunctions.md(item.comment)}
               </div>
-              <img src={item.image} alt='Image' className='accordion-image' />
+              <img src={item.image} alt="Image" className="accordion-image" />
             </div>
           </div>
         )}
-      </div>,
+      </div>
     );
   }
 
@@ -167,14 +169,14 @@ const Comments = () => {
         <StateContext.Provider value={state}>
           <FormContext.Provider value={state.form}>
             <MainHeader />
-            <div className='input-container'>
+            <div className="input-container">
               <input
-                type='text'
-                className='input-bar'
-                placeholder='Search APIs...'
+                type="text"
+                className="input-bar"
+                placeholder="Search APIs..."
               />
             </div>
-            <div className='accordion'>{comments}</div>
+            <div className="accordion">{comments}</div>
           </FormContext.Provider>
         </StateContext.Provider>
       </DispatchContext.Provider>
@@ -188,30 +190,39 @@ const MainHeader = () => {
   const { visible } = useContext(FormContext);
   const dispatch = useContext(DispatchContext);
   return (
-    <div className='main-header'>
+    <div className="main-header">
       <div>
-        <div className='content'>
-          <div className='comment-data-box'>
-            <img className='comment-data-image' src={tech.image}></img>
+        <div className="content">
+          <div className="comment-data-box">
+            <img className="comment-data-image" src={tech.image}></img>
             <div>
-              <a href={tech.link} className='comment-tech-link'>
+              <a href={tech.link} className="comment-tech-link">
                 <h2>{tech.name}</h2>
               </a>
-              <p className='comment-tech-description'>{tech.description}</p>
+              <p className="comment-tech-description">{tech.description}</p>
             </div>
           </div>
           <button
-            className='button'
-            onClick={e => {
+            className="button"
+            onClick={(e) => {
               e.preventDefault();
               dispatch({ type: actions.OPEN_OVERLAY });
-            }}>
+            }}
+          >
             + ADD POST
           </button>
           {visible && (
-            <div className='overlay-comments'>
-              <div className='overlay-content-comments'>
+            <div className="overlay-comments">
+              <div className="overlay-content-comments">
                 <div>
+                  <button
+                    className="exitButton"
+                    onClick={() => {
+                      dispatch({ type: actions.EXIT_OVERLAY });
+                    }}
+                  >
+                    X
+                  </button>
                   <Form />
                 </div>
               </div>
@@ -228,16 +239,16 @@ const Form = () => {
   const dispatch = useContext(DispatchContext);
   return (
     <form>
-      <div className='formGroup-two'>
+      <div className="formGroup-two">
         <div>
           <h2>Add FORM</h2>
-          <hr className='line' />
+          <hr className="line" />
           <input
-            type='text'
-            className='input-one-first'
-            placeholder='Title'
+            type="text"
+            className="input-one-first"
+            placeholder="Title"
             value={form.title}
-            onChange={event => {
+            onChange={(event) => {
               dispatch({
                 type: actions.FORM_INPUT,
                 payload: { formVar: 'title', input: event.target.value },
@@ -246,11 +257,11 @@ const Form = () => {
           />
           <h5></h5>
           <input
-            type='text'
-            className='input-one-c'
-            placeholder='Language Used'
+            type="text"
+            className="input-one-c"
+            placeholder="Language Used"
             value={form.language}
-            onChange={event => {
+            onChange={(event) => {
               dispatch({
                 type: actions.FORM_INPUT,
                 payload: { formVar: 'language', input: event.target.value },
@@ -258,8 +269,8 @@ const Form = () => {
             }}
           />
           <Editor
-            apiKey='ba2mzqsjqzq6lv0fu4numgypg3j9125otxy4rpzttx7vji3q'
-            className='custom-editor'
+            apiKey="ba2mzqsjqzq6lv0fu4numgypg3j9125otxy4rpzttx7vji3q"
+            className="custom-editor"
             onEditorChange={(value, editor) => {
               dispatch({
                 type: actions.FORM_INPUT,
@@ -280,11 +291,11 @@ const Form = () => {
             }}
           />
           <input
-            type='file'
-            className='input-one-image'
-            accept='image/*'
+            type="file"
+            className="input-one-image"
+            accept="image/*"
             value={form.image}
-            onChange={event => {
+            onChange={(event) => {
               dispatch({
                 type: actions.FORM_INPUT,
                 payload: { formVar: 'imageFile', input: event.target.value },
@@ -292,14 +303,15 @@ const Form = () => {
             }}
           />
         </div>
-        <div className='btn'>
+        <div className="btn">
           <button
-            type='submit'
-            className='login-button'
-            onClick={e => {
+            type="submit"
+            className="login-button"
+            onClick={(e) => {
               e.preventDefault();
               dispatch({ type: actions.SUBMIT_FORM });
-            }}>
+            }}
+          >
             Submit
           </button>
         </div>
