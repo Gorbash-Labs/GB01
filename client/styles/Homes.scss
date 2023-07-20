@@ -18,68 +18,99 @@ body {
     background-position: 0% 50%;
   }
 }
-hr{
-  width:100%;
+hr {
+  width: 100%;
 }
 
+.logo {
+  width: 700px;
+  border-radius: 10px;
+}
 .homepage {
-  animation: loadin 1s ease-in ;
+  animation: loadin 1s ease-in;
   background: linear-gradient(86.3deg, #97b7e1 3.6%, #79acef 87.6%);
+  background: #010409;
+  display: flex;
+  flex-direction: column;
+  gap: 45px;
 }
 
-.home-top-title-button {
+.main-header {
   display: flex;
+  justify-content: center;
+}
+.home-title-hero {
+  display: flex;
+  width: 1200px;
   flex-direction: row;
   align-items: center;
-  justify-content: space-around;
+  justify-content: flex-start;
+  border: 1px solid #ffffff3f;
+  background-color: rgb(255, 255, 255);
+  border-radius: 20px;
+  gap: 80px;
+  padding: 25px;
 }
 
 .input-container {
   display: flex;
   flex-direction: row;
-  margin-bottom: 20px;
   justify-content: center;
+  align-items: center;
 
   .input-bar-home {
     position: relative;
     border-radius: 14px;
     border: 1px solid;
-    background-color: #a7bfe8;
-    width: 30%;
+    background-color: #ffffff;
+    width: 800px;
     padding: 10px;
+    height: 50px;
+    margin: 0;
   }
 }
 
+.grid-body {
+  display: flex;
+  justify-content: center;
+}
 .grid-container {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 20px;
+  gap: 10px;
   // overflow-y: auto;
-  // max-height: 100vh;
-  justify-items: center;
+  max-width: 1200px;
 
   .box {
     display: flex;
     flex-direction: column;
-    justify-content: space-evenly;
+    justify-content: flex-start;
     align-items: center;
-    background-color: #6190e8;
+    gap: 15px;
+    height: 350px;
+    background-color: #0d1116;
+    border: 1px solid #ffffff3f;
     padding: 50px;
-    width: 450px;
-    height: 320px;
+    // width: 400px;
+    // height: 320px;
     word-wrap: break-word;
-    border-radius: 18px;
+    border-radius: 10px;
     &:hover {
-      box-shadow: 5px 5px 10px black;
+      box-shadow: 0px 0px 10px rgba(255, 255, 255, 0.363);
       cursor: pointer;
     }
     .api-image {
-      max-height: 200px;
-      max-width: 200px;
+      height: 150px;
+      width: auto;
+      border-radius: 10px;
     }
   }
 }
 
+.tech-itemname {
+  color: white;
+  text-decoration: none;
+}
 #allbuttons {
   width: 160px;
   border-radius: 15px;

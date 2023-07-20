@@ -38,6 +38,15 @@ router.get('/signout', userController.endSession, (req, res) => {
   res.status(200).redirect('/');
 });
 
+//Is already signed in
+router.get('/checkSession', (req, res) => {
+  if (req.cookies.SSID) {
+    res.status(200).json({ authenticate: true, id: req.cookies.SSID });
+  } else {
+    res.status(200).json({ authenticate: false });
+  }
+});
+
 // Look up a single user by name
 router.get(
   '/id/:id',

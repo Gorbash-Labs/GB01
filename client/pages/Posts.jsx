@@ -38,7 +38,7 @@ const Comments = () => {
     '#81c784',
     '#ffff8d',
     '#ffab40',
-    '#ab47bc',
+    '#cc6edc',
     '#f06292',
     '#00bcd4',
     '#8d6e63',
@@ -163,8 +163,7 @@ const Comments = () => {
       >
         <div className="accordion-header">
           <div style={{ display: 'flex', gap: 15, alignItems: 'center' }}>
-            <div>{item.title}</div>
-
+            <div style={{ flexGrow: 1 }}>{item.title}</div>
             <div
               className="language"
               style={{ color: colors[item.language - 1] }}
@@ -172,7 +171,7 @@ const Comments = () => {
               {lang[item.language - 1]}
             </div>
           </div>
-          <div className="tags">Goru User: Steve {item.uploader}</div>
+          <div className="tags">Goru post by: {item.uploader}</div>
         </div>
 
         {index === activeIndex && (
